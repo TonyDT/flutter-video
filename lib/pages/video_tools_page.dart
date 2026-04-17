@@ -7,6 +7,7 @@
 library;
 
 import 'package:flutter/material.dart';
+import 'merge_video_page.dart';
 
 /// 视频工具入口页面
 ///
@@ -264,8 +265,11 @@ class VideoToolsPage extends StatelessWidget {
     // 根据 toolId 处理不同的功能
     switch (toolId) {
       case 'merge':
-        // 合并视频
-        _showFeatureDialog(context, title, '正在打开合并视频功能...');
+        // 合并视频 - 跳转到合并页面
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const MergeVideoPage()),
+        );
         break;
       case 'cut':
         // 视频截取
@@ -352,6 +356,7 @@ class VideoToolsPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
         children: [
           if (isLarge)
             Container(
@@ -365,24 +370,32 @@ class VideoToolsPage extends StatelessWidget {
           else
             Icon(icon, size: iconSize, color: Colors.white),
           SizedBox(height: isLarge ? 14 : 8),
-          Text(
-            title,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontWeight: isLarge ? FontWeight.bold : FontWeight.w600,
-              fontSize: titleSize,
-              color: isLarge ? const Color(0xFF2D3748) : Colors.white,
-              letterSpacing: isLarge ? 0.3 : 0.2,
+          Flexible(
+            child: Text(
+              title,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontWeight: isLarge ? FontWeight.bold : FontWeight.w600,
+                fontSize: titleSize,
+                color: isLarge ? const Color(0xFF2D3748) : Colors.white,
+                letterSpacing: isLarge ? 0.3 : 0.2,
+              ),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
             ),
           ),
           SizedBox(height: isLarge ? 6 : 2),
-          Text(
-            description,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: isLarge ? Colors.grey[600] : Colors.white.withValues(alpha: 0.85),
-              fontSize: isLarge ? 12 : 10,
-              height: isLarge ? 1.3 : 1.2,
+          Flexible(
+            child: Text(
+              description,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: isLarge ? Colors.grey[600] : Colors.white.withValues(alpha: 0.85),
+                fontSize: isLarge ? 12 : 10,
+                height: isLarge ? 1.3 : 1.2,
+              ),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
             ),
           ),
         ],

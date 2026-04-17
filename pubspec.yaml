@@ -37,6 +37,15 @@ dependencies:
   provider: ^6.1.2
   path_provider: ^2.1.2
 
+  # 视频相关
+  video_player: ^2.9.3
+  file_picker: ^8.1.6
+  image_gallery_saver_plus: ^3.0.5
+  permission_handler: ^11.3.1
+
+  # FFmpeg 视频处理
+  ffmpeg_kit_flutter_new: ^4.1.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
