@@ -46,6 +46,9 @@ dependencies:
   # FFmpeg 视频处理
   ffmpeg_kit_flutter_new: ^4.1.0
 
+  # 音频播放
+  audioplayers: ^6.1.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

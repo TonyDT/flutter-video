@@ -9,6 +9,7 @@ import 'package:video_player/video_player.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:ffmpeg_kit_flutter_new/ffmpeg_kit.dart';
 import 'package:ffmpeg_kit_flutter_new/return_code.dart';
+import '../utils/top_notify.dart';
 // 条件导入
 import '../utils/native_file_helper.dart'
     if (dart.library.io) '../utils/native_file_helper.dart'
@@ -328,40 +329,125 @@ class _MergeVideoPageState extends State<MergeVideoPage> {
 
     try {
       final tempDir = await TempDirHelper.getTemporaryDirectory();
-      final fileListPath = '${tempDir.path}/filelist.txt';
-      final outputPath = '${tempDir.path}/merged_${DateTime.now().millisecondsSinceEpoch}.mp4';
+      final ts = DateTime.now().millisecondsSinceEpoch;
+      final clip1Path = '${tempDir.path}/clip1_$ts.mp4';
+      final clip2Path = '${tempDir.path}/clip2_$ts.mp4';
+      final outputPath = '${tempDir.path}/merged_$ts.mp4';
 
-      // 创建文件列表（注意转义单引号）
-      final listContent = "file '${_path1!.replaceAll("'", r"'\''")}'\nfile '${_path2!.replaceAll("'", r"'\''")}'";
+      // 第一步：裁剪视频1（应用起止时间 + 统一编码参数）
+      // 注意：FFmpeg -ss/-to 参数单位是秒，不是毫秒
+      final ss1 = (_start1.inMilliseconds / 1000.0).toStringAsFixed(3);
+      final to1 = (_end1.inMilliseconds / 1000.0).toStringAsFixed(3);
+      final clip1Args = [
+        '-i', _path1!,
+        '-ss', ss1,
+        '-to', to1,
+        '-c:v', 'libx264',
+        '-preset', 'fast',
+        '-c:a', 'aac',
+        '-ar', '44100',
+        '-ac', '2',
+        '-vf', 'scale=trunc(iw/2)*2:trunc(ih/2)*2',
+        '-r', '30',
+        '-pix_fmt', 'yuv420p',
+        clip1Path,
+        '-y',
+      ];
+
+      debugPrint('FFmpeg clip1: ${clip1Args.join(' ')}');
+      final session1 = await FFmpegKit.execute(clip1Args.join(' '));
+      final rc1 = await session1.getReturnCode();
+      if (!ReturnCode.isSuccess(rc1)) {
+        if (mounted) _showError('视频1裁剪失败');
+        setState(() => _isMerging = false);
+        return;
+      }
+
+      // 获取裁剪后视频1的分辨率，用于统一视频2的尺寸
+      String? resolution;
+      final probeArgs = '-v error -select_streams v:0 -show_entries stream=width,height -of csv=s=x:p=0 "$clip1Path"';
+      final probeSession = await FFmpegKit.execute(probeArgs);
+      final probeOutput = await probeSession.getOutput();
+      if (probeOutput != null) {
+        final lines = probeOutput.split('\n').where((l) => l.contains('x')).toList();
+        if (lines.isNotEmpty) {
+          resolution = lines.first.trim();
+          debugPrint('Detected clip1 resolution: $resolution');
+        }
+      }
+
+      // 第二步：裁剪视频2（应用起止时间 + 统一编码参数 + 统一分辨率）
+      final ss2 = (_start2.inMilliseconds / 1000.0).toStringAsFixed(3);
+      final to2 = (_end2.inMilliseconds / 1000.0).toStringAsFixed(3);
+      // 如果获取到了视频1的分辨率，视频2缩放到相同尺寸（确保偶数对齐）
+      final scaleFilter = resolution != null
+          ? 'scale=trunc(${resolution.split('x')[0]}/2)*2:trunc(${resolution.split('x')[1]}/2)*2'
+          : 'scale=trunc(iw/2)*2:trunc(ih/2)*2';
+      final clip2Args = [
+        '-i', _path2!,
+        '-ss', ss2,
+        '-to', to2,
+        '-c:v', 'libx264',
+        '-preset', 'fast',
+        '-c:a', 'aac',
+        '-ar', '44100',
+        '-ac', '2',
+        '-vf', scaleFilter,
+        '-r', '30',
+        '-pix_fmt', 'yuv420p',
+        clip2Path,
+        '-y',
+      ];
+
+      debugPrint('FFmpeg clip2: ${clip2Args.join(' ')}');
+      final session2 = await FFmpegKit.execute(clip2Args.join(' '));
+      final rc2 = await session2.getReturnCode();
+      if (!ReturnCode.isSuccess(rc2)) {
+        if (mounted) _showError('视频2裁剪失败');
+        setState(() => _isMerging = false);
+        return;
+      }
+
+      // 第三步：合并裁剪后的两个片段
+      final fileListPath = '${tempDir.path}/filelist_$ts.txt';
+      final listContent = "file '${clip1Path}'\nfile '${clip2Path}'";
       await File(fileListPath).writeAsString(listContent);
 
-      // 构建命令（快速合并，若失败可改用转码）
-      final args = ['-f', 'concat', '-safe', '0', '-i', fileListPath, '-c', 'copy', outputPath, '-y'];
+      final mergeArgs = [
+        '-f', 'concat',
+        '-safe', '0',
+        '-i', fileListPath,
+        '-c', 'copy',
+        '-movflags', '+faststart',
+        outputPath,
+        '-y',
+      ];
 
-      // 执行合并
-      await FFmpegKit.executeAsync(
-        args.join(' '),
-        (session) async {
-          final returnCode = await session.getReturnCode();
-          if (ReturnCode.isSuccess(returnCode)) {
-            _mergedVideoPath = outputPath;
-            _showSuccess('合并成功！');
-            await _initPreview(outputPath);
-          } else {
-            final failMsg = await session.getFailStackTrace();
-            _showError('合并失败：$failMsg');
-          }
-          setState(() => _isMerging = false);
-        },
-        (log) {
-          debugPrint('FFmpeg log: ${log.getMessage()}');
-        },
-        (statistics) {
-          // 进度回调
-        },
-      );
+      debugPrint('FFmpeg merge: ${mergeArgs.join(' ')}');
+      final session3 = await FFmpegKit.execute(mergeArgs.join(' '));
+      final rc3 = await session3.getReturnCode();
+
+      if (!mounted) return;
+
+      if (ReturnCode.isSuccess(rc3)) {
+        _mergedVideoPath = outputPath;
+        _showSuccess('合并成功！');
+        await _initPreview(outputPath);
+      } else {
+        _showError('合并失败');
+      }
+
+      // 清理中间文件
+      try {
+        await File(clip1Path).delete();
+        await File(clip2Path).delete();
+        await File(fileListPath).delete();
+      } catch (_) {}
+
+      setState(() => _isMerging = false);
     } catch (e) {
-      _showError('合并异常: $e');
+      debugPrint('Merge error: $e');
+      if (mounted) _showError('合并异常: $e');
       setState(() => _isMerging = false);
     }
   }
@@ -425,16 +511,12 @@ class _MergeVideoPageState extends State<MergeVideoPage> {
 
   void _showError(String msg) {
     if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(msg), backgroundColor: Colors.red),
-    );
+    TopNotify.error(context, msg);
   }
 
   void _showSuccess(String msg) {
     if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(msg), backgroundColor: Colors.green),
-    );
+    TopNotify.success(context, msg);
   }
 
   String _formatDuration(Duration d) {
@@ -474,6 +556,8 @@ class _MergeVideoPageState extends State<MergeVideoPage> {
               '合并视频',
               style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
           ),
           const SizedBox(width: 48),

@@ -10,6 +10,7 @@ library;
 import 'package:flutter/material.dart';
 
 import 'audio_tools_page.dart';
+import 'settings_page.dart';
 import 'video_tools_page.dart';
 
 /// 应用主页面，包含底部导航栏
@@ -26,6 +27,7 @@ class _ToolTabsPageState extends State<ToolTabsPage> {
   /// 当前选中的 Tab 索引
   /// 0: 视频工具
   /// 1: 音频工具
+  /// 2: 设置
   int _selectedIndex = 0;
 
   /// 页面列表
@@ -37,6 +39,8 @@ class _ToolTabsPageState extends State<ToolTabsPage> {
     VideoToolsPage(),
     // 音频相关工具入口容器
     AudioToolsPage(),
+    // 设置页面
+    SettingsPage(),
   ];
 
   /// Tab 被选中时的回调
@@ -68,6 +72,11 @@ class _ToolTabsPageState extends State<ToolTabsPage> {
             icon: Icon(Icons.audiotrack),
             activeIcon: Icon(Icons.audiotrack, color: Colors.orange),
             label: '音频',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            activeIcon: Icon(Icons.settings, color: Colors.orange),
+            label: '设置',
           ),
         ],
         currentIndex: _selectedIndex,

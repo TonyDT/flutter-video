@@ -7,7 +7,18 @@
 library;
 
 import 'package:flutter/material.dart';
+import '../utils/top_notify.dart';
 import 'merge_video_page.dart';
+import 'cut_video_page.dart';
+import 'compress_video_page.dart';
+import 'ratio_video_page.dart';
+import 'mute_video_page.dart';
+import 'dubbing_video_page.dart';
+import 'extract_image_page.dart';
+import 'split_video_page.dart';
+import 'separate_av_page.dart';
+import 'crop_video_page.dart';
+import 'convert_format_page.dart';
 
 /// 视频工具入口页面
 ///
@@ -129,15 +140,18 @@ class VideoToolsPage extends StatelessWidget {
             ),
           ),
 
-          // 后面的小卡片（一排三个）
+          // 后面的小卡片（自适应列数）
           SliverPadding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            sliver: SliverGrid(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
+            sliver: SliverLayoutBuilder(
+              builder: (context, constraints) {
+                final crossAxisCount = constraints.crossAxisExtent >= 480 ? 4 : constraints.crossAxisExtent >= 360 ? 3 : 2;
+                return SliverGrid(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: crossAxisCount,
                 crossAxisSpacing: 12,
                 mainAxisSpacing: 12,
-                childAspectRatio: 0.9,
+                childAspectRatio: crossAxisCount <= 2 ? 1.0 : 0.9,
               ),
               delegate: SliverChildListDelegate([
                 _buildSmallCard(
@@ -213,6 +227,8 @@ class VideoToolsPage extends StatelessWidget {
                   'convert',
                 ),
               ]),
+                );
+              },
             ),
           ),
 
@@ -262,81 +278,43 @@ class VideoToolsPage extends StatelessWidget {
 
   /// 工具点击事件
   void _onToolTap(BuildContext context, String toolId, String title) {
-    // 根据 toolId 处理不同的功能
     switch (toolId) {
       case 'merge':
-        // 合并视频 - 跳转到合并页面
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const MergeVideoPage()),
-        );
+        Navigator.push(context, MaterialPageRoute(builder: (context) => const MergeVideoPage()));
         break;
       case 'cut':
-        // 视频截取
-        _showFeatureDialog(context, title, '正在打开视频截取功能...');
+        Navigator.push(context, MaterialPageRoute(builder: (context) => const CutVideoPage()));
         break;
       case 'compress':
-        // 视频压缩
-        _showFeatureDialog(context, title, '正在打开视频压缩功能...');
+        Navigator.push(context, MaterialPageRoute(builder: (context) => const CompressVideoPage()));
         break;
       case 'ratio':
-        // 视频比例
-        _showFeatureDialog(context, title, '正在打开视频比例调整功能...');
+        Navigator.push(context, MaterialPageRoute(builder: (context) => const RatioVideoPage()));
         break;
       case 'mute':
-        // 视频消音
-        _showFeatureDialog(context, title, '正在打开视频消音功能...');
+        Navigator.push(context, MaterialPageRoute(builder: (context) => const MuteVideoPage()));
         break;
       case 'dubbing':
-        // 视频配音
-        _showFeatureDialog(context, title, '正在打开视频配音功能...');
+        Navigator.push(context, MaterialPageRoute(builder: (context) => const DubbingVideoPage()));
         break;
       case 'extract':
-        // 提取图片
-        _showFeatureDialog(context, title, '正在打开提取图片功能...');
+        Navigator.push(context, MaterialPageRoute(builder: (context) => const ExtractImagePage()));
         break;
       case 'split':
-        // 视频分割
-        _showFeatureDialog(context, title, '正在打开视频分割功能...');
+        Navigator.push(context, MaterialPageRoute(builder: (context) => const SplitVideoPage()));
         break;
       case 'separate':
-        // 音视频分离
-        _showFeatureDialog(context, title, '正在打开音视频分离功能...');
+        Navigator.push(context, MaterialPageRoute(builder: (context) => const SeparateAVPage()));
         break;
       case 'crop':
-        // 视频裁剪
-        _showFeatureDialog(context, title, '正在打开视频裁剪功能...');
+        Navigator.push(context, MaterialPageRoute(builder: (context) => const CropVideoPage()));
         break;
       case 'convert':
-        // 格式转换
-        _showFeatureDialog(context, title, '正在打开格式转换功能...');
+        Navigator.push(context, MaterialPageRoute(builder: (context) => const ConvertFormatPage()));
         break;
       default:
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('开始执行 $title 功能'),
-            backgroundColor: const Color(0xFF3D5A80),
-            behavior: SnackBarBehavior.floating,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-          ),
-        );
+        TopNotify.info(context, '开始执行 $title 功能');
     }
-  }
-
-  /// 显示功能对话框
-  void _showFeatureDialog(BuildContext context, String title, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        backgroundColor: const Color(0xFF3D5A80),
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-      ),
-    );
   }
 
   /// 构建卡片内容
@@ -349,7 +327,7 @@ class VideoToolsPage extends StatelessWidget {
   ) {
     final iconSize = isLarge ? 36.0 : 28.0;
     final padding = isLarge ? 18.0 : 10.0;
-    final titleSize = isLarge ? 17.0 : 13.0;
+    final titleSize = isLarge ? 17.0 : 14.0;
 
     return Padding(
       padding: EdgeInsets.all(padding),
@@ -391,7 +369,7 @@ class VideoToolsPage extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: isLarge ? Colors.grey[600] : Colors.white.withValues(alpha: 0.85),
-                fontSize: isLarge ? 12 : 10,
+                fontSize: isLarge ? 12 : 11,
                 height: isLarge ? 1.3 : 1.2,
               ),
               maxLines: 2,
