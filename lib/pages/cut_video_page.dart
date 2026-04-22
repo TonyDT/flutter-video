@@ -40,7 +40,7 @@ class _CutVideoPageState extends State<CutVideoPage> {
 
   static const _bg = LinearGradient(
     begin: Alignment.topCenter, end: Alignment.bottomCenter,
-    colors: [Color(0xFF1A237E), Color(0xFF3949AB), Color(0xFFE8EAF6)],
+    colors: [Color(0xFF0D3B2E), Color(0xFF1B6B4F), Color(0xFFE8F5E9)],
   );
 
   @override
@@ -248,7 +248,7 @@ class _CutVideoPageState extends State<CutVideoPage> {
       // 时间信息
       Container(padding: const EdgeInsets.all(16), decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16)),
         child: Column(children: [
-          Row(children: [const Icon(Icons.timer, color: Colors.blue), const SizedBox(width: 8), Text('总时长: ${_fmt(_duration)}', style: const TextStyle(fontWeight: FontWeight.w600))]),
+          Row(children: [const Icon(Icons.timer, color: Colors.blue), const SizedBox(width: 8), Expanded(child: Text('总时长: ${_fmt(_duration)}', style: const TextStyle(fontWeight: FontWeight.w600), overflow: TextOverflow.ellipsis))]),
           const SizedBox(height: 12),
           _buildSlider('开始', _start, Colors.green, (v) {
             setState(() {
@@ -280,20 +280,20 @@ class _CutVideoPageState extends State<CutVideoPage> {
             });
           }),
           const SizedBox(height: 8),
-          Text('截取: ${_fmt(_start)} - ${_fmt(_end)}  (${_fmt(_end - _start)})', style: TextStyle(color: Colors.blue.shade700, fontWeight: FontWeight.w600)),
+          Text('截取: ${_fmt(_start)} - ${_fmt(_end)}  (${_fmt(_end - _start)})', style: TextStyle(color: Colors.blue.shade700, fontWeight: FontWeight.w600), overflow: TextOverflow.ellipsis),
         ]),
       ),
       const SizedBox(height: 20),
       // 操作按钮
       if (_resultPath == null) SizedBox(width: double.infinity, height: 52, child: ElevatedButton(
         onPressed: _isProcessing ? null : _cutVideo,
-        style: ElevatedButton.styleFrom(backgroundColor: Colors.orange, foregroundColor: Colors.white, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(26)), elevation: 0),
+        style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF2E7D32), foregroundColor: Colors.white, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(26)), elevation: 0),
         child: _isProcessing ? const Row(mainAxisAlignment: MainAxisAlignment.center, children: [SizedBox(width:24,height:24,child: CircularProgressIndicator(color:Colors.white,strokeWidth:2.5)), SizedBox(width:12), Text('截取中...',style:TextStyle(fontSize:16,fontWeight:FontWeight.w600))])
             : const Text('开始截取', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600)),
       )) else Row(children: [
-        Expanded(child: ElevatedButton(onPressed: _saveToGallery, style: ElevatedButton.styleFrom(backgroundColor: Colors.green, foregroundColor: Colors.white, padding: const EdgeInsets.symmetric(vertical: 14), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))), child: const Row(mainAxisAlignment: MainAxisAlignment.center, children: [Icon(Icons.download), SizedBox(width:8), Text('保存到相册')]))),
+        Expanded(child: ElevatedButton(onPressed: _saveToGallery, style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF2E7D32), foregroundColor: Colors.white, padding: const EdgeInsets.symmetric(vertical: 14), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))), child: const Row(mainAxisAlignment: MainAxisAlignment.center, children: [Icon(Icons.download), SizedBox(width:8), Flexible(child: Text('保存到相册', overflow: TextOverflow.ellipsis))]))),
         const SizedBox(width: 12),
-        Expanded(child: ElevatedButton(onPressed: () { _controller?.dispose(); setState(() { _resultPath = null; _controller = null; _controllerError = false; }); _pickVideo(); }, style: ElevatedButton.styleFrom(backgroundColor: Colors.orange, foregroundColor: Colors.white, padding: const EdgeInsets.symmetric(vertical: 14), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))), child: const Row(mainAxisAlignment: MainAxisAlignment.center, children: [Icon(Icons.refresh), SizedBox(width:8), Text('重新选择')]))),
+        Expanded(child: ElevatedButton(onPressed: () { _controller?.dispose(); setState(() { _resultPath = null; _controller = null; _controllerError = false; }); _pickVideo(); }, style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF43A047), foregroundColor: Colors.white, padding: const EdgeInsets.symmetric(vertical: 14), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))), child: const Row(mainAxisAlignment: MainAxisAlignment.center, children: [Icon(Icons.refresh), SizedBox(width:8), Flexible(child: Text('重新选择', overflow: TextOverflow.ellipsis))]))),
       ]),
       const SizedBox(height: 12),
       TextButton.icon(onPressed: _pickVideo, icon: const Icon(Icons.swap_horiz, color: Colors.white70), label: const Text('更换视频', style: TextStyle(color: Colors.white70))),
@@ -304,7 +304,7 @@ class _CutVideoPageState extends State<CutVideoPage> {
     final maxMs = _duration.inMilliseconds > 0 ? _duration.inMilliseconds.toDouble() : 1.0;
     final valMs = value.inMilliseconds.toDouble().clamp(0.0, maxMs);
     return Column(children: [
-      Row(children: [Icon(label == '开始' ? Icons.play_arrow : Icons.stop, size: 16, color: color), const SizedBox(width:4), Text(label, style: TextStyle(fontSize:13,color:Colors.grey.shade600)), const Spacer(), Text(_fmt(value), style: TextStyle(fontSize:13,fontWeight:FontWeight.w600,color:Colors.grey.shade800))]),
+      Row(children: [Icon(label == '开始' ? Icons.play_arrow : Icons.stop, size: 16, color: color), const SizedBox(width:4), Text(label, style: TextStyle(fontSize:13,color:Colors.grey.shade600)), const Spacer(), Text(_fmt(value), style: TextStyle(fontSize:13,fontWeight:FontWeight.w600,color:Colors.grey.shade800), overflow: TextOverflow.ellipsis)]),
       SliderTheme(data: SliderThemeData(activeTrackColor: color, inactiveTrackColor: color.withValues(alpha:0.2)), child: Slider(value: valMs, min:0, max:maxMs, onChanged: onChanged)),
     ]);
   }

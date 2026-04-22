@@ -41,7 +41,7 @@ class _RatioVideoPageState extends State<RatioVideoPage> {
   static const _ratios = ['16:9', '9:16', '4:3', '1:1', '21:9'];
   static const _bg = LinearGradient(
     begin: Alignment.topCenter, end: Alignment.bottomCenter,
-    colors: [Color(0xFF56C59A), Color(0xFF3DB87A), Color(0xFFE8F5E9)],
+    colors: [Color(0xFF2E7D32), Color(0xFF43A047), Color(0xFFE8F5E9)],
   );
 
   @override
@@ -126,9 +126,12 @@ class _RatioVideoPageState extends State<RatioVideoPage> {
         _resultPath = output;
         _showSuccess('调整成功！');
         _controller?.dispose();
-        _controller = VideoPlayerController.file(NativeFileHelper.getFile(output))
-          ..initialize().then((_) { setState(() {}); _controller!.play(); });
+        final newCtrl = VideoPlayerController.file(NativeFileHelper.getFile(output));
+        _controller = newCtrl;
+        await newCtrl.initialize();
+        if (!mounted) { newCtrl.dispose(); return; }
         setState(() {});
+        await newCtrl.play();
       } else { _showError('调整失败'); }
     } catch (e) { _showError('调整出错: $e'); }
     setState(() => _isProcessing = false);
@@ -139,7 +142,7 @@ class _RatioVideoPageState extends State<RatioVideoPage> {
     final ok = await PermissionHelper.requestPhotos();
     if (ok != true) { _showError('需要相册权限'); return; }
     final result = await GallerySaverHelper.saveFile(_resultPath!);
-    if (result == true) _showSuccess('已保存到相册'); else _showError('保存失败');
+    if (result == true) { _showSuccess('已保存到相册'); } else { _showError('保存失败'); }
   }
 
   void _showError(String m) { if (mounted) TopNotify.error(context, m); }
@@ -171,7 +174,7 @@ class _RatioVideoPageState extends State<RatioVideoPage> {
       child: _controller!=null&&_controller!.value.isInitialized ? ClipRRect(borderRadius:BorderRadius.circular(16), child: AspectRatio(aspectRatio:_controller!.value.aspectRatio, child: VideoPlayer(_controller!))) : const Center(child: CircularProgressIndicator(color:Colors.white))),
     const SizedBox(height:16),
     Container(padding: const EdgeInsets.all(16), decoration: BoxDecoration(color:Colors.white, borderRadius:BorderRadius.circular(16)), child: Column(crossAxisAlignment:CrossAxisAlignment.start, children: [
-      Text('原始: ${_videoWidth}x$_videoHeight', style: const TextStyle(fontWeight:FontWeight.w600)),
+      Text('原始: ${_videoWidth}x$_videoHeight', style: const TextStyle(fontWeight:FontWeight.w600), overflow: TextOverflow.ellipsis),
       const SizedBox(height:12),
       const Text('目标比例:', style: TextStyle(fontWeight:FontWeight.w600)),
       const SizedBox(height:8),
@@ -187,12 +190,12 @@ class _RatioVideoPageState extends State<RatioVideoPage> {
     ])),
     const SizedBox(height:20),
     if (_resultPath == null) SizedBox(width:double.infinity,height:52, child: ElevatedButton(onPressed: _isProcessing?null:_adjustRatio,
-      style: ElevatedButton.styleFrom(backgroundColor:Colors.green,foregroundColor:Colors.white,shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(26)),elevation:0),
+      style: ElevatedButton.styleFrom(backgroundColor:const Color(0xFF2E7D32),foregroundColor:Colors.white,shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(26)),elevation:0),
       child: _isProcessing ? const Row(mainAxisAlignment:MainAxisAlignment.center,children:[SizedBox(width:24,height:24,child:CircularProgressIndicator(color:Colors.white,strokeWidth:2.5)),SizedBox(width:12),Text('调整中...',style:TextStyle(fontSize:16,fontWeight:FontWeight.w600))]) : const Text('开始调整',style:TextStyle(fontSize:17,fontWeight:FontWeight.w600)),
     )) else Row(children: [
-      Expanded(child: ElevatedButton(onPressed:_saveToGallery, style:ElevatedButton.styleFrom(backgroundColor:Colors.green,foregroundColor:Colors.white,padding:const EdgeInsets.symmetric(vertical:14),shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(12))), child: Row(mainAxisAlignment:MainAxisAlignment.center,children:[const Icon(Icons.download),const SizedBox(width:8),Flexible(child: Text('保存到相册',overflow:TextOverflow.ellipsis))]))),
+      Expanded(child: ElevatedButton(onPressed:_saveToGallery, style:ElevatedButton.styleFrom(backgroundColor:const Color(0xFF2E7D32),foregroundColor:Colors.white,padding:const EdgeInsets.symmetric(vertical:14),shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(12))), child: Row(mainAxisAlignment:MainAxisAlignment.center,children:[const Icon(Icons.download),const SizedBox(width:8),Flexible(child: Text('保存到相册',overflow:TextOverflow.ellipsis))]))),
       const SizedBox(width:12),
-      Expanded(child: ElevatedButton(onPressed:(){ _controller?.dispose(); setState((){_resultPath=null;_controller=null;}); _pickVideo(); }, style:ElevatedButton.styleFrom(backgroundColor:Colors.green.shade700,foregroundColor:Colors.white,padding:const EdgeInsets.symmetric(vertical:14),shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(12))), child: Row(mainAxisAlignment:MainAxisAlignment.center,children:[const Icon(Icons.refresh),const SizedBox(width:8),Flexible(child: Text('重新选择',overflow:TextOverflow.ellipsis))]))),
+      Expanded(child: ElevatedButton(onPressed:(){ _controller?.dispose(); setState((){_resultPath=null;_controller=null;}); _pickVideo(); }, style:ElevatedButton.styleFrom(backgroundColor:const Color(0xFF43A047),foregroundColor:Colors.white,padding:const EdgeInsets.symmetric(vertical:14),shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(12))), child: Row(mainAxisAlignment:MainAxisAlignment.center,children:[const Icon(Icons.refresh),const SizedBox(width:8),Flexible(child: Text('重新选择',overflow:TextOverflow.ellipsis))]))),
     ]),
   ]));
 }

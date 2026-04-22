@@ -1,100 +1,143 @@
 # xixi_media_tool
 
-一个多平台媒体工具（Flutter）工程骨架，用于后续接入本地/端侧媒体处理能力（计划使用 FFmpeg 系列方案）。
+基于 Flutter 开发的多平台媒体工具应用，集成 FFmpeg 实现本地视频/音频处理，无需上传文件即可在设备端完成所有操作。
 
-## 功能入口结构（音频 / 视频 Tab）
+## 功能概览
 
-当前首页已按“视频 / 音频”拆分为两个 Tab，方便后续按领域扩展工具列表：
+### 视频工具（已实现）
 
-- **首页 Tab 容器**：`lib/pages/tool_tabs_page.dart`
-- **视频工具入口页**：`lib/pages/video_tools_page.dart`
-- **音频工具入口页**：`lib/pages/audio_tools_page.dart`
-- **App 入口配置**：`lib/main.dart`（非鸿蒙平台时 `home` 指向 `ToolTabsPage`）
+| 功能 | 说明 | 页面文件 |
+|------|------|----------|
+| 合并视频 | 将多个视频文件按顺序合并为一个视频 | `lib/pages/merge_video_page.dart` |
+| 视频截取 | 通过时间轴滑块截取视频片段，支持精确到秒 | `lib/pages/cut_video_page.dart` |
+| 视频压缩 | 降低视频码率/分辨率以减小文件大小 | `lib/pages/compress_video_page.dart` |
+| 视频比例 | 调整视频宽高比（16:9、9:16、1:1 等） | `lib/pages/ratio_video_page.dart` |
+| 视频消音 | 去除视频中的音频轨道 | `lib/pages/mute_video_page.dart` |
+| 视频配音 | 为视频添加外部音频文件 | `lib/pages/dubbing_video_page.dart` |
+| 提取图片 | 按时间范围和帧率从视频中提取图片，可保存到相册 | `lib/pages/extract_image_page.dart` |
+| 视频分割 | 按时间点将视频分割为多个片段，全部保存到相册 | `lib/pages/split_video_page.dart` |
+| 音视频分离 | 将视频的画面和音频分离，同时输出 M4A 和 MP3 格式，支持音频播放预览 | `lib/pages/separate_av_page.dart` |
+| 视频裁剪 | 在视频画面上手势框选裁剪区域，支持四角/四边拖拽、三分法网格 | `lib/pages/crop_video_page.dart` |
+| 格式转换 | 将视频转换为 MP4/MOV/AVI/MKV 等格式 | `lib/pages/convert_format_page.dart` |
 
-后续新增功能时：
+### 音频工具（开发中）
 
-- 视频类入口（按钮/卡片）优先加在 `VideoToolsPage`
-- 音频类入口（按钮/卡片）优先加在 `AudioToolsPage`
-- 具体处理逻辑建议放到 `lib/providers/`（用 `ChangeNotifier` 管理进度/状态），页面只负责触发与展示
+| 功能 | 说明 |
+|------|------|
+| 音频提取 | 从视频中提取音频 |
+| 音频转换 | 转换音频格式 |
+| 音频变速 | 调整音频播放速度 |
+| 音频调节 | 调整音量大小 |
+| 音频合并 | 合并多个音频文件 |
+| 音频截取 | 截取音频片段 |
 
-## 支持平台
+### 其他页面
 
-- **Android**：已配置 `minSdk=24`
-- **iOS**：已配置 `platform :ios, '12.0'`
-- **Web**：保留 Web 入口与 WASM 接入说明（暂不实际集成 `ffmpeg.wasm`）
-- **HarmonyOS（鸿蒙）**：当前为占位提示页（“鸿蒙版正在开发中”），原生能力后续手动接入
+| 页面 | 说明 | 文件 |
+|------|------|------|
+| 首页 Tab 容器 | 视频/音频双 Tab 切换 | `lib/pages/tool_tabs_page.dart` |
+| SDK 信息 | 查看 FFmpeg SDK 信息 | `lib/pages/sdk_list_page.dart` |
+| 设置 | 应用设置 | `lib/pages/settings_page.dart` |
+| 隐私政策 | 隐私政策说明 | `lib/pages/privacy_policy_page.dart` |
 
-说明：本仓库已移除 **Windows** / **macOS** 平台目录。
+## 项目结构
+
+```
+lib/
+├── main.dart                          # 应用入口
+├── pages/
+│   ├── tool_tabs_page.dart            # 首页 Tab 容器
+│   ├── video_tools_page.dart          # 视频工具入口
+│   ├── audio_tools_page.dart          # 音频工具入口
+│   ├── merge_video_page.dart          # 合并视频
+│   ├── cut_video_page.dart            # 视频截取
+│   ├── compress_video_page.dart       # 视频压缩
+│   ├── ratio_video_page.dart          # 视频比例
+│   ├── mute_video_page.dart           # 视频消音
+│   ├── dubbing_video_page.dart        # 视频配音
+│   ├── extract_image_page.dart        # 提取图片
+│   ├── split_video_page.dart          # 视频分割
+│   ├── separate_av_page.dart          # 音视频分离
+│   ├── crop_video_page.dart           # 视频裁剪
+│   ├── convert_format_page.dart       # 格式转换
+│   ├── sdk_list_page.dart             # SDK 信息
+│   ├── settings_page.dart             # 设置
+│   └── privacy_policy_page.dart       # 隐私政策
+├── utils/
+│   ├── top_notify.dart                # 顶部通知（替代 SnackBar）
+│   ├── native_file_helper.dart        # 原生文件操作
+│   ├── temp_dir_helper.dart           # 临时目录管理
+│   ├── permission_helper.dart         # 权限请求封装
+│   ├── gallery_saver_helper.dart      # 相册保存封装
+│   └── video_player_web_helper.dart   # Web 视频播放辅助
+└── platform/
+    ├── os.dart                        # 平台检测（条件导出）
+    ├── os_io.dart                     # 原生平台检测
+    └── os_stub.dart                   # Web 平台桩
+```
+
+## 技术特性
+
+- **本地处理**：所有视频/音频处理均通过 FFmpeg 在设备本地完成，无需上传到服务器
+- **顶部通知**：使用 Overlay 实现顶部通知提示，避免底部 SnackBar 遮挡操作按钮
+- **视频预览**：选择视频后自动播放预览，带进度条和播放控制
+- **手势裁剪**：视频裁剪支持在画面上直接框选，四角/四边拖拽，三分法网格辅助
+- **FFmpeg 容错**：关键操作均有 fallback 策略（copy 模式失败自动降级为转码模式）
+- **条件导入**：Web/原生平台通过条件导入隔离 `dart:io`，确保 Web 构建正常
 
 ## 依赖
 
-当前已加入（`pubspec.yaml`）：
+| 包名 | 用途 |
+|------|------|
+| `video_player` | 视频播放预览 |
+| `file_picker` | 文件选择 |
+| `ffmpeg_kit_flutter_new` | FFmpeg 视频处理 |
+| `audioplayers` | 音频播放预览 |
+| `image_gallery_saver_plus` | 保存到系统相册 |
+| `permission_handler` | 运行时权限管理 |
+| `path_provider` | 目录路径获取 |
+| `provider` | 状态管理 |
 
-- `provider`
-- `path_provider`
+## 支持平台
+
+| 平台 | 状态 | 说明 |
+|------|------|------|
+| Android | ✅ 已支持 | minSdk=24, Java 17 |
+| iOS | ✅ 已支持 | platform :ios, '12.0' |
+| Web | ⚠️ 预留 | 保留入口，FFmpeg WASM 未集成 |
+| HarmonyOS | ⚠️ 占位 | 显示"鸿蒙版正在开发中" |
 
 ## 快速开始
 
-在项目根目录执行：
-
 ```bash
+# 安装依赖
 flutter pub get
-flutter run
+
+# Android 运行
+flutter run -d android
+
+# iOS 运行（需先安装 Pods）
+cd ios && pod install && cd ..
+flutter run -d ios
+
+# Web 运行
+flutter run -d chrome
 ```
 
-## 平台配置要点（已落实到代码）
+## Android 配置
 
-### Android
+- **minSdk**: 24
+- **targetSdk**: 跟随 Flutter 默认
+- **NDK**: 27.0.12077973
+- **Java**: 17
+- **Kotlin**: 2.0.21
 
-文件：`android/app/build.gradle`
+## iOS 配置
 
-- **minSdkVersion**：已改为 `24`
-
-### iOS
-
-文件：`ios/Podfile`
-
-- **平台版本**：已确保为 `platform :ios, '12.0'`
-
-安装 Pods（建议 UTF-8 终端）：
+- **平台版本**: 12.0
+- 安装 Pods:
 
 ```bash
 cd ios
 LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 pod install
 ```
-
-### HarmonyOS（鸿蒙）
-
-当前策略：由于 `ffmpeg_kit_flutter` 尚未官方支持鸿蒙，Flutter 层先做占位提示，避免用户误以为功能可用。
-
-- **占位入口**：`lib/main.dart`（检测到 `ohos/harmonyos` 时展示“鸿蒙版正在开发中”）
-- **平台检测封装**：`lib/platform/os.dart`（使用条件导出，确保 Web 构建不直接引入 `dart:io`）
-
-### Web（WASM 预留）
-
-- **说明注释**：`web/index.html` 中已添加 `ffmpeg.wasm` 的预留说明（仅注释，不做实际集成）
-
-后续如需接入 FFmpeg WASM，通常做法是将 `ffmpeg.wasm` 与对应 JS glue/worker 放到 `web/` 静态资源或通过 `assets` 暴露，然后在 Web 侧用 JS/interop 加载。
-
-## 已知问题（与你当前 Flutter SDK 相关）
-
-你当前使用的 Flutter SDK 为 OHOS fork（`Flutter 3.27.5-ohos-1.0.4`）。在该 SDK 下我本机验证时出现：
-
-- **`flutter build web --wasm`**：触发 SDK/引擎侧报错（`cpuinfo_macos.cc: unreachable code`）
-- **`pod install`**：在 post_install 阶段提示 iOS 引擎产物缺失（需要 `Flutter.xcframework`）。尝试 `flutter precache --ios` 同样会触发上述 SDK 侧报错
-
-因此：**README 中提供了命令与配置，但 iOS pods / Web WASM 的“实际跑通”需要你后续在可用的 SDK/环境下完成验证。**
-
-## 常用命令
-
-```bash
-# Android 运行
-flutter run -d android
-
-# iOS 运行（需先 pod install）
-flutter run -d ios
-
-# Web（非 WASM）
-flutter run -d chrome
-```
-# flutter-video

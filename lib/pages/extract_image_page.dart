@@ -41,7 +41,7 @@ class _ExtractImagePageState extends State<ExtractImagePage> {
 
   static const _bg = LinearGradient(
     begin: Alignment.topCenter, end: Alignment.bottomCenter,
-    colors: [Color(0xFF4ECDC4), Color(0xFF36B3A8), Color(0xFFE0F7FA)],
+    colors: [Color(0xFF1B5E20), Color(0xFF388E3C), Color(0xFFE8F5E9)],
   );
 
   @override
@@ -184,7 +184,7 @@ class _ExtractImagePageState extends State<ExtractImagePage> {
       child: _controller!=null&&_controller!.value.isInitialized ? ClipRRect(borderRadius:BorderRadius.circular(16), child: AspectRatio(aspectRatio:_controller!.value.aspectRatio, child: VideoPlayer(_controller!))) : const Center(child: CircularProgressIndicator(color:Colors.white))),
     const SizedBox(height:16),
     Container(padding: const EdgeInsets.all(16), decoration: BoxDecoration(color:Colors.white, borderRadius:BorderRadius.circular(16)), child: Column(crossAxisAlignment:CrossAxisAlignment.start, children: [
-      Row(children: [const Icon(Icons.timer,color:Colors.teal), const SizedBox(width:8), Text('视频时长: ${_fmt(_duration)}', style: const TextStyle(fontWeight:FontWeight.w600))]),
+      Row(children: [const Icon(Icons.timer,color:Colors.teal), const SizedBox(width:8), Expanded(child: Text('视频时长: ${_fmt(_duration)}', style: const TextStyle(fontWeight:FontWeight.w600), overflow: TextOverflow.ellipsis))]),
       const SizedBox(height:12),
       // 时间范围选择
       _buildTimeSlider('开始时间', _startTime, Colors.green, (v) {
@@ -207,15 +207,15 @@ class _ExtractImagePageState extends State<ExtractImagePage> {
         });
       }),
       const SizedBox(height:8),
-      Text('提取范围: ${_fmt(_startTime)} - ${_fmt(_endTime)}  (共 ${_fmt(_endTime - _startTime)})', style: TextStyle(color:Colors.teal.shade700, fontWeight:FontWeight.w600)),
+      Text('提取范围: ${_fmt(_startTime)} - ${_fmt(_endTime)}  (共 ${_fmt(_endTime - _startTime)})', style: TextStyle(color:Colors.teal.shade700, fontWeight:FontWeight.w600), overflow: TextOverflow.ellipsis),
       const SizedBox(height:12),
-      Text('提取频率: ${_fps.toStringAsFixed(_fps==_fps.roundToDouble()?0:1)} 帧/秒', style: const TextStyle(fontWeight:FontWeight.w600)),
+      Text('提取频率: ${_fps.toStringAsFixed(_fps==_fps.roundToDouble()?0:1)} 帧/秒', style: const TextStyle(fontWeight:FontWeight.w600), overflow: TextOverflow.ellipsis),
       Slider(value: _fps, min:0.5, max:30, divisions:59, label: _fps.toStringAsFixed(1), onChanged: (v)=>setState(()=>_fps=v)),
-      Text('预计提取约 ${((_endTime - _startTime).inSeconds * _fps).round()} 张图片', style: TextStyle(fontSize:13,color:Colors.grey.shade600)),
+      Text('预计提取约 ${((_endTime - _startTime).inSeconds * _fps).round()} 张图片', style: TextStyle(fontSize:13,color:Colors.grey.shade600), overflow: TextOverflow.ellipsis),
     ])),
     const SizedBox(height:20),
     if (_extractedImages.isEmpty) SizedBox(width:double.infinity,height:52, child: ElevatedButton(onPressed: _isProcessing?null:_extract,
-      style: ElevatedButton.styleFrom(backgroundColor:Colors.teal,foregroundColor:Colors.white,shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(26)),elevation:0),
+      style: ElevatedButton.styleFrom(backgroundColor:const Color(0xFF2E7D32),foregroundColor:Colors.white,shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(26)),elevation:0),
       child: _isProcessing ? const Row(mainAxisAlignment:MainAxisAlignment.center,children:[SizedBox(width:24,height:24,child:CircularProgressIndicator(color:Colors.white,strokeWidth:2.5)),SizedBox(width:12),Text('提取中...',style:TextStyle(fontSize:16,fontWeight:FontWeight.w600))]) : const Text('开始提取',style:TextStyle(fontSize:17,fontWeight:FontWeight.w600)),
     )) else Column(crossAxisAlignment:CrossAxisAlignment.start, children: [
       Text('已提取 ${_extractedImages.length} 张图片', style: const TextStyle(fontWeight:FontWeight.w600,fontSize:16)),
@@ -225,7 +225,7 @@ class _ExtractImagePageState extends State<ExtractImagePage> {
       )),
       if (_extractedImages.length > 30) Padding(padding: const EdgeInsets.only(top:8), child: Text('仅显示前30张，共 ${_extractedImages.length} 张', style: TextStyle(color:Colors.grey.shade600,fontSize:12))),
       const SizedBox(height:12),
-      SizedBox(width:double.infinity, child: ElevatedButton(onPressed: _saveAllToGallery, style: ElevatedButton.styleFrom(backgroundColor:Colors.green,foregroundColor:Colors.white,padding:const EdgeInsets.symmetric(vertical:14),shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(12))), child: Row(mainAxisAlignment:MainAxisAlignment.center,children:[const Icon(Icons.download),const SizedBox(width:8),Flexible(child: Text('保存全部 ${_extractedImages.length} 张到相册',overflow:TextOverflow.ellipsis))]))),
+      SizedBox(width:double.infinity, child: ElevatedButton(onPressed: _saveAllToGallery, style: ElevatedButton.styleFrom(backgroundColor:const Color(0xFF2E7D32),foregroundColor:Colors.white,padding:const EdgeInsets.symmetric(vertical:14),shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(12))), child: Row(mainAxisAlignment:MainAxisAlignment.center,children:[const Icon(Icons.download),const SizedBox(width:8),Flexible(child: Text('保存全部 ${_extractedImages.length} 张',overflow:TextOverflow.ellipsis))]))),
     ]),
     const SizedBox(height:12),
     TextButton.icon(onPressed: _pickVideo, icon: const Icon(Icons.swap_horiz,color:Colors.white70), label: const Text('更换视频',style:TextStyle(color:Colors.white70))),
@@ -235,7 +235,7 @@ class _ExtractImagePageState extends State<ExtractImagePage> {
     final maxMs = _duration.inMilliseconds > 0 ? _duration.inMilliseconds.toDouble() : 1.0;
     final valMs = value.inMilliseconds.toDouble().clamp(0.0, maxMs);
     return Column(children: [
-      Row(children: [Icon(Icons.access_time, size:16, color:color), const SizedBox(width:4), Text(label, style: TextStyle(fontSize:13,color:Colors.grey.shade600)), const Spacer(), Text(_fmt(value), style: TextStyle(fontSize:13,fontWeight:FontWeight.w600,color:Colors.grey.shade800))]),
+      Row(children: [Icon(Icons.access_time, size:16, color:color), const SizedBox(width:4), Expanded(child: Text(label, style: TextStyle(fontSize:13,color:Colors.grey.shade600), overflow: TextOverflow.ellipsis)), Text(_fmt(value), style: TextStyle(fontSize:13,fontWeight:FontWeight.w600,color:Colors.grey.shade800), overflow: TextOverflow.ellipsis)]),
       SliderTheme(data: SliderThemeData(activeTrackColor: color, inactiveTrackColor: color.withValues(alpha:0.2)), child: Slider(value: valMs, min:0, max:maxMs, onChanged: onChanged)),
     ]);
   }

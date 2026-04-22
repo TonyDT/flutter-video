@@ -38,7 +38,7 @@ class _ConvertFormatPageState extends State<ConvertFormatPage> {
   static const _formats = ['mp4', 'avi', 'mov', 'mkv', 'webm', 'flv', 'wmv', '3gp'];
   static const _bg = LinearGradient(
     begin: Alignment.topCenter, end: Alignment.bottomCenter,
-    colors: [Color(0xFF667EEA), Color(0xFF5A67D8), Color(0xFFE8EAF6)],
+    colors: [Color(0xFF33691E), Color(0xFF558B2F), Color(0xFFF1F8E9)],
   );
 
   @override
@@ -93,7 +93,7 @@ class _ConvertFormatPageState extends State<ConvertFormatPage> {
     final ok = await PermissionHelper.requestPhotos();
     if (ok != true) { _showError('需要相册权限'); return; }
     final result = await GallerySaverHelper.saveFile(_resultPath!);
-    if (result == true) _showSuccess('已保存到相册'); else _showError('保存失败');
+    if (result == true) { _showSuccess('已保存到相册'); } else { _showError('保存失败'); }
   }
 
   void _showError(String m) { if (mounted) TopNotify.error(context, m); }
@@ -131,12 +131,12 @@ class _ConvertFormatPageState extends State<ConvertFormatPage> {
     ])),
     const SizedBox(height:20),
     if (_resultPath == null) SizedBox(width:double.infinity,height:52, child: ElevatedButton(onPressed: _isProcessing?null:_convert,
-      style: ElevatedButton.styleFrom(backgroundColor:Colors.indigo,foregroundColor:Colors.white,shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(26)),elevation:0),
-      child: _isProcessing ? const Row(mainAxisAlignment:MainAxisAlignment.center,children:[SizedBox(width:24,height:24,child:CircularProgressIndicator(color:Colors.white,strokeWidth:2.5)),SizedBox(width:12),Text('转换中...',style:TextStyle(fontSize:16,fontWeight:FontWeight.w600))]) : Text('转换为 ${_targetFormat.toUpperCase()}',style:const TextStyle(fontSize:17,fontWeight:FontWeight.w600)),
+      style: ElevatedButton.styleFrom(backgroundColor:const Color(0xFF33691E),foregroundColor:Colors.white,shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(26)),elevation:0),
+      child: _isProcessing ? const Row(mainAxisAlignment:MainAxisAlignment.center,children:[SizedBox(width:24,height:24,child:CircularProgressIndicator(color:Colors.white,strokeWidth:2.5)),SizedBox(width:12),Text('转换中...',style:TextStyle(fontSize:16,fontWeight:FontWeight.w600))]) : Text('转换为 ${_targetFormat.toUpperCase()}',style:const TextStyle(fontSize:17,fontWeight:FontWeight.w600), overflow: TextOverflow.ellipsis),
     )) else Row(children: [
-      Expanded(child: ElevatedButton(onPressed:_saveToGallery, style:ElevatedButton.styleFrom(backgroundColor:Colors.green,foregroundColor:Colors.white,padding:const EdgeInsets.symmetric(vertical:14),shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(12))), child: Row(mainAxisAlignment:MainAxisAlignment.center,children:[const Icon(Icons.download),const SizedBox(width:8),Flexible(child: Text('保存到相册',overflow:TextOverflow.ellipsis))]))),
+      Expanded(child: ElevatedButton(onPressed:_saveToGallery, style:ElevatedButton.styleFrom(backgroundColor:const Color(0xFF2E7D32),foregroundColor:Colors.white,padding:const EdgeInsets.symmetric(vertical:14),shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(12))), child: Row(mainAxisAlignment:MainAxisAlignment.center,children:[const Icon(Icons.download),const SizedBox(width:8),Flexible(child: Text('保存到相册',overflow:TextOverflow.ellipsis))]))),
       const SizedBox(width:12),
-      Expanded(child: ElevatedButton(onPressed:(){ _controller?.dispose(); setState((){_resultPath=null;_controller=null;}); _pickVideo(); }, style:ElevatedButton.styleFrom(backgroundColor:Colors.indigo,foregroundColor:Colors.white,padding:const EdgeInsets.symmetric(vertical:14),shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(12))), child: Row(mainAxisAlignment:MainAxisAlignment.center,children:[const Icon(Icons.refresh),const SizedBox(width:8),Flexible(child: Text('重新选择',overflow:TextOverflow.ellipsis))]))),
+      Expanded(child: ElevatedButton(onPressed:(){ _controller?.dispose(); setState((){_resultPath=null;_controller=null;}); _pickVideo(); }, style:ElevatedButton.styleFrom(backgroundColor:const Color(0xFF33691E),foregroundColor:Colors.white,padding:const EdgeInsets.symmetric(vertical:14),shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(12))), child: Row(mainAxisAlignment:MainAxisAlignment.center,children:[const Icon(Icons.refresh),const SizedBox(width:8),Flexible(child: Text('重新选择',overflow:TextOverflow.ellipsis))]))),
     ]),
   ]));
 }

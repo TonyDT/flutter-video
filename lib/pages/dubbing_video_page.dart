@@ -40,7 +40,7 @@ class _DubbingVideoPageState extends State<DubbingVideoPage> {
 
   static const _bg = LinearGradient(
     begin: Alignment.topCenter, end: Alignment.bottomCenter,
-    colors: [Color(0xFFFF7EB3), Color(0xFFFF5C8A), Color(0xFFFCE4EC)],
+    colors: [Color(0xFF558B2F), Color(0xFF7CB342), Color(0xFFF1F8E9)],
   );
 
   @override
@@ -97,9 +97,12 @@ class _DubbingVideoPageState extends State<DubbingVideoPage> {
         _resultPath = output;
         _showSuccess('配音成功！');
         _controller?.dispose();
-        _controller = VideoPlayerController.file(NativeFileHelper.getFile(output))
-          ..initialize().then((_) { setState(() {}); _controller!.play(); });
+        final newCtrl = VideoPlayerController.file(NativeFileHelper.getFile(output));
+        _controller = newCtrl;
+        await newCtrl.initialize();
+        if (!mounted) { newCtrl.dispose(); return; }
         setState(() {});
+        await newCtrl.play();
       } else { _showError('配音失败'); }
     } catch (e) { _showError('配音出错: $e'); }
     setState(() => _isProcessing = false);
@@ -110,7 +113,7 @@ class _DubbingVideoPageState extends State<DubbingVideoPage> {
     final ok = await PermissionHelper.requestPhotos();
     if (ok != true) { _showError('需要相册权限'); return; }
     final result = await GallerySaverHelper.saveFile(_resultPath!);
-    if (result == true) _showSuccess('已保存到相册'); else _showError('保存失败');
+    if (result == true) { _showSuccess('已保存到相册'); } else { _showError('保存失败'); }
   }
 
   void _showError(String m) { if (mounted) TopNotify.error(context, m); }
@@ -132,18 +135,18 @@ class _DubbingVideoPageState extends State<DubbingVideoPage> {
   Widget _buildWorkArea() => SingleChildScrollView(padding: const EdgeInsets.all(16), child: Column(children: [
     // 视频选择卡片
     Container(padding: const EdgeInsets.all(16), decoration: BoxDecoration(color:Colors.white, borderRadius:BorderRadius.circular(16)), child: Column(crossAxisAlignment:CrossAxisAlignment.start, children: [
-      Row(children: [const Icon(Icons.videocam,color:Colors.pink), const SizedBox(width:8), Text(_videoPath==null?'选择视频':_videoName??'已选择视频', style: TextStyle(fontWeight:FontWeight.w600,color:_videoPath==null?Colors.grey:Colors.black))]),
+      Row(children: [const Icon(Icons.videocam,color:Color(0xFF2E7D32)), const SizedBox(width:8), Expanded(child: Text(_videoPath==null?'选择视频':_videoName??'已选择视频', style: TextStyle(fontWeight:FontWeight.w600,color:_videoPath==null?Colors.grey:Colors.black), overflow: TextOverflow.ellipsis))]),
       if (_videoPath != null && _controller != null && _controller!.value.isInitialized) Container(height:150,margin:const EdgeInsets.only(top:12), decoration:BoxDecoration(color:Colors.black87,borderRadius:BorderRadius.circular(12)), child: ClipRRect(borderRadius:BorderRadius.circular(12), child: AspectRatio(aspectRatio:_controller!.value.aspectRatio, child: VideoPlayer(_controller!))),
       ),
       const SizedBox(height:8),
-      SizedBox(width:double.infinity, child: OutlinedButton.icon(onPressed: _pickVideo, icon: const Icon(Icons.video_call), label: Text(_videoPath==null?'选择视频':'更换视频'))),
+      SizedBox(width:double.infinity, child: OutlinedButton.icon(onPressed: _pickVideo, icon: const Icon(Icons.video_call), label: Flexible(child: Text(_videoPath==null?'选择视频':'更换视频', overflow: TextOverflow.ellipsis)))),
     ])),
     const SizedBox(height:12),
     // 音频选择卡片
     Container(padding: const EdgeInsets.all(16), decoration: BoxDecoration(color:Colors.white, borderRadius:BorderRadius.circular(16)), child: Column(crossAxisAlignment:CrossAxisAlignment.start, children: [
-      Row(children: [const Icon(Icons.audiotrack,color:Colors.pink), const SizedBox(width:8), Text(_audioPath==null?'选择音频':_audioName??'已选择音频', style: TextStyle(fontWeight:FontWeight.w600,color:_audioPath==null?Colors.grey:Colors.black))]),
+      Row(children: [const Icon(Icons.audiotrack,color:Color(0xFF2E7D32)), const SizedBox(width:8), Expanded(child: Text(_audioPath==null?'选择音频':_audioName??'已选择音频', style: TextStyle(fontWeight:FontWeight.w600,color:_audioPath==null?Colors.grey:Colors.black), overflow: TextOverflow.ellipsis))]),
       const SizedBox(height:8),
-      SizedBox(width:double.infinity, child: OutlinedButton.icon(onPressed: _pickAudio, icon: const Icon(Icons.audio_file), label: Text(_audioPath==null?'选择音频':'更换音频'))),
+      SizedBox(width:double.infinity, child: OutlinedButton.icon(onPressed: _pickAudio, icon: const Icon(Icons.audio_file), label: Flexible(child: Text(_audioPath==null?'选择音频':'更换音频', overflow: TextOverflow.ellipsis)))),
     ])),
     const SizedBox(height:12),
     // 模式选择
@@ -154,12 +157,12 @@ class _DubbingVideoPageState extends State<DubbingVideoPage> {
     ])),
     const SizedBox(height:20),
     if (_resultPath == null) SizedBox(width:double.infinity,height:52, child: ElevatedButton(onPressed: (_videoPath!=null&&_audioPath!=null&&!_isProcessing) ? _dubbing : null,
-      style: ElevatedButton.styleFrom(backgroundColor:Colors.pink,foregroundColor:Colors.white,shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(26)),elevation:0),
+      style: ElevatedButton.styleFrom(backgroundColor:const Color(0xFF558B2F),foregroundColor:Colors.white,shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(26)),elevation:0),
       child: _isProcessing ? const Row(mainAxisAlignment:MainAxisAlignment.center,children:[SizedBox(width:24,height:24,child:CircularProgressIndicator(color:Colors.white,strokeWidth:2.5)),SizedBox(width:12),Text('配音中...',style:TextStyle(fontSize:16,fontWeight:FontWeight.w600))]) : const Text('开始配音',style:TextStyle(fontSize:17,fontWeight:FontWeight.w600)),
     )) else Row(children: [
-      Expanded(child: ElevatedButton(onPressed:_saveToGallery, style:ElevatedButton.styleFrom(backgroundColor:Colors.green,foregroundColor:Colors.white,padding:const EdgeInsets.symmetric(vertical:14),shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(12))), child: Row(mainAxisAlignment:MainAxisAlignment.center,children:[const Icon(Icons.download),const SizedBox(width:8),Flexible(child: Text('保存到相册',overflow:TextOverflow.ellipsis))]))),
+      Expanded(child: ElevatedButton(onPressed:_saveToGallery, style:ElevatedButton.styleFrom(backgroundColor:const Color(0xFF2E7D32),foregroundColor:Colors.white,padding:const EdgeInsets.symmetric(vertical:14),shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(12))), child: Row(mainAxisAlignment:MainAxisAlignment.center,children:[const Icon(Icons.download),const SizedBox(width:8),Flexible(child: Text('保存到相册',overflow:TextOverflow.ellipsis))]))),
       const SizedBox(width:12),
-      Expanded(child: ElevatedButton(onPressed:(){ _controller?.dispose(); setState((){_resultPath=null;_controller=null;}); }, style:ElevatedButton.styleFrom(backgroundColor:Colors.pink,foregroundColor:Colors.white,padding:const EdgeInsets.symmetric(vertical:14),shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(12))), child: Row(mainAxisAlignment:MainAxisAlignment.center,children:[const Icon(Icons.refresh),const SizedBox(width:8),Flexible(child: Text('重新来过',overflow:TextOverflow.ellipsis))]))),
+      Expanded(child: ElevatedButton(onPressed:(){ _controller?.dispose(); setState((){_resultPath=null;_controller=null;}); }, style:ElevatedButton.styleFrom(backgroundColor:const Color(0xFF558B2F),foregroundColor:Colors.white,padding:const EdgeInsets.symmetric(vertical:14),shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(12))), child: Row(mainAxisAlignment:MainAxisAlignment.center,children:[const Icon(Icons.refresh),const SizedBox(width:8),Flexible(child: Text('重新来过',overflow:TextOverflow.ellipsis))]))),
     ]),
   ]));
 }

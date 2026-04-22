@@ -62,7 +62,7 @@ class _MergeVideoPageState extends State<MergeVideoPage> {
   static const LinearGradient _backgroundGradient = LinearGradient(
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
-    colors: [Color(0xFF1A237E), Color(0xFF3949AB), Color(0xFFE8EAF6)],
+    colors: [Color(0xFF0D3B2E), Color(0xFF1B6B4F), Color(0xFFE8F5E9)],
   );
 
   @override
@@ -380,7 +380,7 @@ class _MergeVideoPageState extends State<MergeVideoPage> {
       final ss2 = (_start2.inMilliseconds / 1000.0).toStringAsFixed(3);
       final to2 = (_end2.inMilliseconds / 1000.0).toStringAsFixed(3);
       // 如果获取到了视频1的分辨率，视频2缩放到相同尺寸（确保偶数对齐）
-      final scaleFilter = resolution != null
+      final scaleFilter = resolution != null && resolution.contains('x')
           ? 'scale=trunc(${resolution.split('x')[0]}/2)*2:trunc(${resolution.split('x')[1]}/2)*2'
           : 'scale=trunc(iw/2)*2:trunc(ih/2)*2';
       final clip2Args = [
@@ -427,7 +427,10 @@ class _MergeVideoPageState extends State<MergeVideoPage> {
       final session3 = await FFmpegKit.execute(mergeArgs.join(' '));
       final rc3 = await session3.getReturnCode();
 
-      if (!mounted) return;
+      if (!mounted) {
+        setState(() => _isMerging = false);
+        return;
+      }
 
       if (ReturnCode.isSuccess(rc3)) {
         _mergedVideoPath = outputPath;
@@ -456,10 +459,12 @@ class _MergeVideoPageState extends State<MergeVideoPage> {
     try {
       _previewController?.dispose();
       final file = NativeFileHelper.getFile(path);
-      _previewController = VideoPlayerController.file(file);
-      await _previewController!.initialize();
-      await _previewController!.setLooping(true);
-      await _previewController!.play();
+      final ctrl = VideoPlayerController.file(file);
+      await ctrl.initialize();
+      if (!mounted) { ctrl.dispose(); return; }
+      _previewController = ctrl;
+      await ctrl.setLooping(true);
+      await ctrl.play();
       _previewTarget = -1;
       if (mounted) setState(() {});
     } catch (e) {
@@ -580,12 +585,14 @@ class _MergeVideoPageState extends State<MergeVideoPage> {
             ),
             child: const Row(
               children: [
-                Icon(Icons.video_library, color: Colors.orange, size: 24),
+                Icon(Icons.video_library, color: Color(0xFF2E7D32), size: 24),
                 SizedBox(width: 12),
                 Expanded(
                   child: Text(
                     '选择两个视频进行合并',
                     style: TextStyle(color: Colors.white, fontSize: 14),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
               ],
@@ -633,12 +640,12 @@ class _MergeVideoPageState extends State<MergeVideoPage> {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: Colors.blue.shade50,
+                color: const Color(0xFF2E7D32).withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
               child: _isLoadingVideo
-                  ? SizedBox(width: 28, height: 28, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.blue.shade400))
-                  : Icon(Icons.video_call, size: 28, color: Colors.blue.shade400),
+                  ? SizedBox(width: 28, height: 28, child: CircularProgressIndicator(strokeWidth: 2, color: const Color(0xFF2E7D32)))
+                  : Icon(Icons.video_call, size: 28, color: const Color(0xFF2E7D32)),
             ),
             const SizedBox(width: 16),
             Expanded(
@@ -734,8 +741,8 @@ class _MergeVideoPageState extends State<MergeVideoPage> {
                 children: [
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                    decoration: BoxDecoration(color: Colors.blue.shade50, borderRadius: BorderRadius.circular(12)),
-                    child: Text('视频 1', style: TextStyle(color: Colors.blue.shade700, fontWeight: FontWeight.w600, fontSize: 13)),
+                    decoration: BoxDecoration(color: const Color(0xFF2E7D32).withValues(alpha: 0.1), borderRadius: BorderRadius.circular(12)),
+                    child: Text('视频 1', style: const TextStyle(color: Color(0xFF2E7D32), fontWeight: FontWeight.w600, fontSize: 13)),
                   ),
                   const Spacer(),
                   TextButton.icon(
@@ -796,12 +803,12 @@ class _MergeVideoPageState extends State<MergeVideoPage> {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: Colors.orange.shade50,
+                color: const Color(0xFF43A047).withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
               child: _isLoadingVideo
-                  ? SizedBox(width: 28, height: 28, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.orange.shade400))
-                  : Icon(Icons.video_call, size: 28, color: Colors.orange.shade400),
+                  ? SizedBox(width: 28, height: 28, child: CircularProgressIndicator(strokeWidth: 2, color: const Color(0xFF43A047)))
+                  : Icon(Icons.video_call, size: 28, color: const Color(0xFF43A047)),
             ),
             const SizedBox(width: 16),
             Expanded(
@@ -897,8 +904,8 @@ class _MergeVideoPageState extends State<MergeVideoPage> {
                 children: [
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                    decoration: BoxDecoration(color: Colors.orange.shade50, borderRadius: BorderRadius.circular(12)),
-                    child: Text('视频 2', style: TextStyle(color: Colors.orange.shade700, fontWeight: FontWeight.w600, fontSize: 13)),
+                    decoration: BoxDecoration(color: const Color(0xFF43A047).withValues(alpha: 0.1), borderRadius: BorderRadius.circular(12)),
+                    child: Text('视频 2', style: const TextStyle(color: Color(0xFF43A047), fontWeight: FontWeight.w600, fontSize: 13)),
                   ),
                   const Spacer(),
                   TextButton.icon(
@@ -938,9 +945,8 @@ class _MergeVideoPageState extends State<MergeVideoPage> {
           children: [
             Icon(label == '开始' ? Icons.play_arrow : Icons.stop, size: 16, color: color),
             const SizedBox(width: 4),
-            Text(label, style: TextStyle(fontSize: 12, color: Colors.grey.shade600)),
-            const Spacer(),
-            Text(_formatDuration(value), style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Colors.grey.shade800)),
+            Expanded(child: Text(label, style: TextStyle(fontSize: 12, color: Colors.grey.shade600), overflow: TextOverflow.ellipsis)),
+            Text(_formatDuration(value), style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Colors.grey.shade800), overflow: TextOverflow.ellipsis),
           ],
         ),
         SliderTheme(
@@ -964,7 +970,7 @@ class _MergeVideoPageState extends State<MergeVideoPage> {
         borderRadius: BorderRadius.circular(28),
         boxShadow: [
           BoxShadow(
-            color: Colors.orange.withValues(alpha: canMerge ? 0.4 : 0.2),
+            color: const Color(0xFF2E7D32).withValues(alpha: canMerge ? 0.4 : 0.2),
             blurRadius: 12,
             offset: const Offset(0, 6),
           ),
@@ -976,7 +982,7 @@ class _MergeVideoPageState extends State<MergeVideoPage> {
         child: ElevatedButton(
           onPressed: canMerge ? _mergeVideos : null,
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.orange,
+            backgroundColor: const Color(0xFF2E7D32),
             foregroundColor: Colors.white,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
             elevation: 0,
@@ -1057,7 +1063,7 @@ class _MergeVideoPageState extends State<MergeVideoPage> {
                 child: ElevatedButton(
                   onPressed: _saveToGallery,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
+                    backgroundColor: const Color(0xFF2E7D32),
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
@@ -1069,7 +1075,7 @@ class _MergeVideoPageState extends State<MergeVideoPage> {
                     children: <Widget>[
                       Icon(Icons.download),
                       SizedBox(width: 8),
-                      Text('保存到相册'),
+                      Flexible(child: Text('保存到相册', overflow: TextOverflow.ellipsis)),
                     ],
                   ),
                 ),
@@ -1079,7 +1085,7 @@ class _MergeVideoPageState extends State<MergeVideoPage> {
                 child: ElevatedButton(
                   onPressed: _reset,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.orange,
+                    backgroundColor: const Color(0xFF2E7D32),
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
@@ -1091,7 +1097,7 @@ class _MergeVideoPageState extends State<MergeVideoPage> {
                     children: <Widget>[
                       Icon(Icons.refresh),
                       SizedBox(width: 8),
-                      Text('重新合并'),
+                      Flexible(child: Text('重新合并', overflow: TextOverflow.ellipsis)),
                     ],
                   ),
                 ),

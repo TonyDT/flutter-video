@@ -38,7 +38,7 @@ class _SplitVideoPageState extends State<SplitVideoPage> {
 
   static const _bg = LinearGradient(
     begin: Alignment.topCenter, end: Alignment.bottomCenter,
-    colors: [Color(0xFF5B9FFF), Color(0xFF3D7EFF), Color(0xFFE3F2FD)],
+    colors: [Color(0xFF33691E), Color(0xFF689F38), Color(0xFFF1F8E9)],
   );
 
   @override
@@ -173,17 +173,17 @@ class _SplitVideoPageState extends State<SplitVideoPage> {
       child: _controller!=null&&_controller!.value.isInitialized ? ClipRRect(borderRadius:BorderRadius.circular(16), child: AspectRatio(aspectRatio:_controller!.value.aspectRatio, child: VideoPlayer(_controller!))) : const Center(child: CircularProgressIndicator(color:Colors.white))),
     const SizedBox(height:16),
     Container(padding: const EdgeInsets.all(16), decoration: BoxDecoration(color:Colors.white, borderRadius:BorderRadius.circular(16)), child: Column(crossAxisAlignment:CrossAxisAlignment.start, children: [
-      Row(children: [const Icon(Icons.timer,color:Colors.blue), const SizedBox(width:8), Text('视频时长: ${_fmt(_duration)}', style: const TextStyle(fontWeight:FontWeight.w600))]),
+      Row(children: [const Icon(Icons.timer,color:Colors.blue), const SizedBox(width:8), Expanded(child: Text('视频时长: ${_fmt(_duration)}', style: const TextStyle(fontWeight:FontWeight.w600), overflow: TextOverflow.ellipsis))]),
       const SizedBox(height:12),
       // 分割点列表
       Row(children: [
         const Text('分割点:', style: TextStyle(fontWeight:FontWeight.w600,fontSize:15)),
         const Spacer(),
-        ElevatedButton.icon(onPressed: _addSplitPoint, icon: const Icon(Icons.add, size:18), label: const Text('添加分割点'), style: ElevatedButton.styleFrom(backgroundColor:Colors.blue,foregroundColor:Colors.white,padding:const EdgeInsets.symmetric(horizontal:12,vertical:6),textStyle:const TextStyle(fontSize:13))),
+        ElevatedButton.icon(onPressed: _addSplitPoint, icon: const Icon(Icons.add, size:18), label: const Text('添加', style: TextStyle(fontSize:13)), style: ElevatedButton.styleFrom(backgroundColor:const Color(0xFF33691E),foregroundColor:Colors.white,padding:const EdgeInsets.symmetric(horizontal:10,vertical:6))),
       ]),
       const SizedBox(height:8),
       if (_splitPoints.isEmpty)
-        Padding(padding: const EdgeInsets.symmetric(vertical:8), child: Text('暂无分割点，点击"添加分割点"', style: TextStyle(color:Colors.grey.shade500,fontSize:13)))
+        Padding(padding: const EdgeInsets.symmetric(vertical:8), child: Text('暂无分割点，点击添加', style: TextStyle(color:Colors.grey.shade500,fontSize:13)))
       else
         ...List.generate(_splitPoints.length, (i) {
           return Padding(padding: const EdgeInsets.only(bottom:8), child: Column(children: [
@@ -213,26 +213,26 @@ class _SplitVideoPageState extends State<SplitVideoPage> {
         const SizedBox(height:8),
         const Divider(),
         const SizedBox(height:4),
-        Text('分割后将产生 ${_splitPoints.length + 1} 段视频:', style: TextStyle(fontSize:13,color:Colors.grey.shade600)),
+        Text('分割后将产生 ${_splitPoints.length + 1} 段:', style: TextStyle(fontSize:13,color:Colors.grey.shade600), overflow: TextOverflow.ellipsis),
         const SizedBox(height:4),
         ...List.generate(_getAllPoints().length - 1, (i) {
           final pts = _getAllPoints();
           return Padding(padding: const EdgeInsets.only(bottom:2), child: Row(children: [
             Icon(Icons.play_circle_outline, size:14, color:Colors.green.shade600),
             const SizedBox(width:4),
-            Text('片段 ${i+1}: ${_fmt(pts[i])} - ${_fmt(pts[i+1])}  (${_fmt(pts[i+1] - pts[i])})', style: const TextStyle(fontSize:12)),
+            Text('片段 ${i+1}: ${_fmt(pts[i])}-${_fmt(pts[i+1])} (${_fmt(pts[i+1] - pts[i])})', style: const TextStyle(fontSize:12), overflow: TextOverflow.ellipsis),
           ]));
         }),
       ],
     ])),
     const SizedBox(height:20),
     if (_resultPaths.isEmpty) SizedBox(width:double.infinity,height:52, child: ElevatedButton(onPressed: _isProcessing?null:_split,
-      style: ElevatedButton.styleFrom(backgroundColor:Colors.blue,foregroundColor:Colors.white,shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(26)),elevation:0),
+      style: ElevatedButton.styleFrom(backgroundColor:const Color(0xFF33691E),foregroundColor:Colors.white,shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(26)),elevation:0),
       child: _isProcessing ? const Row(mainAxisAlignment:MainAxisAlignment.center,children:[SizedBox(width:24,height:24,child:CircularProgressIndicator(color:Colors.white,strokeWidth:2.5)),SizedBox(width:12),Text('分割中...',style:TextStyle(fontSize:16,fontWeight:FontWeight.w600))]) : const Text('开始分割',style:TextStyle(fontSize:17,fontWeight:FontWeight.w600)),
     )) else Column(children: [
-      SizedBox(width:double.infinity, child: ElevatedButton(onPressed:_saveAllToGallery, style:ElevatedButton.styleFrom(backgroundColor:Colors.green,foregroundColor:Colors.white,padding:const EdgeInsets.symmetric(vertical:14),shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(12))), child: Row(mainAxisAlignment:MainAxisAlignment.center,children:[const Icon(Icons.download),const SizedBox(width:8),Flexible(child: Text('保存全部 ${_resultPaths.length} 段到相册',overflow:TextOverflow.ellipsis))]))),
+      SizedBox(width:double.infinity, child: ElevatedButton(onPressed:_saveAllToGallery, style:ElevatedButton.styleFrom(backgroundColor:const Color(0xFF2E7D32),foregroundColor:Colors.white,padding:const EdgeInsets.symmetric(vertical:14),shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(12))), child: Row(mainAxisAlignment:MainAxisAlignment.center,children:[const Icon(Icons.download),const SizedBox(width:8),Flexible(child: Text('保存全部 ${_resultPaths.length} 段',overflow:TextOverflow.ellipsis))]))),
       const SizedBox(height:12),
-      ...List.generate(_resultPaths.length, (i) => Card(child: ListTile(leading: CircleAvatar(child: Text('${i+1}')), title: Text('片段 ${i+1}'), subtitle: Text(_resultPaths[i].split('/').last), trailing: const Icon(Icons.check_circle, color: Colors.green)))),
+      ...List.generate(_resultPaths.length, (i) => Card(child: ListTile(leading: CircleAvatar(child: Text('${i+1}')), title: Text('片段 ${i+1}', overflow: TextOverflow.ellipsis), subtitle: Text(_resultPaths[i].split('/').last, overflow: TextOverflow.ellipsis, maxLines: 1), trailing: const Icon(Icons.check_circle, color: Colors.green)))),
     ]),
     const SizedBox(height:12),
     TextButton.icon(onPressed: _pickVideo, icon: const Icon(Icons.swap_horiz,color:Colors.white70), label: const Text('更换视频',style:TextStyle(color:Colors.white70))),

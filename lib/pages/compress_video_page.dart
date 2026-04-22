@@ -41,7 +41,7 @@ class _CompressVideoPageState extends State<CompressVideoPage> {
 
   static const _bg = LinearGradient(
     begin: Alignment.topCenter, end: Alignment.bottomCenter,
-    colors: [Color(0xFFFF9A56), Color(0xFFFF6B35), Color(0xFFFFF3E0)],
+    colors: [Color(0xFF1B5E20), Color(0xFF2E7D32), Color(0xFFE8F5E9)],
   );
 
   @override
@@ -96,7 +96,7 @@ class _CompressVideoPageState extends State<CompressVideoPage> {
     final ok = await PermissionHelper.requestPhotos();
     if (ok != true) { _showError('需要相册权限'); return; }
     final result = await GallerySaverHelper.saveFile(_resultPath!);
-    if (result == true) _showSuccess('已保存到相册'); else _showError('保存失败');
+    if (result == true) { _showSuccess('已保存到相册'); } else { _showError('保存失败'); }
   }
 
   void _showError(String m) { if (mounted) TopNotify.error(context, m); }
@@ -129,30 +129,30 @@ class _CompressVideoPageState extends State<CompressVideoPage> {
       child: _controller!=null&&_controller!.value.isInitialized ? ClipRRect(borderRadius:BorderRadius.circular(16), child: AspectRatio(aspectRatio:_controller!.value.aspectRatio, child: VideoPlayer(_controller!))) : const Center(child: CircularProgressIndicator(color:Colors.white))),
     const SizedBox(height:16),
     Container(padding: const EdgeInsets.all(16), decoration: BoxDecoration(color:Colors.white, borderRadius:BorderRadius.circular(16)), child: Column(crossAxisAlignment:CrossAxisAlignment.start, children: [
-      Row(children: [Icon(Icons.folder,color:Colors.orange.shade700), const SizedBox(width:8), Text('原始大小: ${_fmtSize(_originalSize)}', style: const TextStyle(fontWeight:FontWeight.w600))]),
+      Row(children: [Icon(Icons.folder,color:const Color(0xFF2E7D32)), const SizedBox(width:8), Expanded(child: Text('原始大小: ${_fmtSize(_originalSize)}', style: const TextStyle(fontWeight:FontWeight.w600), overflow: TextOverflow.ellipsis))]),
       const SizedBox(height:16),
       Text('压缩质量 (CRF): ${_crf.toInt()}', style: const TextStyle(fontWeight:FontWeight.w600)),
       Slider(value: _crf, min:18, max:51, divisions:33, label: _crf.toInt().toString(), onChanged: (v) => setState(() => _crf = v)),
-      Text('提示: 数值越大压缩越多，画质越低', style: TextStyle(fontSize:13,color:Colors.grey.shade600)),
+      Text('提示: 数值越大压缩越多，画质越低', style: TextStyle(fontSize:13,color:Colors.grey.shade600), overflow: TextOverflow.ellipsis, maxLines: 2),
       const SizedBox(height:12),
       const Text('编码速度:', style: TextStyle(fontWeight:FontWeight.w600)),
       const SizedBox(height:8),
       Wrap(spacing:8, children: ['ultrafast','fast','medium','slow'].map((p) => ChoiceChip(label: Text(p), selected: _preset==p, onSelected: (_)=>setState(()=>_preset=p))).toList()),
       if (_resultPath != null) ...[
         const SizedBox(height:16), const Divider(), const SizedBox(height:8),
-        Row(children: [Icon(Icons.check_circle,color:Colors.green.shade700), const SizedBox(width:8), Text('压缩后: ${_fmtSize(_resultSize)}', style: TextStyle(color:Colors.green.shade700,fontWeight:FontWeight.w600))]),
+        Row(children: [Icon(Icons.check_circle,color:Colors.green.shade700), const SizedBox(width:8), Expanded(child: Text('压缩后: ${_fmtSize(_resultSize)}', style: TextStyle(color:Colors.green.shade700,fontWeight:FontWeight.w600), overflow: TextOverflow.ellipsis))]),
         const SizedBox(height:4),
-        Text('节省: ${_fmtSize(_originalSize-_resultSize)} (${((_originalSize-_resultSize)/_originalSize*100).toStringAsFixed(1)}%)', style: TextStyle(color:Colors.blue.shade700,fontWeight:FontWeight.w600)),
+        Text('节省: ${_fmtSize(_originalSize-_resultSize)} (${((_originalSize-_resultSize)/_originalSize*100).toStringAsFixed(1)}%)', style: TextStyle(color:Colors.blue.shade700,fontWeight:FontWeight.w600), overflow: TextOverflow.ellipsis, maxLines: 2),
       ],
     ])),
     const SizedBox(height:20),
     if (_resultPath == null) SizedBox(width:double.infinity,height:52, child: ElevatedButton(onPressed: _isProcessing?null:_compress,
-      style: ElevatedButton.styleFrom(backgroundColor:Colors.orange,foregroundColor:Colors.white,shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(26)),elevation:0),
+      style: ElevatedButton.styleFrom(backgroundColor:const Color(0xFF2E7D32),foregroundColor:Colors.white,shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(26)),elevation:0),
       child: _isProcessing ? const Row(mainAxisAlignment:MainAxisAlignment.center,children:[SizedBox(width:24,height:24,child:CircularProgressIndicator(color:Colors.white,strokeWidth:2.5)),SizedBox(width:12),Text('压缩中...',style:TextStyle(fontSize:16,fontWeight:FontWeight.w600))]) : const Text('开始压缩',style:TextStyle(fontSize:17,fontWeight:FontWeight.w600)),
     )) else Row(children: [
-      Expanded(child: ElevatedButton(onPressed:_saveToGallery, style:ElevatedButton.styleFrom(backgroundColor:Colors.green,foregroundColor:Colors.white,padding:const EdgeInsets.symmetric(vertical:14),shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(12))), child: Row(mainAxisAlignment:MainAxisAlignment.center,children:[const Icon(Icons.download),const SizedBox(width:8),Flexible(child: Text('保存到相册',overflow:TextOverflow.ellipsis))]))),
+      Expanded(child: ElevatedButton(onPressed:_saveToGallery, style:ElevatedButton.styleFrom(backgroundColor:const Color(0xFF2E7D32),foregroundColor:Colors.white,padding:const EdgeInsets.symmetric(vertical:14),shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(12))), child: Row(mainAxisAlignment:MainAxisAlignment.center,children:[const Icon(Icons.download),const SizedBox(width:8),Flexible(child: Text('保存到相册',overflow:TextOverflow.ellipsis))]))),
       const SizedBox(width:12),
-      Expanded(child: ElevatedButton(onPressed:(){ _controller?.dispose(); setState((){_resultPath=null;_controller=null;}); _pickVideo(); }, style:ElevatedButton.styleFrom(backgroundColor:Colors.orange,foregroundColor:Colors.white,padding:const EdgeInsets.symmetric(vertical:14),shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(12))), child: Row(mainAxisAlignment:MainAxisAlignment.center,children:[const Icon(Icons.refresh),const SizedBox(width:8),Flexible(child: Text('重新选择',overflow:TextOverflow.ellipsis))]))),
+      Expanded(child: ElevatedButton(onPressed:(){ _controller?.dispose(); setState((){_resultPath=null;_controller=null;}); _pickVideo(); }, style:ElevatedButton.styleFrom(backgroundColor:const Color(0xFF43A047),foregroundColor:Colors.white,padding:const EdgeInsets.symmetric(vertical:14),shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(12))), child: Row(mainAxisAlignment:MainAxisAlignment.center,children:[const Icon(Icons.refresh),const SizedBox(width:8),Flexible(child: Text('重新选择',overflow:TextOverflow.ellipsis))]))),
     ]),
   ]));
 }

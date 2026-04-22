@@ -50,7 +50,7 @@ class _SeparateAVPageState extends State<SeparateAVPage> {
 
   static const _bg = LinearGradient(
     begin: Alignment.topCenter, end: Alignment.bottomCenter,
-    colors: [Color(0xFF45B7D1), Color(0xFF2980B9), Color(0xFFE0F7FA)],
+    colors: [Color(0xFF00695C), Color(0xFF26A69A), Color(0xFFE0F2F1)],
   );
 
   @override
@@ -266,15 +266,15 @@ class _SeparateAVPageState extends State<SeparateAVPage> {
     const SizedBox(height:20),
     if (_videoOnlyPath == null && _audioOnlyPath == null && _mp3Path == null) ...[
       SizedBox(width:double.infinity,height:52, child: ElevatedButton(onPressed: _isProcessing?null:_separate,
-        style: ElevatedButton.styleFrom(backgroundColor:Colors.blue.shade700,foregroundColor:Colors.white,shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(26)),elevation:0),
+        style: ElevatedButton.styleFrom(backgroundColor:const Color(0xFF00695C),foregroundColor:Colors.white,shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(26)),elevation:0),
         child: _isProcessing ? const Row(mainAxisAlignment:MainAxisAlignment.center,children:[SizedBox(width:24,height:24,child:CircularProgressIndicator(color:Colors.white,strokeWidth:2.5)),SizedBox(width:12),Text('分离中...',style:TextStyle(fontSize:16,fontWeight:FontWeight.w600))]) : const Text('开始分离',style:TextStyle(fontSize:17,fontWeight:FontWeight.w600)),
       )),
     ] else ...[
       // 纯视频
       if (_videoOnlyPath != null) Card(child: ListTile(
         leading: Icon(Icons.videocam, color: _videoSaved ? Colors.green : Colors.blue),
-        title: const Text('纯视频（无音频）'),
-        subtitle: Text(_videoSaved ? '已保存到相册' : _videoOnlyPath!.split('/').last),
+        title: const Text('纯视频（无音频）', overflow: TextOverflow.ellipsis, maxLines: 1),
+        subtitle: Text(_videoSaved ? '已保存到相册' : _videoOnlyPath!.split('/').last, overflow: TextOverflow.ellipsis, maxLines: 1),
         trailing: _videoSaved
           ? const Icon(Icons.check_circle, color: Colors.green)
           : IconButton(icon: const Icon(Icons.download), onPressed: _saveVideoToGallery),
@@ -297,7 +297,7 @@ class _SeparateAVPageState extends State<SeparateAVPage> {
           onPressed: _reset,
           icon: const Icon(Icons.refresh, size:18),
           label: const Text('重新选择'),
-          style: ElevatedButton.styleFrom(backgroundColor:Colors.orange, foregroundColor:Colors.white, padding:const EdgeInsets.symmetric(vertical:12), shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(12))),
+          style: ElevatedButton.styleFrom(backgroundColor:const Color(0xFF43A047), foregroundColor:Colors.white, padding:const EdgeInsets.symmetric(vertical:12), shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(12))),
         )),
       ]),
     ],
@@ -362,8 +362,8 @@ class _SeparateAVPageState extends State<SeparateAVPage> {
   Widget _buildAudioCard(String path, String label, bool saved, IconData icon, Color color, Function(bool) onSaved) {
     return ListTile(
       leading: Icon(icon, color: saved ? Colors.green : color),
-      title: Text(label),
-      subtitle: Text(saved ? '已保存到 Downloads' : path.split('/').last),
+      title: Text(label, overflow: TextOverflow.ellipsis),
+      subtitle: Text(saved ? '已保存到 Downloads' : path.split('/').last, overflow: TextOverflow.ellipsis, maxLines: 1),
       trailing: saved
         ? const Icon(Icons.check_circle, color: Colors.green)
         : IconButton(icon: const Icon(Icons.download), onPressed: () => _saveAudioToFile(path, label, onSaved)),
