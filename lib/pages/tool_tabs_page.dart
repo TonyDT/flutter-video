@@ -23,8 +23,8 @@ class _ToolTabsPageState extends State<ToolTabsPage> {
   @override
   Widget build(BuildContext context) {
     final bg = Theme.of(context).brightness == Brightness.dark
-        ? const Color(0xFF0F0F1A)
-        : const Color(0xFFF8F9FC);
+        ? const Color(0xFF1E1E32)
+        : const Color(0xFFEDE7F6);
 
     return Scaffold(
       backgroundColor: bg,

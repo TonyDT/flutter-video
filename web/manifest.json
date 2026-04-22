@@ -1,6 +1,6 @@
 {
-    "name": "xixi_media_tool",
-    "short_name": "xixi_media_tool",
+    "name": "Video ToolKit",
+    "short_name": "Video ToolKit",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

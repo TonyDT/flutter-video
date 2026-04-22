@@ -14,7 +14,7 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(color: AppTheme.bg(context), child: SafeArea(child: ListView(padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8), children: [
       Container(padding: const EdgeInsets.only(left: 4, top: 8, bottom: 16), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Text('ToolKit', style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: AppTheme.primaryLight, letterSpacing: -0.5)),
+        Text('Video ToolKit', style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: AppTheme.primaryLight, letterSpacing: -0.5)),
         const SizedBox(height: 4), Text('设置与关于', style: TextStyle(fontSize: 14, color: AppTheme.textSecondary(context))),
       ])),
       const SizedBox(height: 8),
@@ -26,7 +26,7 @@ class SettingsPage extends StatelessWidget {
       const SizedBox(height: 16),
 
       _buildSectionCard(context, icon: Icons.info_outline_rounded, title: '关于应用', children: [
-        _buildInfoRow(context, '应用名称', 'ToolKit 媒体处理'),
+        _buildInfoRow(context, '应用名称', 'Video ToolKit'),
         _buildInfoRow(context, '版本号', '1.0.0'),
         _buildInfoRow(context, '开发者', 'xinyoushanhai888@gmail.com'),
         const SizedBox(height: 12), _buildOpenSourceNotice(context),

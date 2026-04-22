@@ -34,16 +34,16 @@ class AppTheme extends ChangeNotifier {
   static const Color primaryLight = Color(0xFFA78BFA);
 
   // 深色系
-  static const Color darkBg = Color(0xFF0F0F1A);
-  static const Color darkCardBg = Color(0xFF2A2A45);
-  static const Color darkIconBg = Color(0xFF353558);
-  static const Color darkBorder = Color(0xFF3A3A55);
+  static const Color darkBg = Color(0xFF1E1E32);
+  static const Color darkCardBg = Color(0xFF2D2D48);
+  static const Color darkIconBg = Color(0xFF3A3A58);
+  static const Color darkBorder = Color(0xFF3F3F5A);
 
   // 浅色系
-  static const Color lightBg = Color(0xFFF8F9FC);
+  static const Color lightBg = Color(0xFFEDE7F6);
   static const Color lightCardBg = Colors.white;
-  static const Color lightIconBg = Color(0xFFF3E8FF);
-  static const Color lightBorder = Color(0xFFE5E7EB);
+  static const Color lightIconBg = Color(0xFFE8D5FF);
+  static const Color lightBorder = Color(0xFFD4C4E8);
 
   /// 根据当前模式获取颜色
   static Color bg(BuildContext context) =>

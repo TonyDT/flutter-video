@@ -49,7 +49,32 @@ dependencies:
   # 音频播放
   audioplayers: ^6.1.0
 
+
+flutter_launcher_icons:
+  image_path: "assets/icon/icon_1024x1024.png"    # 1024x1024像素的PNG源图
+  android: true
+  ios: true
+  remove_alpha_ios: true
+  adaptive_icon_background: "#FFFFFF"       # 背景色（十六进制颜色）
+  adaptive_icon_foreground: "assets/icon/icon_1024x1024.png"  # 前景图标
+
+flutter_native_splash:
+  color: "#7C3AED"
+  image: assets/icon/icon_1024x1024.png
+  color_dark: "#0F0F1A"
+  image_dark: assets/icon/icon_1024x1024.png
+  android: true
+  ios: true
+  android_12:
+    image: assets/icon/icon_1024x1024.png
+    image_dark: assets/icon/icon_1024x1024.png
+    icon_background_color: "#7C3AED"
+    icon_background_color_dark: "#0F0F1A"
+
 dev_dependencies:
+  flutter_launcher_icons: ^0.13.1
+  flutter_native_splash: ^2.4.1
+
   flutter_test:
     sdk: flutter
 
