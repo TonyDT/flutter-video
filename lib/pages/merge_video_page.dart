@@ -9,6 +9,7 @@ import 'package:video_player/video_player.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:ffmpeg_kit_flutter_new/ffmpeg_kit.dart';
 import 'package:ffmpeg_kit_flutter_new/return_code.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../utils/top_notify.dart';
 // 条件导入
 import '../utils/native_file_helper.dart'
@@ -110,7 +111,7 @@ class _MergeVideoPageState extends State<MergeVideoPage> {
         }
       }
     } catch (e) {
-      if (mounted) _showError('选择视频失败');
+      if (mounted) _showError(AppLocalizations.of(context)!.selectVideoFailed);
     }
   }
 
@@ -147,7 +148,7 @@ class _MergeVideoPageState extends State<MergeVideoPage> {
         }
       }
     } catch (e) {
-      if (mounted) _showError('选择视频失败');
+      if (mounted) _showError(AppLocalizations.of(context)!.selectVideoFailed);
     }
   }
 
@@ -358,7 +359,7 @@ class _MergeVideoPageState extends State<MergeVideoPage> {
       final session1 = await FFmpegKit.execute(clip1Args.join(' '));
       final rc1 = await session1.getReturnCode();
       if (!ReturnCode.isSuccess(rc1)) {
-        if (mounted) _showError('视频1裁剪失败');
+        if (mounted) _showError(AppLocalizations.of(context)!.video1CropFailed);
         setState(() => _isMerging = false);
         return;
       }
@@ -403,7 +404,7 @@ class _MergeVideoPageState extends State<MergeVideoPage> {
       final session2 = await FFmpegKit.execute(clip2Args.join(' '));
       final rc2 = await session2.getReturnCode();
       if (!ReturnCode.isSuccess(rc2)) {
-        if (mounted) _showError('视频2裁剪失败');
+        if (mounted) _showError(AppLocalizations.of(context)!.video2CropFailed);
         setState(() => _isMerging = false);
         return;
       }

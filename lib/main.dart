@@ -2,6 +2,8 @@
 library;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'theme/app_theme.dart';
 import 'platform/os.dart';
 import 'pages/tool_tabs_page.dart';
@@ -28,6 +30,14 @@ class MyApp extends StatelessWidget {
           themeMode: theme.mode,
           theme: _buildLightTheme(),
           darkTheme: _buildDarkTheme(),
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: AppLocalizations.supportedLocales,
+          locale: AppTheme().locale,
           home: isHarmony
               ? const HarmonyDevelopingPage()
               : const ToolTabsPage(),
@@ -105,6 +115,7 @@ class HarmonyDevelopingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       body: SafeArea(
         child: Center(
@@ -115,7 +126,7 @@ class HarmonyDevelopingPage extends StatelessWidget {
               children: [
                 const Icon(Icons.construction, size: 48),
                 const SizedBox(height: 16),
-                const Text('鸿蒙版正在开发中', textAlign: TextAlign.center, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
+                Text(l10n.harmonyDeveloping, textAlign: TextAlign.center, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
               ],
             ),
           ),

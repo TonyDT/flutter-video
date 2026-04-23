@@ -8,7 +8,6 @@ import 'package:video_player/video_player.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:ffmpeg_kit_flutter_new/ffmpeg_kit.dart';
 import 'package:ffmpeg_kit_flutter_new/return_code.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:audioplayers/audioplayers.dart';
 import '../utils/native_file_helper.dart'
     if (dart.library.io) '../utils/native_file_helper.dart'
@@ -17,12 +16,6 @@ import '../utils/top_notify.dart';
 import '../utils/temp_dir_helper.dart'
     if (dart.library.io) '../utils/temp_dir_helper.dart'
     if (dart.library.html) '../utils/temp_dir_helper_web.dart';
-import '../utils/permission_helper.dart'
-    if (dart.library.io) '../utils/permission_helper.dart'
-    if (dart.library.html) '../utils/permission_helper_web.dart';
-import '../utils/gallery_saver_helper.dart'
-    if (dart.library.io) '../utils/gallery_saver_helper.dart'
-    if (dart.library.html) '../utils/gallery_saver_helper_web.dart';
 
 class SeparateAVPage extends StatefulWidget {
   const SeparateAVPage({super.key});
@@ -167,17 +160,24 @@ class _SeparateAVPageState extends State<SeparateAVPage> {
     if (mounted) setState(() => _isProcessing = false);
   }
 
-  Future<void> _saveVideoToGallery() async {
+  Future<void> _saveVideoFile() async {
     if (_videoOnlyPath == null) return;
-    final ok = await PermissionHelper.requestPhotos();
-    if (ok != true) { _showError('需要相册权限'); return; }
     try {
-      final result = await GallerySaverHelper.saveFile(_videoOnlyPath!);
-      if (result) {
+      final fileName = _videoOnlyPath!.split('/').last;
+      final destPath = await FilePicker.platform.saveFile(
+        dialogTitle: '保存纯视频',
+        fileName: fileName,
+        type: FileType.video,
+        allowedExtensions: ['mp4'],
+      );
+      if (destPath == null) return; // 用户取消
+      final sourceFile = File(_videoOnlyPath!);
+      if (await sourceFile.exists()) {
+        await sourceFile.copy(destPath);
         setState(() => _videoSaved = true);
-        _showSuccess('纯视频已保存到相册');
+        _showSuccess('纯视频已保存');
       } else {
-        _showError('保存视频失败');
+        _showError('源文件不存在');
       }
     } catch (e) {
       _showError('保存视频出错: $e');
@@ -186,15 +186,20 @@ class _SeparateAVPageState extends State<SeparateAVPage> {
 
   Future<void> _saveAudioToFile(String path, String label, Function(bool) onSaved) async {
     try {
-      final downloadsDir = await getDownloadsDirectory();
-      if (downloadsDir == null) { _showError('无法获取下载目录'); return; }
       final fileName = path.split('/').last;
-      final destPath = '${downloadsDir.path}/$fileName';
+      final ext = fileName.split('.').last.toLowerCase();
+      final destPath = await FilePicker.platform.saveFile(
+        dialogTitle: '保存$label',
+        fileName: fileName,
+        type: FileType.custom,
+        allowedExtensions: [ext],
+      );
+      if (destPath == null) return; // 用户取消
       final sourceFile = File(path);
       if (await sourceFile.exists()) {
         await sourceFile.copy(destPath);
         onSaved(true);
-        _showSuccess('$label 已保存到: Downloads/$fileName');
+        _showSuccess('$label 已保存');
       } else {
         _showError('$label 文件不存在');
       }
@@ -274,10 +279,10 @@ class _SeparateAVPageState extends State<SeparateAVPage> {
       if (_videoOnlyPath != null) Card(child: ListTile(
         leading: Icon(Icons.videocam, color: _videoSaved ? Colors.green : Colors.blue),
         title: const Text('纯视频（无音频）', overflow: TextOverflow.ellipsis, maxLines: 1),
-        subtitle: Text(_videoSaved ? '已保存到相册' : _videoOnlyPath!.split('/').last, overflow: TextOverflow.ellipsis, maxLines: 1),
+        subtitle: Text(_videoSaved ? '已保存' : _videoOnlyPath!.split('/').last, overflow: TextOverflow.ellipsis, maxLines: 1),
         trailing: _videoSaved
           ? const Icon(Icons.check_circle, color: Colors.green)
-          : IconButton(icon: const Icon(Icons.download), onPressed: _saveVideoToGallery),
+          : IconButton(icon: const Icon(Icons.download), onPressed: _saveVideoFile),
       )),
       // 纯音频 M4A
       if (_audioOnlyPath != null) Card(child: _buildAudioCard(
@@ -363,7 +368,7 @@ class _SeparateAVPageState extends State<SeparateAVPage> {
     return ListTile(
       leading: Icon(icon, color: saved ? Colors.green : color),
       title: Text(label, overflow: TextOverflow.ellipsis),
-      subtitle: Text(saved ? '已保存到 Downloads' : path.split('/').last, overflow: TextOverflow.ellipsis, maxLines: 1),
+      subtitle: Text(saved ? '已保存' : path.split('/').last, overflow: TextOverflow.ellipsis, maxLines: 1),
       trailing: saved
         ? const Icon(Icons.check_circle, color: Colors.green)
         : IconButton(icon: const Icon(Icons.download), onPressed: () => _saveAudioToFile(path, label, onSaved)),

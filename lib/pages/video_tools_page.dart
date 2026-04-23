@@ -2,6 +2,7 @@
 library;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../utils/top_notify.dart';
 import '../theme/app_theme.dart';
 import 'merge_video_page.dart';
@@ -19,37 +20,40 @@ import 'convert_format_page.dart';
 class VideoToolsPage extends StatelessWidget {
   const VideoToolsPage({super.key});
 
-  static const List<_Tool> _tools = [
-    _Tool(Icons.merge_type, '合并视频', '将多个视频文件合并成一个', 'merge'),
-    _Tool(Icons.content_cut, '视频截取', '从视频中截取指定时间段', 'cut'),
-    _Tool(Icons.compress, '视频压缩', '减小视频文件大小', 'compress'),
-    _Tool(Icons.aspect_ratio, '视频比例', '调整画面宽高比', 'ratio'),
-    _Tool(Icons.volume_off, '视频消音', '去除视频中音频轨道', 'mute'),
-    _Tool(Icons.record_voice_over, '视频配音', '为视频添加背景音乐', 'dubbing'),
-    _Tool(Icons.image, '提取图片', '从视频中提取帧图片', 'extract'),
-    _Tool(Icons.call_split, '视频分割', '将视频分割成多段', 'split'),
-    _Tool(Icons.layers_clear, '音视频分离', '分离音视频轨道', 'separate'),
-    _Tool(Icons.crop, '视频裁剪', '裁剪视频画面区域', 'crop'),
-    _Tool(Icons.autorenew, '格式转换', '转换视频文件格式', 'convert'),
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final tools = _buildTools(l10n);
+
     return Container(color: AppTheme.bg(context), child: CustomScrollView(physics: const BouncingScrollPhysics(), slivers: [
       SliverToBoxAdapter(child: _buildHeader(context)),
       SliverToBoxAdapter(child: Padding(padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12), child: Row(children: [
         Icon(Icons.inventory_2_outlined, size: 18, color: AppTheme.textSecondary(context)),
         const SizedBox(width: 6),
-        Text('${_tools.length} 款 · 全部', style: TextStyle(fontSize: 13, color: AppTheme.textSecondary(context))),
+        Text(l10n.toolCountAll(tools.length), style: TextStyle(fontSize: 13, color: AppTheme.textSecondary(context))),
       ]))),
       SliverPadding(padding: const EdgeInsets.symmetric(horizontal: 16), sliver: SliverLayoutBuilder(builder: (sliverCtx, constraints) {
         final count = constraints.crossAxisExtent >= 480 ? 4 : constraints.crossAxisExtent >= 360 ? 3 : 2;
         return SliverGrid(gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: count, crossAxisSpacing: 12, mainAxisSpacing: 12, childAspectRatio: count <= 2 ? 1.0 : 0.82),
-          delegate: SliverChildListDelegate(_tools.map((t) => _buildCard(context, t)).toList()));
+          delegate: SliverChildListDelegate(tools.map((t) => _buildCard(context, t)).toList()));
       })),
       const SliverPadding(padding: EdgeInsets.only(bottom: 100)),
     ]));
   }
+
+  List<_Tool> _buildTools(AppLocalizations l10n) => [
+    _Tool(Icons.merge_type, l10n.toolMerge, l10n.toolMergeDesc, 'merge'),
+    _Tool(Icons.content_cut, l10n.toolCut, l10n.toolCutDesc, 'cut'),
+    _Tool(Icons.compress, l10n.toolCompress, l10n.toolCompressDesc, 'compress'),
+    _Tool(Icons.aspect_ratio, l10n.toolRatio, l10n.toolRatioDesc, 'ratio'),
+    _Tool(Icons.volume_off, l10n.toolMute, l10n.toolMuteDesc, 'mute'),
+    _Tool(Icons.record_voice_over, l10n.toolDubbing, l10n.toolDubbingDesc, 'dubbing'),
+    _Tool(Icons.image, l10n.toolExtract, l10n.toolExtractDesc, 'extract'),
+    _Tool(Icons.call_split, l10n.toolSplit, l10n.toolSplitDesc, 'split'),
+    _Tool(Icons.layers_clear, l10n.toolSeparate, l10n.toolSeparateDesc, 'separate'),
+    _Tool(Icons.crop, l10n.toolCrop, l10n.toolCropDesc, 'crop'),
+    _Tool(Icons.autorenew, l10n.toolConvert, l10n.toolConvertDesc, 'convert'),
+  ];
 
   Widget _buildHeader(BuildContext ctx) => Container(
     padding: const EdgeInsets.only(left: 20, right: 20, top: kToolbarHeight + 4, bottom: 16),
@@ -69,6 +73,7 @@ class VideoToolsPage extends StatelessWidget {
   }
 
   void _navigate(BuildContext ctx, String id, String name) {
+    final l10n = AppLocalizations.of(ctx)!;
     final routes = <String, Widget Function()>{
       'merge': () => const MergeVideoPage(),
       'cut': () => const CutVideoPage(),
@@ -82,7 +87,7 @@ class VideoToolsPage extends StatelessWidget {
       'crop': () => const CropVideoPage(),
       'convert': () => const ConvertFormatPage(),
     };
-    if (routes.containsKey(id)) Navigator.push(ctx, MaterialPageRoute(builder: (_) => routes[id]!())); else TopNotify.info(ctx, '$name 功能开发中');
+    if (routes.containsKey(id)) Navigator.push(ctx, MaterialPageRoute(builder: (_) => routes[id]!())); else TopNotify.info(ctx, l10n.featureDeveloping(name));
   }
 }
 

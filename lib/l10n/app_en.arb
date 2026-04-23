@@ -1,0 +1,502 @@
+{
+  "@@locale": "en",
+  "appName": "Video ToolKit",
+  "tabAll": "All",
+  "tabSettings": "Settings",
+  "settingsAbout": "Settings & About",
+  "appearance": "Appearance",
+  "lightMode": "Light Mode",
+  "darkMode": "Dark Mode",
+  "aboutApp": "About App",
+  "appNameLabel": "App Name",
+  "versionLabel": "Version",
+  "developerLabel": "Developer",
+  "privacyPolicy": "Privacy Policy",
+  "viewPrivacyTerms": "View privacy terms",
+  "sdkList": "Third-party SDK List",
+  "viewThirdPartyServices": "View third-party services",
+  "openSourceNotice": "Built with FFmpeg, Flutter and other open-source technologies. Thanks to the open-source community.",
+  "harmonyDeveloping": "HarmonyOS version is under development",
+
+  "toolMerge": "Merge Videos",
+  "toolMergeDesc": "Merge multiple video files into one",
+  "toolCut": "Cut Video",
+  "toolCutDesc": "Extract a specific time segment from video",
+  "toolCompress": "Compress Video",
+  "toolCompressDesc": "Reduce video file size",
+  "toolRatio": "Video Ratio",
+  "toolRatioDesc": "Adjust aspect ratio",
+  "toolMute": "Mute Video",
+  "toolMuteDesc": "Remove audio track from video",
+  "toolDubbing": "Dub Video",
+  "toolDubbingDesc": "Add background music to video",
+  "toolExtract": "Extract Images",
+  "toolExtractDesc": "Extract frames from video as images",
+  "toolSplit": "Split Video",
+  "toolSplitDesc": "Split video into multiple segments",
+  "toolSeparate": "Separate A/V",
+  "toolSeparateDesc": "Separate audio and video tracks",
+  "toolCrop": "Crop Video",
+  "toolCropDesc": "Crop video frame area",
+  "toolConvert": "Convert Format",
+  "toolConvertDesc": "Convert video file format",
+  "toolCountAll": "{count} tools · All",
+  "@toolCountAll": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "featureDeveloping": "{name} is under development",
+  "@featureDeveloping": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+
+  "selectVideoFailed": "Failed to select video",
+  "selectAudioFailed": "Failed to select audio",
+  "needAlbumPermission": "Album permission required",
+  "savedToAlbum": "Saved to album",
+  "saveFailed": "Save failed",
+  "saveError": "Save error: {error}",
+  "@saveError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "loading": "Loading...",
+  "tapToSelectVideo": "Tap to select a video",
+  "tapToSelectFirstVideo": "Tap to select the first video",
+  "tapToSelectSecondVideo": "Tap to select the second video",
+  "tapToPreview": "Tap to preview",
+  "start": "Start",
+  "end": "End",
+  "change": "Change",
+  "reselect": "Reselect",
+  "changeVideo": "Change Video",
+  "saveToAlbum": "Save to Album",
+  "processing": "Processing...",
+  "videoLoadFailed": "Video load failed",
+  "previewFailed": "Preview failed",
+  "previewInitFailed": "Preview initialization failed",
+
+  "mergeVideo": "Merge Videos",
+  "selectTwoVideosToMerge": "Select two videos to merge",
+  "video1": "Video 1",
+  "video2": "Video 2",
+  "selectVideo1": "Select Video 1",
+  "selectVideo2": "Select Video 2",
+  "pleaseSelectTwoVideos": "Please select two videos first",
+  "webNotSupportMerge": "Merge is not supported on Web",
+  "video1CropFailed": "Video 1 crop failed",
+  "video2CropFailed": "Video 2 crop failed",
+  "mergeSuccess": "Merge successful!",
+  "mergeFailed": "Merge failed",
+  "mergeError": "Merge error: {error}",
+  "@mergeError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "merging": "Merging...",
+  "startMerge": "Start Merge",
+
+  "compressVideo": "Compress Video",
+  "compressSuccess": "Compression complete!",
+  "compressFailed": "Compression failed",
+  "compressError": "Compression error: {error}",
+  "@compressError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "originalSize": "Original size: {size}",
+  "@originalSize": {
+    "placeholders": {
+      "size": { "type": "String" }
+    }
+  },
+  "compressQuality": "Compression quality (CRF): {value}",
+  "@compressQuality": {
+    "placeholders": {
+      "value": { "type": "int" }
+    }
+  },
+  "compressTip": "Higher value means more compression, lower quality",
+  "encodeSpeed": "Encode speed:",
+  "compressedSize": "Compressed: {size}",
+  "@compressedSize": {
+    "placeholders": {
+      "size": { "type": "String" }
+    }
+  },
+  "savedSpace": "Saved: {size} ({percent}%)",
+  "@savedSpace": {
+    "placeholders": {
+      "size": { "type": "String" },
+      "percent": { "type": "String" }
+    }
+  },
+  "compressing": "Compressing...",
+  "startCompress": "Start Compress",
+
+  "convertFormat": "Convert Format",
+  "convertSuccess": "Conversion successful!",
+  "convertFailed": "Conversion failed",
+  "convertError": "Conversion error: {error}",
+  "@convertError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "targetFormat": "Target format:",
+  "converting": "Converting...",
+  "convertTo": "Convert to {format}",
+  "@convertTo": {
+    "placeholders": {
+      "format": { "type": "String" }
+    }
+  },
+
+  "cropVideo": "Crop Video",
+  "cropSuccess": "Crop successful!",
+  "cropFailed": "Crop failed",
+  "cropError": "Crop error: {error}",
+  "@cropError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "cropPreviewFailedButSaved": "Preview failed, but file has been generated",
+  "originalResolution": "Original: {width}x{height}",
+  "@originalResolution": {
+    "placeholders": {
+      "width": { "type": "int" },
+      "height": { "type": "int" }
+    }
+  },
+  "cropResolution": "Crop: {width}x{height}",
+  "@cropResolution": {
+    "placeholders": {
+      "width": { "type": "int" },
+      "height": { "type": "int" }
+    }
+  },
+  "cropDragTip": "Drag the green box or edges to adjust crop area, drag inside to move",
+  "resetCrop": "Reset Crop Area",
+  "cropping": "Cropping...",
+  "startCrop": "Start Crop",
+
+  "cutVideo": "Cut Video",
+  "cutSuccess": "Cut successful!",
+  "cutFailed": "Cut failed",
+  "cutError": "Cut error: {error}",
+  "@cutError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "cutCompletePreviewUnavailable": "Cut complete (preview unavailable)",
+  "videoPreviewUnavailable": "Video preview unavailable",
+  "totalDuration": "Total duration: {duration}",
+  "@totalDuration": {
+    "placeholders": {
+      "duration": { "type": "String" }
+    }
+  },
+  "cutRange": "Cut: {start} - {end}  ({duration})",
+  "@cutRange": {
+    "placeholders": {
+      "start": { "type": "String" },
+      "end": { "type": "String" },
+      "duration": { "type": "String" }
+    }
+  },
+  "cutting": "Cutting...",
+  "startCut": "Start Cut",
+
+  "dubbingVideo": "Dub Video",
+  "dubbingSuccess": "Dubbing successful!",
+  "dubbingFailed": "Dubbing failed",
+  "dubbingError": "Dubbing error: {error}",
+  "@dubbingError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "selectVideo": "Select Video",
+  "videoSelected": "Video selected",
+  "selectAudio": "Select Audio",
+  "audioSelected": "Audio selected",
+  "dubbingMode": "Dubbing mode:",
+  "replaceOriginalAudio": "Replace original audio",
+  "replaceAudioHint": "Turn off to mix both audio tracks",
+  "dubbing": "Dubbing...",
+  "startDubbing": "Start Dubbing",
+  "startOver": "Start Over",
+
+  "extractImages": "Extract Images",
+  "startTimeMustBeBeforeEnd": "Start time must be before end time",
+  "extractedCount": "Extracted {count} images",
+  "@extractedCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "noImagesExtracted": "No images extracted, please check the video file",
+  "extractFailed": "Extraction failed",
+  "extractError": "Extraction error: {error}",
+  "@extractError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "savedCountToAlbum": "Saved {count} images to album",
+  "@savedCountToAlbum": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "videoDuration": "Video duration: {duration}",
+  "@videoDuration": {
+    "placeholders": {
+      "duration": { "type": "String" }
+    }
+  },
+  "startTime": "Start time",
+  "endTime": "End time",
+  "extractRange": "Extract range: {start} - {end}  ({duration})",
+  "@extractRange": {
+    "placeholders": {
+      "start": { "type": "String" },
+      "end": { "type": "String" },
+      "duration": { "type": "String" }
+    }
+  },
+  "extractFps": "Extract rate: {fps} fps",
+  "@extractFps": {
+    "placeholders": {
+      "fps": { "type": "String" }
+    }
+  },
+  "estimatedImages": "About {count} images will be extracted",
+  "@estimatedImages": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "extracting": "Extracting...",
+  "startExtract": "Start Extract",
+  "extractedImagesCount": "Extracted {count} images",
+  "@extractedImagesCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "showingFirst30": "Showing first 30 of {count}",
+  "@showingFirst30": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "saveAllCount": "Save all {count}",
+  "@saveAllCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+
+  "muteVideo": "Mute Video",
+  "muteSuccess": "Mute successful!",
+  "muteFailed": "Mute failed",
+  "muteError": "Mute error: {error}",
+  "@muteError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "muteDescription": "All audio will be removed, only video frames retained",
+  "muting": "Muting...",
+  "removeAudio": "Remove Audio",
+
+  "ratioVideo": "Video Ratio",
+  "ratioSuccess": "Ratio adjusted successfully!",
+  "ratioFailed": "Ratio adjustment failed",
+  "ratioError": "Ratio error: {error}",
+  "@ratioError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "targetRatio": "Target ratio:",
+  "scaleMode": "Scale mode:",
+  "stretchFit": "Stretch fit",
+  "cropFill": "Crop fill",
+  "letterbox": "Letterbox",
+  "adjusting": "Adjusting...",
+  "startAdjust": "Start Adjust",
+
+  "separateAV": "Separate A/V",
+  "separateComplete": "Separation complete!",
+  "separateFailed": "Separation failed, video may not contain audio/video tracks",
+  "separateError": "Separation error: {error}",
+  "@separateError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "videoOnlySavedToAlbum": "Video only saved to album",
+  "saveVideoFailed": "Save video failed",
+  "saveVideoError": "Save video error: {error}",
+  "@saveVideoError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "cannotGetDownloadDir": "Cannot get download directory",
+  "savedToDownloads": "{label} saved to: Downloads/{fileName}",
+  "@savedToDownloads": {
+    "placeholders": {
+      "label": { "type": "String" },
+      "fileName": { "type": "String" }
+    }
+  },
+  "fileNotExist": "{label} file does not exist",
+  "@fileNotExist": {
+    "placeholders": {
+      "label": { "type": "String" }
+    }
+  },
+  "separateDescription": "Extract video frames and audio as separate files",
+  "separating": "Separating...",
+  "startSeparate": "Start Separate",
+  "videoOnly": "Video only (no audio)",
+  "savedToAlbumLabel": "Saved to album",
+  "m4aAudio": "M4A Audio",
+  "mp3Audio": "MP3 Audio",
+  "savedToDownloadsShort": "Saved to Downloads",
+  "playMp3Audio": "Play MP3 audio",
+  "playM4aAudio": "Play M4A audio",
+
+  "splitVideo": "Split Video",
+  "addAtLeastOneSplitPoint": "Please add at least one split point",
+  "splitComplete": "Split complete! {count} segments",
+  "@splitComplete": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "splitFailed": "Split failed",
+  "splitError": "Split error: {error}",
+  "@splitError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "savedSegmentsToAlbum": "Saved {count} segments to album",
+  "@savedSegmentsToAlbum": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "splitPoints": "Split points:",
+  "add": "Add",
+  "noSplitPoints": "No split points, tap to add",
+  "splitPoint": "Split point {index}:",
+  "@splitPoint": {
+    "placeholders": {
+      "index": { "type": "int" }
+    }
+  },
+  "willProduceSegments": "Will produce {count} segments after split:",
+  "@willProduceSegments": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "segmentInfo": "Segment {index}: {start}-{end} ({duration})",
+  "@segmentInfo": {
+    "placeholders": {
+      "index": { "type": "int" },
+      "start": { "type": "String" },
+      "end": { "type": "String" },
+      "duration": { "type": "String" }
+    }
+  },
+  "splitting": "Splitting...",
+  "startSplit": "Start Split",
+  "saveAllSegments": "Save all {count} segments",
+  "@saveAllSegments": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "segment": "Segment {index}",
+  "@segment": {
+    "placeholders": {
+      "index": { "type": "int" }
+    }
+  },
+
+  "privacyTitle": "Privacy Policy",
+  "updateDate": "Update date",
+  "privacyDate": "January 1, 2025",
+  "section1Title": "1. Information Collection",
+  "section1Content": "We take your privacy very seriously. This app only collects the following necessary information during service provision:",
+  "section1Item1": "Video/audio files you actively select (only used for local processing, never uploaded to any server)",
+  "section1Item2": "Basic device information (for device adaptation, does not contain personal identity information)",
+  "section2Title": "2. Information Usage",
+  "section2Content": "All audio/video processing is completed locally on your device. We will never upload any of your files or data to remote servers. Collected device information is only used for feature adaptation and crash investigation.",
+  "section3Title": "3. Information Storage",
+  "section3Content": "Temporary files generated by the app are stored in the device's local temporary directory. You can save or delete them at your discretion after processing. We do not store any of your data on servers.",
+  "section4Title": "4. Information Sharing",
+  "section4Content": "We will not sell, trade, or otherwise transfer your personal information to third parties, except in the following cases:",
+  "section4Item1": "With your explicit consent",
+  "section4Item2": "As required by law or government order",
+  "section5Title": "5. Third-party Services",
+  "section5Content": "This app uses some third-party SDKs to provide services, which may have their own privacy policies. Please see the \"Third-party SDK List\" page for details.",
+  "section6Title": "6. Data Security",
+  "section6Content": "We take reasonable security measures to protect your information from unauthorized access, use, or disclosure. However, please note that the Internet is not absolutely secure. We recommend keeping your device safe.",
+  "section7Title": "7. Protection of Minors",
+  "section7Content": "We attach great importance to protecting minors' personal information. If you are under 18, we recommend using this app under the guidance of a guardian.",
+  "section8Title": "8. Privacy Policy Changes",
+  "section8Content": "We may revise this privacy policy from time to time. When changes occur, we will notify you via in-app pop-ups or announcements.",
+  "section9Title": "9. Contact Us",
+  "section9Content": "If you have any questions or suggestions about this privacy policy, please contact us at:\nxinyoushanhai888@gmail.com",
+
+  "sdkFlutterTitle": "Flutter",
+  "sdkFlutterDesc": "Cross-platform application development framework for building UI and interactions",
+  "sdkFfmpegTitle": "FFmpeg",
+  "sdkFfmpegDesc": "Audio/video processing core library for video cropping, compression, format conversion, etc.",
+  "sdkVideoPlayerTitle": "Video Player",
+  "sdkVideoPlayerDesc": "Video playback component for video preview",
+  "sdkFilePickerTitle": "File Picker",
+  "sdkFilePickerDesc": "File selector for choosing local video and audio files",
+  "sdkGallerySaverTitle": "Gallery Saver",
+  "sdkGallerySaverDesc": "Album save tool for saving processed files to system album",
+  "sdkPermissionTitle": "Permission Handler",
+  "sdkPermissionDesc": "Permission management component for requesting storage, album, and other system permissions",
+  "sdkPathProviderTitle": "Path Provider",
+  "sdkPathProviderDesc": "Path provider for obtaining temporary and document directories",
+  "sdkProviderTitle": "Provider",
+  "sdkProviderDesc": "State management library for in-app state sharing and management",
+  "licenseLabel": "License: {license}",
+  "@licenseLabel": {
+    "placeholders": {
+      "license": { "type": "String" }
+    }
+  },
+
+  "videoInitFailed": "Video initialization failed: {error}",
+  "@videoInitFailed": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "selectVideoFailedWithError": "Failed to select video: {error}",
+  "@selectVideoFailedWithError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  }
+}

@@ -3,16 +3,18 @@ library;
 
 import 'package:flutter/material.dart';
 
-/// 全局主题状态，支持浅色/深色切换
+/// 全局主题状态，支持浅色/深色切换和语言切换
 class AppTheme extends ChangeNotifier {
   static final AppTheme _instance = AppTheme._internal();
   factory AppTheme() => _instance;
   AppTheme._internal();
 
   ThemeMode _mode = ThemeMode.light;
+  Locale _locale = const Locale('zh');
 
   ThemeMode get mode => _mode;
   bool get isDark => _mode == ThemeMode.dark;
+  Locale get locale => _locale;
 
   /// 切换主题
   void toggle() {
@@ -26,6 +28,20 @@ class AppTheme extends ChangeNotifier {
       _mode = m;
       notifyListeners();
     }
+  }
+
+  /// 切换语言
+  void setLocale(Locale l) {
+    if (_locale != l) {
+      _locale = l;
+      notifyListeners();
+    }
+  }
+
+  /// 切换中英文
+  void toggleLocale() {
+    _locale = _locale.languageCode == 'zh' ? const Locale('en') : const Locale('zh');
+    notifyListeners();
   }
 
   // --- 颜色常量 ---
