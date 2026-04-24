@@ -14,12 +14,7 @@ import '../utils/top_notify.dart';
 import '../utils/temp_dir_helper.dart'
     if (dart.library.io) '../utils/temp_dir_helper.dart'
     if (dart.library.html) '../utils/temp_dir_helper_web.dart';
-import '../utils/permission_helper.dart'
-    if (dart.library.io) '../utils/permission_helper.dart'
-    if (dart.library.html) '../utils/permission_helper_web.dart';
-import '../utils/gallery_saver_helper.dart'
-    if (dart.library.io) '../utils/gallery_saver_helper.dart'
-    if (dart.library.html) '../utils/gallery_saver_helper_web.dart';
+import '../utils/save_to_gallery.dart';
 
 class CropVideoPage extends StatefulWidget {
   const CropVideoPage({super.key});
@@ -151,12 +146,7 @@ class _CropVideoPageState extends State<CropVideoPage> {
 
   Future<void> _saveToGallery() async {
     if (_resultPath == null) return;
-    final ok = await PermissionHelper.requestPhotos();
-    if (ok != true) { _showError('需要相册权限'); return; }
-    try {
-      final result = await GallerySaverHelper.saveFile(_resultPath!);
-      if (result == true) { _showSuccess('已保存到相册'); } else { _showError('保存失败'); }
-    } catch (e) { _showError('保存出错: $e'); }
+    await SaveToGallery.save(_resultPath!, context);
   }
 
   void _reset() {

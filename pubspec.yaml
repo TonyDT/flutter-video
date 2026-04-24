@@ -38,7 +38,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   provider: ^6.1.2
   path_provider: ^2.1.2
-  intl: ^0.19.0
+  # intl 由 flutter_localizations 自动带入，无需显式声明
 
   # 视频相关
   video_player: ^2.9.3
@@ -51,6 +51,13 @@ dependencies:
 
   # 音频播放
   audioplayers: ^6.1.0
+  shared_preferences: ^2.2.0
+  in_app_purchase: ^3.2.3
+
+  # 安全存储 & 设备标识
+  encrypt: ^5.0.3
+  crypto: ^3.0.3
+  device_info_plus: ^10.1.0
 
 
 flutter_launcher_icons:

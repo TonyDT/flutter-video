@@ -18,12 +18,7 @@ import '../utils/native_file_helper.dart'
 import '../utils/temp_dir_helper.dart'
     if (dart.library.io) '../utils/temp_dir_helper.dart'
     if (dart.library.html) '../utils/temp_dir_helper_web.dart';
-import '../utils/permission_helper.dart'
-    if (dart.library.io) '../utils/permission_helper.dart'
-    if (dart.library.html) '../utils/permission_helper_web.dart';
-import '../utils/gallery_saver_helper.dart'
-    if (dart.library.io) '../utils/gallery_saver_helper.dart'
-    if (dart.library.html) '../utils/gallery_saver_helper_web.dart';
+import '../utils/save_to_gallery.dart';
 import '../utils/video_player_web_helper.dart'
     if (dart.library.io) '../utils/video_player_web_helper_stub.dart'
     if (dart.library.html) '../utils/video_player_web_helper.dart';
@@ -485,25 +480,8 @@ class _MergeVideoPageState extends State<MergeVideoPage> {
   }
 
   Future<void> _saveToGallery() async {
-    if (_mergedVideoPath == null) return;
-    if (kIsWeb) return;
-
-    try {
-      final status = await PermissionHelper.requestPhotos();
-      if (status != true) {
-        _showError('需要相册权限');
-        return;
-      }
-
-      final result = await GallerySaverHelper.saveFile(_mergedVideoPath!);
-      if (result == true) {
-        _showSuccess('已保存到相册');
-      } else {
-        _showError('保存失败');
-      }
-    } catch (e) {
-      _showError('保存出错');
-    }
+    if (_mergedVideoPath == null || kIsWeb) return;
+    await SaveToGallery.save(_mergedVideoPath!, context);
   }
 
   void _reset() {

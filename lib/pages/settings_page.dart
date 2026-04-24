@@ -16,7 +16,7 @@ class SettingsPage extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     return Container(color: AppTheme.bg(context), child: SafeArea(child: ListView(padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8), children: [
       Container(padding: const EdgeInsets.only(left: 4, top: 8, bottom: 16), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Text('Video ToolKit', style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: AppTheme.primaryLight, letterSpacing: -0.5)),
+        Text('ToolKit', style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: AppTheme.primaryLight, letterSpacing: -0.5)),
         const SizedBox(height: 4), Text(l10n.settingsAbout, style: TextStyle(fontSize: 14, color: AppTheme.textSecondary(context))),
       ])),
       const SizedBox(height: 8),

@@ -4,9 +4,11 @@ library;
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 import 'theme/app_theme.dart';
 import 'platform/os.dart';
 import 'pages/tool_tabs_page.dart';
+import 'providers/iap_provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,29 +22,32 @@ class MyApp extends StatelessWidget {
     final os = currentOperatingSystem().toLowerCase();
     final isHarmony = os == 'ohos' || os == 'harmonyos';
 
-    return ListenableBuilder(
-      listenable: AppTheme(),
-      builder: (context, child) {
-        final theme = AppTheme();
-        return MaterialApp(
-          title: 'ToolKit',
-          debugShowCheckedModeBanner: false,
-          themeMode: theme.mode,
-          theme: _buildLightTheme(),
-          darkTheme: _buildDarkTheme(),
-          localizationsDelegates: const [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: AppLocalizations.supportedLocales,
-          locale: AppTheme().locale,
-          home: isHarmony
-              ? const HarmonyDevelopingPage()
-              : const ToolTabsPage(),
-        );
-      },
+    return ChangeNotifierProvider(
+      create: (_) => IAPProvider()..init(),
+      child: ListenableBuilder(
+        listenable: AppTheme(),
+        builder: (context, child) {
+          final theme = AppTheme();
+          return MaterialApp(
+            title: 'ToolKit',
+            debugShowCheckedModeBanner: false,
+            themeMode: theme.mode,
+            theme: _buildLightTheme(),
+            darkTheme: _buildDarkTheme(),
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: AppLocalizations.supportedLocales,
+            locale: AppTheme().locale,
+            home: isHarmony
+                ? const HarmonyDevelopingPage()
+                : const ToolTabsPage(),
+          );
+        },
+      ),
     );
   }
 

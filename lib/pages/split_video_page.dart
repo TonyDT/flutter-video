@@ -14,12 +14,7 @@ import '../utils/top_notify.dart';
 import '../utils/temp_dir_helper.dart'
     if (dart.library.io) '../utils/temp_dir_helper.dart'
     if (dart.library.html) '../utils/temp_dir_helper_web.dart';
-import '../utils/permission_helper.dart'
-    if (dart.library.io) '../utils/permission_helper.dart'
-    if (dart.library.html) '../utils/permission_helper_web.dart';
-import '../utils/gallery_saver_helper.dart'
-    if (dart.library.io) '../utils/gallery_saver_helper.dart'
-    if (dart.library.html) '../utils/gallery_saver_helper_web.dart';
+import '../utils/save_to_gallery.dart';
 
 class SplitVideoPage extends StatefulWidget {
   const SplitVideoPage({super.key});
@@ -133,14 +128,8 @@ class _SplitVideoPageState extends State<SplitVideoPage> {
   }
 
   Future<void> _saveAllToGallery() async {
-    final ok = await PermissionHelper.requestPhotos();
-    if (ok != true) { _showError('需要相册权限'); return; }
-    int saved = 0;
-    for (final p in _resultPaths) {
-      final r = await GallerySaverHelper.saveFile(p);
-      if (r == true) { saved++; }
-    }
-    if (saved > 0) { _showSuccess('已保存 $saved 段到相册'); } else { _showError('保存失败'); }
+    if (_resultPaths.isEmpty) return;
+    await SaveToGallery.saveAll(_resultPaths, context, unit: '段');
   }
 
   void _showError(String m) { if (mounted) TopNotify.error(context, m); }

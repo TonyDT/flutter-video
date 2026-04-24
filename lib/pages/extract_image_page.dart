@@ -15,12 +15,7 @@ import '../utils/native_file_helper.dart'
 import '../utils/temp_dir_helper.dart'
     if (dart.library.io) '../utils/temp_dir_helper.dart'
     if (dart.library.html) '../utils/temp_dir_helper_web.dart';
-import '../utils/permission_helper.dart'
-    if (dart.library.io) '../utils/permission_helper.dart'
-    if (dart.library.html) '../utils/permission_helper_web.dart';
-import '../utils/gallery_saver_helper.dart'
-    if (dart.library.io) '../utils/gallery_saver_helper.dart'
-    if (dart.library.html) '../utils/gallery_saver_helper_web.dart';
+import '../utils/save_to_gallery.dart';
 
 class ExtractImagePage extends StatefulWidget {
   const ExtractImagePage({super.key});
@@ -140,18 +135,7 @@ class _ExtractImagePageState extends State<ExtractImagePage> {
 
   Future<void> _saveAllToGallery() async {
     if (_extractedImages.isEmpty) return;
-    final ok = await PermissionHelper.requestPhotos();
-    if (ok != true) { _showError('需要相册权限'); return; }
-    int saved = 0;
-    for (final imgPath in _extractedImages) {
-      final r = await GallerySaverHelper.saveFile(imgPath);
-      if (r == true) { saved++; }
-    }
-    if (saved > 0) {
-      _showSuccess('已保存 $saved 张图片到相册');
-    } else {
-      _showError('保存失败');
-    }
+    await SaveToGallery.saveAll(_extractedImages, context, unit: '张图片');
   }
 
   void _showError(String m) { if (mounted) TopNotify.error(context, m); }

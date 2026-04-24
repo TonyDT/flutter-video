@@ -64,6 +64,36 @@ class SdkListPage extends StatelessWidget {
       description: '状态管理库，用于应用内状态共享与管理',
       license: 'MIT',
     ),
+    _SdkInfo(
+      name: 'shared_preferences',
+      version: '2.2.0',
+      description: '本地键值存储，用于持久化应用数据',
+      license: 'BSD 3-Clause',
+    ),
+    _SdkInfo(
+      name: 'device_info_plus',
+      version: '10.1.0',
+      description: '设备信息采集，用于获取设备品牌型号等基本信息',
+      license: 'BSD 3-Clause',
+    ),
+    _SdkInfo(
+      name: 'encrypt',
+      version: '5.0.3',
+      description: 'AES-256加密库，用于本地数据加密存储',
+      license: 'MIT',
+    ),
+    _SdkInfo(
+      name: 'crypto',
+      version: '3.0.3',
+      description: '加密算法库，用于密钥派生与数据完整性校验',
+      license: 'BSD 3-Clause',
+    ),
+    _SdkInfo(
+      name: 'in_app_purchase',
+      version: '3.2.3',
+      description: '应用内购买组件，用于处理高级版购买与恢复',
+      license: 'BSD 3-Clause',
+    ),
   ];
 
   // 每个SDK卡片的渐变色
@@ -76,6 +106,11 @@ class SdkListPage extends StatelessWidget {
     [Color(0xFFFF7EB3), Color(0xFFFF5C8A)],
     [Color(0xFF45B7D1), Color(0xFF2980B9)],
     [Color(0xFF667EEA), Color(0xFF5A67D8)],
+    [Color(0xFFF093FB), Color(0xFFF5576C)],
+    [Color(0xFF4FACFE), Color(0xFF00F2FE)],
+    [Color(0xFF43E97B), Color(0xFF38F9D7)],
+    [Color(0xFFFA709A), Color(0xFFFEE140)],
+    [Color(0xFFA18CD1), Color(0xFFDBC7A8)],
   ];
 
   @override
