@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToolKit - Política de Privacidad</title>
+    <style>
+        :root {
+          --primary: #7C3AED;
+          --primary-light: #A78BFA;
+          --bg: #F9FAFB;
+          --card-bg: #FFFFFF;
+          --text: #1F2937;
+          --text-secondary: #6B7280;
+          --border: #E5E7EB;
+          --accent-bg: #F3F0FF;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans SC', 'Noto Sans JP', 'Noto Sans ES', sans-serif;
+          background: var(--bg);
+          color: var(--text);
+          line-height: 1.7;
+        }
+        .header {
+          background: linear-gradient(135deg, #7C3AED 0%, #5B21B6 100%);
+          color: white;
+          padding: 48px 24px 36px;
+          text-align: center;
+        }
+        .header h1 { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+        .header p { font-size: 15px; opacity: 0.85; }
+        .lang-switch {
+          display: flex;
+          justify-content: center;
+          gap: 0;
+          margin-top: 20px;
+          background: rgba(255,255,255,0.15);
+          border-radius: 12px;
+          overflow: hidden;
+          width: fit-content;
+          margin-left: auto;
+          margin-right: auto;
+          flex-wrap: wrap;
+        }
+        .lang-btn {
+          padding: 10px 20px;
+          font-size: 14px;
+          font-weight: 600;
+          border: none;
+          cursor: pointer;
+          background: transparent;
+          color: rgba(255,255,255,0.7);
+          transition: all 0.3s;
+          text-decoration: none;
+          display: inline-block;
+        }
+        .lang-btn.active {
+          background: white;
+          color: var(--primary);
+          border-radius: 10px;
+        }
+        .lang-btn:hover:not(.active) { color: white; }
+        .container {
+          max-width: 800px;
+          margin: 0 auto;
+          padding: 32px 20px 64px;
+        }
+        .meta-card {
+          background: var(--card-bg);
+          border-radius: 16px;
+          padding: 20px 24px;
+          margin-bottom: 24px;
+          border: 1px solid var(--border);
+          display: flex;
+          flex-wrap: wrap;
+          gap: 16px;
+        }
+        .meta-item {
+          flex: 1;
+          min-width: 200px;
+        }
+        .meta-label { font-size: 12px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
+        .meta-value { font-size: 15px; font-weight: 500; margin-top: 4px; }
+        .section {
+          background: var(--card-bg);
+          border-radius: 16px;
+          padding: 24px 28px;
+          margin-bottom: 16px;
+          border: 1px solid var(--border);
+        }
+        .section h2 {
+          font-size: 18px;
+          font-weight: 700;
+          color: var(--primary);
+          margin-bottom: 14px;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+        .section h2 .icon {
+          width: 32px;
+          height: 32px;
+          background: var(--accent-bg);
+          border-radius: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 16px;
+          flex-shrink: 0;
+        }
+        .section p { font-size: 14.5px; color: var(--text); margin-bottom: 10px; }
+        .section ul { padding-left: 20px; margin-bottom: 10px; }
+        .section li { font-size: 14.5px; color: var(--text); margin-bottom: 6px; line-height: 1.6; }
+        .highlight-box {
+          background: var(--accent-bg);
+          border-radius: 12px;
+          padding: 16px 20px;
+          margin: 12px 0;
+          border-left: 4px solid var(--primary);
+        }
+        .highlight-box p { margin-bottom: 0; font-size: 14px; color: #4C1D95; }
+        .data-table {
+          width: 100%;
+          border-collapse: collapse;
+          margin: 12px 0;
+          font-size: 14px;
+        }
+        .data-table th {
+          background: var(--accent-bg);
+          color: var(--primary);
+          padding: 12px 16px;
+          text-align: left;
+          font-weight: 600;
+          font-size: 13px;
+        }
+        .data-table td {
+          padding: 12px 16px;
+          border-bottom: 1px solid var(--border);
+          vertical-align: top;
+        }
+        .data-table tr:last-child td { border-bottom: none; }
+        .footer {
+          text-align: center;
+          padding: 32px 20px;
+          color: var(--text-secondary);
+          font-size: 13px;
+        }
+        .footer a { color: var(--primary); text-decoration: none; }
+        @media (max-width: 600px) {
+          .header { padding: 36px 16px 28px; }
+          .header h1 { font-size: 22px; }
+          .container { padding: 20px 12px 48px; }
+          .section { padding: 18px 16px; }
+          .meta-card { padding: 16px; }
+          .data-table { font-size: 13px; }
+          .data-table th, .data-table td { padding: 10px 8px; }
+          .lang-btn { padding: 8px 14px; font-size: 13px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>ToolKit</h1>
+    <p>Política de Privacidad</p>
+    <div class="lang-switch">
+        <a class="lang-btn" href="yszc.html">中文</a>
+        <a class="lang-btn" href="en.html">English</a>
+        <a class="lang-btn" href="ja.html">日本語</a>
+        <a class="lang-btn active" href="es.html">Español</a>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="meta-card">
+        <div class="meta-item">
+            <div class="meta-label">Fecha de Vigencia</div>
+            <div class="meta-value">24 de abril de 2026</div>
+        </div>
+        <div class="meta-item">
+            <div class="meta-label">Desarrollador</div>
+            <div class="meta-value">xinyoushanhai888@gmail.com</div>
+        </div>
+        <div class="meta-item">
+            <div class="meta-label">Aplicable a</div>
+            <div class="meta-value">ToolKit Android / iOS</div>
+        </div>
+    </div>
+
+    <div class="highlight-box">
+        <p>Esta Política de Privacidad describe cómo ToolKit (en adelante, "la Aplicación") recopila, utiliza, almacena y protege su información personal. Al utilizar la Aplicación, usted acepta los términos de esta Política de Privacidad.</p>
+    </div>
+
+    <div class="section">
+        <h2><span class="icon">📋</span>1. Información que Recopilamos</h2>
+        <p>La Aplicación recopila únicamente la información mínima necesaria para proporcionar sus funciones principales. No recopilamos, cargamos ni almacenamos su información de identificación personal (como nombre, correo electrónico, número de teléfono, etc.).</p>
+        <table class="data-table">
+            <thead>
+            <tr>
+                <th>Tipo de Datos</th>
+                <th>Detalles</th>
+                <th>Propósito</th>
+                <th>Cargado al Servidor</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><strong>Archivos multimedia</strong></td>
+                <td>Archivos de video/audio que usted selecciona</td>
+                <td>Procesados únicamente de forma local en su dispositivo</td>
+                <td>No</td>
+            </tr>
+            <tr>
+                <td><strong>Información del dispositivo</strong></td>
+                <td>Marca, modelo, fabricante, identificador de hardware</td>
+                <td>Generar huella digital del dispositivo para gestión de prueba gratuita</td>
+                <td>No</td>
+            </tr>
+            <tr>
+                <td><strong>Registros de compra</strong></td>
+                <td>Estado de compra a través de Google Play / App Store</td>
+                <td>Verificar estado de compra premium y desbloquear funciones</td>
+                <td>Gestionado por Google/Apple</td>
+            </tr>
+            <tr>
+                <td><strong>Contador de uso</strong></td>
+                <td>Usos restantes de prueba gratuita</td>
+                <td>Gestión de cuota de prueba gratuita</td>
+                <td>No</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2><span class="icon">🔧</span>2. Cómo Utilizamos la Información</h2>
+        <p>La información que recopilamos se utiliza únicamente para los siguientes propósitos:</p>
+        <ul>
+            <li><strong>Procesamiento de audio/video</strong>: Los archivos multimedia que selecciona se procesan localmente en su dispositivo. Usted decide si guarda o elimina los resultados.</li>
+            <li><strong>Gestión de prueba gratuita</strong>: Se utiliza la información del dispositivo para generar una huella digital que gestiona los 7 usos de prueba gratuita y previene la manipulación.</li>
+            <li><strong>Verificación de compra</strong>: Verificamos su estado de compra a través de Google Play Billing o Apple StoreKit para determinar el acceso a funciones premium.</li>
+            <li><strong>Seguridad de datos</strong>: El cifrado AES-256-CBC protege los datos sensibles almacenados localmente contra manipulación y acceso no autorizado.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2><span class="icon">🔒</span>3. Almacenamiento y Seguridad de Datos</h2>
+        <p>Tomamos la seguridad de sus datos muy en serio e implementamos las siguientes medidas:</p>
+        <ul>
+            <li><strong>Almacenamiento local</strong>: Todos los datos (incluyendo contadores de uso, estado de compra) se almacenan localmente en su dispositivo y no se cargan a ningún servidor remoto.</li>
+            <li><strong>Cifrado AES-256-CBC</strong>: Los datos sensibles (contador de prueba gratuita, estado de compra) se cifran utilizando el algoritmo AES-256-CBC con un IV generado aleatoriamente para cada cifrado.</li>
+            <li><strong>Clave vinculada al dispositivo</strong>: La clave de cifrado se deriva de la huella digital de hardware de su dispositivo (SHA-256), está vinculada al dispositivo y no puede descifrarse en otros dispositivos.</li>
+            <li><strong>Verificación de integridad HMAC-SHA256</strong>: Los datos cifrados incluyen un código de verificación de integridad que detecta cualquier manipulación; los datos manipulados se restablecen en lugar de interpretarse erróneamente.</li>
+            <li><strong>Limpieza de archivos temporales</strong>: Los archivos temporales generados durante el procesamiento se almacenan en el directorio temporal del sistema y pueden ser limpiados manualmente por usted.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2><span class="icon">🤝</span>4. Compartir y Divulgación de Información</h2>
+        <p>No vendemos, intercambiamos ni transferimos su información personal a terceros. Las excepciones incluyen:</p>
+        <ul>
+            <li><strong>Compras dentro de la aplicación</strong>: Las transacciones de compra son procesadas por Google Play o Apple App Store y están sujetas a las respectivas políticas de privacidad de Google y Apple.</li>
+            <li><strong>Requisitos legales</strong>: Cuando sea requerido por ley, proceso legal o autoridad gubernamental.</li>
+            <li><strong>Consentimiento del usuario</strong>: Con su consentimiento explícito.</li>
+        </ul>
+        <div class="highlight-box">
+            <p>No compartimos, vendemos ni distribuimos su información personal con fines publicitarios.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2><span class="icon">⏱️</span>5. Retención y Eliminación de Datos</h2>
+        <ul>
+            <li><strong>Archivos multimedia</strong>: Se utilizan temporalmente solo durante el procesamiento; no se conservan copias después de completar el procesamiento.</li>
+            <li><strong>Contador de uso y estado de compra</strong>: Almacenados localmente en su dispositivo; al desinstalar la Aplicación se eliminarán automáticamente todos los datos.</li>
+            <li><strong>Archivos temporales</strong>: Almacenados en el directorio temporal del sistema; pueden limpiarse manualmente o ser reclamados automáticamente por el sistema.</li>
+            <li>Puede eliminar todos los datos almacenados localmente en cualquier momento desinstalando la Aplicación.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2><span class="icon">🔑</span>6. Permisos de la Aplicación</h2>
+        <p>La Aplicación solicita los siguientes permisos del sistema para su funcionalidad principal:</p>
+        <table class="data-table">
+            <thead>
+            <tr>
+                <th>Permiso</th>
+                <th>Propósito</th>
+                <th>Obligatorio</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><strong>Almacenamiento / Fototeca</strong></td>
+                <td>Leer archivos de video seleccionados; guardar archivos procesados en la fototeca</td>
+                <td>Sí</td>
+            </tr>
+            <tr>
+                <td><strong>Micrófono</strong></td>
+                <td>Se utiliza solo en la función de doblaje para grabación de audio</td>
+                <td>No (solo para función de doblaje)</td>
+            </tr>
+            <tr>
+                <td><strong>Red</strong></td>
+                <td>Verificar estado de compra dentro de la aplicación (Google Play Billing)</td>
+                <td>Sí (para funciones de compra)</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2><span class="icon">📦</span>7. Servicios de Terceros</h2>
+        <p>La Aplicación integra los siguientes SDK/servicios de terceros, que pueden tener sus propias políticas de privacidad:</p>
+        <table class="data-table">
+            <thead>
+            <tr>
+                <th>SDK / Servicio</th>
+                <th>Propósito</th>
+                <th>Recopilación de Datos</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><strong>Google Play Billing</strong></td>
+                <td>Procesar compras dentro de la aplicación</td>
+                <td>Información de transacción de compra, sujeta a la política de privacidad de Google</td>
+            </tr>
+            <tr>
+                <td><strong>Apple StoreKit</strong></td>
+                <td>Procesar compras dentro de la aplicación (iOS)</td>
+                <td>Información de transacción de compra, sujeta a la política de privacidad de Apple</td>
+            </tr>
+            <tr>
+                <td><strong>FFmpeg</strong></td>
+                <td>Motor de procesamiento de audio/video</td>
+                <td>Sin recopilación de datos, funciona completamente de forma local</td>
+            </tr>
+            <tr>
+                <td><strong>device_info_plus</strong></td>
+                <td>Obtener información básica del dispositivo</td>
+                <td>Marca, modelo, fabricante del dispositivo, etc., solo uso local</td>
+            </tr>
+            </tbody>
+        </table>
+        <p>Para la lista completa de SDK de terceros, consulte la página "Configuración → Lista de SDK de terceros" dentro de la Aplicación.</p>
+    </div>
+
+    <div class="section">
+        <h2><span class="icon">👶</span>8. Privacidad de Menores</h2>
+        <p>La Aplicación no está dirigida a menores de 13 años. En cumplimiento de COPPA y las regulaciones aplicables:</p>
+        <ul>
+            <li>La Aplicación no proporciona contenido o servicios dirigidos a menores.</li>
+            <li>No servimos publicidad dirigida a menores.</li>
+            <li>Si descubrimos que hemos recopilado inadvertidamente información de un menor de 13 años, la eliminaremos inmediatamente.</li>
+            <li>Se recomienda que los menores utilicen la Aplicación bajo la supervisión de un padre o tutor.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2><span class="icon">✅</span>9. Sus Derechos</h2>
+        <p>Según la legislación aplicable, usted tiene los siguientes derechos:</p>
+        <ul>
+            <li><strong>Derecho de acceso</strong>: Puede ver sus datos de uso y estado de compra en cualquier momento dentro de la configuración de la Aplicación.</li>
+            <li><strong>Derecho de supresión</strong>: Puede eliminar todos los datos almacenados localmente desinstalando la Aplicación.</li>
+            <li><strong>Derecho a retirar el consentimiento</strong>: Puede revocar los permisos otorgados en cualquier momento en la configuración de su sistema.</li>
+            <li><strong>Derecho a la portabilidad de datos</strong>: Dado que todos los datos se almacenan localmente, usted tiene control total sobre sus datos.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2><span class="icon">📝</span>10. Cambios en esta Política</h2>
+        <p>Podemos actualizar esta Política de Privacidad periódicamente. Cuando se realicen cambios:</p>
+        <ul>
+            <li>Le notificaremos a través de ventanas emergentes o anuncios dentro de la Aplicación.</li>
+            <li>La Política de Privacidad actualizada se publicará en esta página.</li>
+            <li>El uso continuado de la Aplicación constituye la aceptación de la Política de Privacidad revisada.</li>
+            <li>Para cambios significativos, solicitaremos su consentimiento explícito.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2><span class="icon">📧</span>11. Contáctenos</h2>
+        <p>Si tiene alguna pregunta, comentario o sugerencia sobre esta Política de Privacidad, contáctenos en:</p>
+        <div class="highlight-box">
+            <p><strong>Correo electrónico:</strong> xinyoushanhai888@gmail.com</p>
+            <p style="margin-top:8px">Responderemos a su solicitud dentro de 15 días hábiles.</p>
+        </div>
+    </div>
+
+</div>
+
+<div class="footer">
+    <p>&copy; 2026 ToolKit. All rights reserved.</p>
+</div>
+
+</body>
+</html>
