@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ToolKit - Privacy Policy / 隐私政策</title>
+  <title>ToolKit - Privacy Policy / 隐私政策 / プライバシーポリシー / Política de Privacidad</title>
   <style>
     :root {
       --primary: #7C3AED;
@@ -17,7 +17,7 @@
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans SC', sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans SC', 'Noto Sans JP', 'Noto Sans ES', sans-serif;
       background: var(--bg);
       color: var(--text);
       line-height: 1.7;
@@ -41,10 +41,11 @@
       width: fit-content;
       margin-left: auto;
       margin-right: auto;
+      flex-wrap: wrap;
     }
     .lang-btn {
-      padding: 10px 32px;
-      font-size: 15px;
+      padding: 10px 20px;
+      font-size: 14px;
       font-weight: 600;
       border: none;
       cursor: pointer;
@@ -149,11 +150,26 @@
     }
     .footer a { color: var(--primary); text-decoration: none; }
 
-    [data-lang="en"] { display: none; }
-    body.lang-en [data-lang="zh"] { display: none; }
+    /* Language visibility */
+    [data-lang="en"], [data-lang="ja"], [data-lang="es"] { display: none; }
+    body.lang-zh [data-lang="zh"] { display: block; }
     body.lang-en [data-lang="en"] { display: block; }
-    body.lang-en .section p,
-    body.lang-en .section li { display: list-item; }
+    body.lang-ja [data-lang="ja"] { display: block; }
+    body.lang-es [data-lang="es"] { display: block; }
+
+    /* Hide non-active languages in header subtitle */
+    body.lang-zh .header [data-lang="en"],
+    body.lang-zh .header [data-lang="ja"],
+    body.lang-zh .header [data-lang="es"] { display: none; }
+    body.lang-en .header [data-lang="zh"],
+    body.lang-en .header [data-lang="ja"],
+    body.lang-en .header [data-lang="es"] { display: none; }
+    body.lang-ja .header [data-lang="zh"],
+    body.lang-ja .header [data-lang="en"],
+    body.lang-ja .header [data-lang="es"] { display: none; }
+    body.lang-es .header [data-lang="zh"],
+    body.lang-es .header [data-lang="en"],
+    body.lang-es .header [data-lang="ja"] { display: none; }
 
     @media (max-width: 600px) {
       .header { padding: 36px 16px 28px; }
@@ -163,6 +179,7 @@
       .meta-card { padding: 16px; }
       .data-table { font-size: 13px; }
       .data-table th, .data-table td { padding: 10px 8px; }
+      .lang-btn { padding: 8px 14px; font-size: 13px; }
     }
   </style>
 </head>
@@ -172,9 +189,13 @@
     <h1>ToolKit</h1>
     <p data-lang="zh">隐私政策</p>
     <p data-lang="en">Privacy Policy</p>
+    <p data-lang="ja">プライバシーポリシー</p>
+    <p data-lang="es">Política de Privacidad</p>
     <div class="lang-switch">
       <button class="lang-btn active" onclick="switchLang('zh')">中文</button>
       <button class="lang-btn" onclick="switchLang('en')">English</button>
+      <button class="lang-btn" onclick="switchLang('ja')">日本語</button>
+      <button class="lang-btn" onclick="switchLang('es')">Español</button>
     </div>
   </div>
 
@@ -202,11 +223,9 @@
         <p>本隐私政策说明 ToolKit（以下简称"本应用"）如何收集、使用、存储和保护您的个人信息。使用本应用即表示您同意本隐私政策所述内容。</p>
       </div>
 
-      <!-- 一、信息收集 -->
       <div class="section">
         <h2><span class="icon">📋</span>一、我们收集的信息</h2>
         <p>本应用仅收集为提供核心功能所必需的最少信息。我们不会收集、上传或存储您的个人身份信息（如姓名、邮箱、电话号码等）。</p>
-
         <table class="data-table">
           <thead>
             <tr>
@@ -245,7 +264,6 @@
         </table>
       </div>
 
-      <!-- 二、信息使用 -->
       <div class="section">
         <h2><span class="icon">🔧</span>二、信息的使用方式</h2>
         <p>我们收集的信息仅用于以下目的：</p>
@@ -257,7 +275,6 @@
         </ul>
       </div>
 
-      <!-- 三、信息存储 -->
       <div class="section">
         <h2><span class="icon">🔒</span>三、信息的存储与安全</h2>
         <p>我们高度重视您的数据安全，采取以下措施保护您的信息：</p>
@@ -270,7 +287,6 @@
         </ul>
       </div>
 
-      <!-- 四、信息共享 -->
       <div class="section">
         <h2><span class="icon">🤝</span>四、信息的共享与披露</h2>
         <p>我们不会将您的个人信息出售、交易或转让给任何第三方。以下情况除外：</p>
@@ -284,7 +300,6 @@
         </div>
       </div>
 
-      <!-- 五、数据保留 -->
       <div class="section">
         <h2><span class="icon">⏱️</span>五、数据的保留与删除</h2>
         <ul>
@@ -295,7 +310,6 @@
         </ul>
       </div>
 
-      <!-- 六、权限说明 -->
       <div class="section">
         <h2><span class="icon">🔑</span>六、应用权限说明</h2>
         <p>本应用请求以下系统权限以实现核心功能：</p>
@@ -327,7 +341,6 @@
         </table>
       </div>
 
-      <!-- 七、第三方SDK -->
       <div class="section">
         <h2><span class="icon">📦</span>七、第三方服务</h2>
         <p>本应用集成了以下第三方SDK/服务，这些服务可能有其独立的隐私政策：</p>
@@ -365,7 +378,6 @@
         <p>完整第三方SDK列表请参见应用内"设置 → 第三方SDK列表"页面。</p>
       </div>
 
-      <!-- 八、儿童隐私 -->
       <div class="section">
         <h2><span class="icon">👶</span>八、儿童隐私保护</h2>
         <p>本应用不面向13岁以下儿童，我们不会故意收集儿童的个人信息。根据 COPPA 和相关法规：</p>
@@ -377,7 +389,6 @@
         </ul>
       </div>
 
-      <!-- 九、您的权利 -->
       <div class="section">
         <h2><span class="icon">✅</span>九、您的权利</h2>
         <p>根据适用法律，您享有以下权利：</p>
@@ -389,7 +400,6 @@
         </ul>
       </div>
 
-      <!-- 十、变更 -->
       <div class="section">
         <h2><span class="icon">📝</span>十、隐私政策变更</h2>
         <p>我们可能会不时更新本隐私政策。当政策发生变更时：</p>
@@ -401,7 +411,6 @@
         </ul>
       </div>
 
-      <!-- 十一、联系 -->
       <div class="section">
         <h2><span class="icon">📧</span>十一、联系我们</h2>
         <p>如您对本隐私政策有任何疑问、意见或建议，请通过以下方式联系我们：</p>
@@ -435,11 +444,9 @@
         <p>This Privacy Policy describes how ToolKit ("the App") collects, uses, stores, and protects your personal information. By using the App, you agree to the terms of this Privacy Policy.</p>
       </div>
 
-      <!-- 1. Information We Collect -->
       <div class="section">
         <h2><span class="icon">📋</span>1. Information We Collect</h2>
         <p>The App collects only the minimum information necessary to provide its core features. We do not collect, upload, or store your personal identification information (such as name, email address, phone number, etc.).</p>
-
         <table class="data-table">
           <thead>
             <tr>
@@ -478,7 +485,6 @@
         </table>
       </div>
 
-      <!-- 2. How We Use Information -->
       <div class="section">
         <h2><span class="icon">🔧</span>2. How We Use Information</h2>
         <p>The information we collect is used solely for the following purposes:</p>
@@ -490,7 +496,6 @@
         </ul>
       </div>
 
-      <!-- 3. Data Storage & Security -->
       <div class="section">
         <h2><span class="icon">🔒</span>3. Data Storage and Security</h2>
         <p>We take the security of your data very seriously and implement the following measures:</p>
@@ -503,7 +508,6 @@
         </ul>
       </div>
 
-      <!-- 4. Data Sharing -->
       <div class="section">
         <h2><span class="icon">🤝</span>4. Data Sharing and Disclosure</h2>
         <p>We do not sell, trade, or transfer your personal information to any third party. Exceptions include:</p>
@@ -517,7 +521,6 @@
         </div>
       </div>
 
-      <!-- 5. Data Retention -->
       <div class="section">
         <h2><span class="icon">⏱️</span>5. Data Retention and Deletion</h2>
         <ul>
@@ -528,7 +531,6 @@
         </ul>
       </div>
 
-      <!-- 6. Permissions -->
       <div class="section">
         <h2><span class="icon">🔑</span>6. App Permissions</h2>
         <p>The App requests the following system permissions for core functionality:</p>
@@ -560,7 +562,6 @@
         </table>
       </div>
 
-      <!-- 7. Third-Party Services -->
       <div class="section">
         <h2><span class="icon">📦</span>7. Third-Party Services</h2>
         <p>The App integrates the following third-party SDKs/services, which may have their own privacy policies:</p>
@@ -598,7 +599,6 @@
         <p>For the complete list of third-party SDKs, please refer to the "Settings → Third-Party SDK List" page within the App.</p>
       </div>
 
-      <!-- 8. Children's Privacy -->
       <div class="section">
         <h2><span class="icon">👶</span>8. Children's Privacy</h2>
         <p>The App is not directed at children under 13 years of age. In compliance with COPPA and applicable regulations:</p>
@@ -610,7 +610,6 @@
         </ul>
       </div>
 
-      <!-- 9. Your Rights -->
       <div class="section">
         <h2><span class="icon">✅</span>9. Your Rights</h2>
         <p>Under applicable law, you have the following rights:</p>
@@ -622,7 +621,6 @@
         </ul>
       </div>
 
-      <!-- 10. Policy Changes -->
       <div class="section">
         <h2><span class="icon">📝</span>10. Changes to This Policy</h2>
         <p>We may update this Privacy Policy from time to time. When changes are made:</p>
@@ -634,13 +632,454 @@
         </ul>
       </div>
 
-      <!-- 11. Contact -->
       <div class="section">
         <h2><span class="icon">📧</span>11. Contact Us</h2>
         <p>If you have any questions, comments, or suggestions regarding this Privacy Policy, please contact us at:</p>
         <div class="highlight-box">
           <p><strong>Email:</strong> xinyoushanhai888@gmail.com</p>
           <p style="margin-top:8px">We will respond to your request within 15 business days.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ==================== 日本語版 ==================== -->
+    <div data-lang="ja">
+
+      <div class="meta-card">
+        <div class="meta-item">
+          <div class="meta-label">発効日</div>
+          <div class="meta-value">2026年4月24日</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">開発者</div>
+          <div class="meta-value">xinyoushanhai888@gmail.com</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">適用範囲</div>
+          <div class="meta-value">ToolKit Android / iOS</div>
+        </div>
+      </div>
+
+      <div class="highlight-box">
+        <p>本プライバシーポリシーは、ToolKit（以下「本アプリ」）がお客様の個人情報をどのように収集、使用、保存、保護するかについて説明します。本アプリを使用することにより、本プライバシーポリシーの内容に同意したものとみなされます。</p>
+      </div>
+
+      <div class="section">
+        <h2><span class="icon">📋</span>1. 収集する情報</h2>
+        <p>本アプリは、コア機能を提供するために必要最小限の情報のみを収集します。お客様の個人識別情報（氏名、メールアドレス、電話番号など）を収集、アップロード、保存することはありません。</p>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>情報の種類</th>
+              <th>詳細</th>
+              <th>収集目的</th>
+              <th>サーバーへのアップロード</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>メディアファイル</strong></td>
+              <td>お客様が選択した動画/音声ファイル</td>
+              <td>デバイス上でのみ音声/動画処理を行う</td>
+              <td>なし</td>
+            </tr>
+            <tr>
+              <td><strong>デバイス情報</strong></td>
+              <td>ブランド、モデル、メーカー、ハードウェア識別子</td>
+              <td>デバイスフィンガープリントの生成、無料トライアル管理</td>
+              <td>なし</td>
+            </tr>
+            <tr>
+              <td><strong>購入履歴</strong></td>
+              <td>Google Play / App Store での購入ステータス</td>
+              <td>プレミアム購入ステータスの確認、機能のアンロック</td>
+              <td>Google/Apple が処理</td>
+            </tr>
+            <tr>
+              <td><strong>使用回数</strong></td>
+              <td>無料トライアルの残り回数</td>
+              <td>無料トライアル回数の管理</td>
+              <td>なし</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="section">
+        <h2><span class="icon">🔧</span>2. 情報の使用方法</h2>
+        <p>収集した情報は以下の目的でのみ使用されます：</p>
+        <ul>
+          <li><strong>音声/動画処理</strong>：お客様が選択したメディアファイルはデバイス上でのみ処理され、処理結果の保存・削除はお客様が決定します</li>
+          <li><strong>無料トライアル管理</strong>：デバイス情報を使用してデバイスフィンガープリントを生成し、7回の無料トライアル回数を管理し、改ざんを防止します</li>
+          <li><strong>購入確認</strong>：Google Play Billing または Apple StoreKit を通じて購入ステータスを確認し、プレミアム機能へのアクセスを判断します</li>
+          <li><strong>データセキュリティ</strong>：AES-256-CBC暗号化により、ローカルに保存された機密データを改ざんや不正アクセスから保護します</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2><span class="icon">🔒</span>3. データの保存とセキュリティ</h2>
+        <p>お客様のデータのセキュリティを非常に重視しており、以下の措置を実施しています：</p>
+        <ul>
+          <li><strong>ローカルストレージ</strong>：すべてのデータ（使用回数、購入ステータスを含む）はデバイス上にローカル保存され、リモートサーバーにはアップロードされません</li>
+          <li><strong>AES-256-CBC暗号化</strong>：機密データ（無料トライアル回数、購入ステータス）は、暗号化ごとにランダムに生成されたIVを使用してAES-256-CBCアルゴリズムで暗号化されます</li>
+          <li><strong>デバイスバインドキー</strong>：暗号化キーはデバイスのハードウェアフィンガープリント（SHA-256）から派生し、デバイスにバインドされているため、他のデバイスでは復号できません</li>
+          <li><strong>HMAC-SHA256整合性チェック</strong>：暗号化データには整合性検証コードが付属し、改ざんを検出できます。改ざんされたデータは誤解釈されずにリセットされます</li>
+          <li><strong>一時ファイルのクリーンアップ</strong>：処理中に生成された一時ファイルはシステムの一時ディレクトリに保存され、お客様が手動でクリーンアップできます</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2><span class="icon">🤝</span>4. 情報の共有と開示</h2>
+        <p>お客様の個人情報を第三者に販売、取引、譲渡することはありません。以下の例外を除きます：</p>
+        <ul>
+          <li><strong>アプリ内購入</strong>：購入取引は Google Play または Apple App Store によって処理され、Google および Apple のそれぞれのプライバシーポリシーが適用されます</li>
+          <li><strong>法的要件</strong>：法律、法的手続き、または政府機関の要請に基づく場合</li>
+          <li><strong>ユーザーの同意</strong>：お客様の明示的な同意がある場合</li>
+        </ul>
+        <div class="highlight-box">
+          <p>広告目的でのお客様の個人情報の共有、販売、配布は行いません。</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2><span class="icon">⏱️</span>5. データの保持と削除</h2>
+        <ul>
+          <li><strong>メディアファイル</strong>：処理中にのみ一時的に使用し、処理完了後はコピーを保持しません</li>
+          <li><strong>使用回数と購入ステータス</strong>：デバイス上にローカル保存され、アプリをアンインストールするとすべてのデータが自動的に削除されます</li>
+          <li><strong>一時ファイル</strong>：システムの一時ディレクトリに保存され、手動でのクリーンアップまたはシステムによる自動回收が可能です</li>
+          <li>アプリをアンインストールすることで、いつでもローカルに保存されたすべてのデータを削除できます</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2><span class="icon">🔑</span>6. アプリの権限</h2>
+        <p>本アプリはコア機能の実現に以下のシステム権限を要求します：</p>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>権限</th>
+              <th>目的</th>
+              <th>必須</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>ストレージ/フォトライブラリ</strong></td>
+              <td>選択した動画ファイルの読み取り、処理済みファイルのフォトライブラリへの保存</td>
+              <td>はい</td>
+            </tr>
+            <tr>
+              <td><strong>マイク</strong></td>
+              <td>吹き替え機能での音声録音にのみ使用</td>
+              <td>いいえ（吹き替え機能使用時のみ）</td>
+            </tr>
+            <tr>
+              <td><strong>ネットワーク</strong></td>
+              <td>アプリ内購入ステータスの確認（Google Play Billing）</td>
+              <td>はい（購入機能に必要）</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="section">
+        <h2><span class="icon">📦</span>7. サードパーティサービス</h2>
+        <p>本アプリには以下のサードパーティSDK/サービスが統合されており、それぞれ独自のプライバシーポリシーが適用される場合があります：</p>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>SDK / サービス</th>
+              <th>目的</th>
+              <th>データ収集</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Google Play Billing</strong></td>
+              <td>アプリ内購入の処理</td>
+              <td>購入取引情報、Googleのプライバシーポリシーが適用</td>
+            </tr>
+            <tr>
+              <td><strong>Apple StoreKit</strong></td>
+              <td>アプリ内購入の処理（iOS）</td>
+              <td>購入取引情報、Appleのプライバシーポリシーが適用</td>
+            </tr>
+            <tr>
+              <td><strong>FFmpeg</strong></td>
+              <td>音声/動画処理エンジン</td>
+              <td>データ収集なし、完全にローカルで動作</td>
+            </tr>
+            <tr>
+              <td><strong>device_info_plus</strong></td>
+              <td>デバイスの基本情報の取得</td>
+              <td>デバイスのブランド、モデル、メーカーなど、ローカルのみで使用</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>サードパーティSDKの完全なリストについては、アプリ内の「設定 → サードパーティSDKリスト」ページをご参照ください。</p>
+      </div>
+
+      <div class="section">
+        <h2><span class="icon">👶</span>8. 児童のプライバシー</h2>
+        <p>本アプリは13歳未満の児童を対象としていません。COPPAおよび適用法規に基づき：</p>
+        <ul>
+          <li>本アプリは児童向けのコンテンツやサービスを提供していません</li>
+          <li>児童に対するターゲット広告は配信しません</li>
+          <li>13歳未満の児童の情報を意図せず収集したことが判明した場合、直ちに削除します</li>
+          <li>未成年者は保護者の指導のもとで本アプリを使用することをお勧めします</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2><span class="icon">✅</span>9. お客様の権利</h2>
+        <p>適用法に基づき、お客様は以下の権利を有します：</p>
+        <ul>
+          <li><strong>アクセス権</strong>：アプリの設定でいつでも使用データと購入ステータスを確認できます</li>
+          <li><strong>削除権</strong>：アプリをアンインストールすることで、ローカルに保存されたすべてのデータを削除できます</li>
+          <li><strong>同意の撤回権</strong>：システム設定で付与済みの権限をいつでも取り消すことができます</li>
+          <li><strong>データポータビリティ権</strong>：すべてのデータはローカルに保存されているため、お客様がデータを完全に管理できます</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2><span class="icon">📝</span>10. ポリシーの変更</h2>
+        <p>本プライバシーポリシーを随時更新する場合があります。変更があった場合：</p>
+        <ul>
+          <li>アプリ内のポップアップまたはお知らせでお客様に通知します</li>
+          <li>更新されたプライバシーポリシーは本ページに掲載されます</li>
+          <li>引き続き本アプリを使用することは、改訂されたプライバシーポリシーに同意したものとみなされます</li>
+          <li>重要な変更については、お客様の明示的な同意を求めます</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2><span class="icon">📧</span>11. お問い合わせ</h2>
+        <p>本プライバシーポリシーに関するご質問、ご意見、ご提案がございましたら、以下までご連絡ください：</p>
+        <div class="highlight-box">
+          <p><strong>メール：</strong>xinyoushanhai888@gmail.com</p>
+          <p style="margin-top:8px">お客様からのご要望に対し、15営業日以内に回答いたします。</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ==================== Versión en Español ==================== -->
+    <div data-lang="es">
+
+      <div class="meta-card">
+        <div class="meta-item">
+          <div class="meta-label">Fecha de Vigencia</div>
+          <div class="meta-value">24 de abril de 2026</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Desarrollador</div>
+          <div class="meta-value">xinyoushanhai888@gmail.com</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Aplicable a</div>
+          <div class="meta-value">ToolKit Android / iOS</div>
+        </div>
+      </div>
+
+      <div class="highlight-box">
+        <p>Esta Política de Privacidad describe cómo ToolKit (en adelante, "la Aplicación") recopila, utiliza, almacena y protege su información personal. Al utilizar la Aplicación, usted acepta los términos de esta Política de Privacidad.</p>
+      </div>
+
+      <div class="section">
+        <h2><span class="icon">📋</span>1. Información que Recopilamos</h2>
+        <p>La Aplicación recopila únicamente la información mínima necesaria para proporcionar sus funciones principales. No recopilamos, cargamos ni almacenamos su información de identificación personal (como nombre, correo electrónico, número de teléfono, etc.).</p>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Tipo de Datos</th>
+              <th>Detalles</th>
+              <th>Propósito</th>
+              <th>Cargado al Servidor</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Archivos multimedia</strong></td>
+              <td>Archivos de video/audio que usted selecciona</td>
+              <td>Procesados únicamente de forma local en su dispositivo</td>
+              <td>No</td>
+            </tr>
+            <tr>
+              <td><strong>Información del dispositivo</strong></td>
+              <td>Marca, modelo, fabricante, identificador de hardware</td>
+              <td>Generar huella digital del dispositivo para gestión de prueba gratuita</td>
+              <td>No</td>
+            </tr>
+            <tr>
+              <td><strong>Registros de compra</strong></td>
+              <td>Estado de compra a través de Google Play / App Store</td>
+              <td>Verificar estado de compra premium y desbloquear funciones</td>
+              <td>Gestionado por Google/Apple</td>
+            </tr>
+            <tr>
+              <td><strong>Contador de uso</strong></td>
+              <td>Usos restantes de prueba gratuita</td>
+              <td>Gestión de cuota de prueba gratuita</td>
+              <td>No</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="section">
+        <h2><span class="icon">🔧</span>2. Cómo Utilizamos la Información</h2>
+        <p>La información que recopilamos se utiliza únicamente para los siguientes propósitos:</p>
+        <ul>
+          <li><strong>Procesamiento de audio/video</strong>: Los archivos multimedia que selecciona se procesan localmente en su dispositivo. Usted decide si guarda o elimina los resultados</li>
+          <li><strong>Gestión de prueba gratuita</strong>: Se utiliza la información del dispositivo para generar una huella digital que gestiona los 7 usos de prueba gratuita y previene la manipulación</li>
+          <li><strong>Verificación de compra</strong>: Verificamos su estado de compra a través de Google Play Billing o Apple StoreKit para determinar el acceso a funciones premium</li>
+          <li><strong>Seguridad de datos</strong>: El cifrado AES-256-CBC protege los datos sensibles almacenados localmente contra manipulación y acceso no autorizado</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2><span class="icon">🔒</span>3. Almacenamiento y Seguridad de Datos</h2>
+        <p>Tomamos la seguridad de sus datos muy en serio e implementamos las siguientes medidas:</p>
+        <ul>
+          <li><strong>Almacenamiento local</strong>: Todos los datos (incluyendo contadores de uso, estado de compra) se almacenan localmente en su dispositivo y no se cargan a ningún servidor remoto</li>
+          <li><strong>Cifrado AES-256-CBC</strong>: Los datos sensibles (contador de prueba gratuita, estado de compra) se cifran utilizando el algoritmo AES-256-CBC con un IV generado aleatoriamente para cada cifrado</li>
+          <li><strong>Clave vinculada al dispositivo</strong>: La clave de cifrado se deriva de la huella digital de hardware de su dispositivo (SHA-256), está vinculada al dispositivo y no puede descifrarse en otros dispositivos</li>
+          <li><strong>Verificación de integridad HMAC-SHA256</strong>: Los datos cifrados incluyen un código de verificación de integridad que detecta cualquier manipulación; los datos manipulados se restablecen en lugar de interpretarse erróneamente</li>
+          <li><strong>Limpieza de archivos temporales</strong>: Los archivos temporales generados durante el procesamiento se almacenan en el directorio temporal del sistema y pueden ser limpiados manualmente por usted</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2><span class="icon">🤝</span>4. Compartir y Divulgación de Información</h2>
+        <p>No vendemos, intercambiamos ni transferimos su información personal a terceros. Las excepciones incluyen:</p>
+        <ul>
+          <li><strong>Compras dentro de la aplicación</strong>: Las transacciones de compra son procesadas por Google Play o Apple App Store y están sujetas a las respectivas políticas de privacidad de Google y Apple</li>
+          <li><strong>Requisitos legales</strong>: Cuando sea requerido por ley, proceso legal o autoridad gubernamental</li>
+          <li><strong>Consentimiento del usuario</strong>: Con su consentimiento explícito</li>
+        </ul>
+        <div class="highlight-box">
+          <p>No compartimos, vendemos ni distribuimos su información personal con fines publicitarios.</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2><span class="icon">⏱️</span>5. Retención y Eliminación de Datos</h2>
+        <ul>
+          <li><strong>Archivos multimedia</strong>: Se utilizan temporalmente solo durante el procesamiento; no se conservan copias después de completar el procesamiento</li>
+          <li><strong>Contador de uso y estado de compra</strong>: Almacenados localmente en su dispositivo; al desinstalar la Aplicación se eliminarán automáticamente todos los datos</li>
+          <li><strong>Archivos temporales</strong>: Almacenados en el directorio temporal del sistema; pueden limpiarse manualmente o ser reclamados automáticamente por el sistema</li>
+          <li>Puede eliminar todos los datos almacenados localmente en cualquier momento desinstalando la Aplicación</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2><span class="icon">🔑</span>6. Permisos de la Aplicación</h2>
+        <p>La Aplicación solicita los siguientes permisos del sistema para su funcionalidad principal:</p>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Permiso</th>
+              <th>Propósito</th>
+              <th>Obligatorio</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Almacenamiento / Fototeca</strong></td>
+              <td>Leer archivos de video seleccionados; guardar archivos procesados en la fototeca</td>
+              <td>Sí</td>
+            </tr>
+            <tr>
+              <td><strong>Micrófono</strong></td>
+              <td>Se utiliza solo en la función de doblaje para grabación de audio</td>
+              <td>No (solo para función de doblaje)</td>
+            </tr>
+            <tr>
+              <td><strong>Red</strong></td>
+              <td>Verificar estado de compra dentro de la aplicación (Google Play Billing)</td>
+              <td>Sí (para funciones de compra)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="section">
+        <h2><span class="icon">📦</span>7. Servicios de Terceros</h2>
+        <p>La Aplicación integra los siguientes SDK/servicios de terceros, que pueden tener sus propias políticas de privacidad:</p>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>SDK / Servicio</th>
+              <th>Propósito</th>
+              <th>Recopilación de Datos</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Google Play Billing</strong></td>
+              <td>Procesar compras dentro de la aplicación</td>
+              <td>Información de transacción de compra, sujeta a la política de privacidad de Google</td>
+            </tr>
+            <tr>
+              <td><strong>Apple StoreKit</strong></td>
+              <td>Procesar compras dentro de la aplicación (iOS)</td>
+              <td>Información de transacción de compra, sujeta a la política de privacidad de Apple</td>
+            </tr>
+            <tr>
+              <td><strong>FFmpeg</strong></td>
+              <td>Motor de procesamiento de audio/video</td>
+              <td>Sin recopilación de datos, funciona completamente de forma local</td>
+            </tr>
+            <tr>
+              <td><strong>device_info_plus</strong></td>
+              <td>Obtener información básica del dispositivo</td>
+              <td>Marca, modelo, fabricante del dispositivo, etc., solo uso local</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>Para la lista completa de SDK de terceros, consulte la página "Configuración → Lista de SDK de terceros" dentro de la Aplicación.</p>
+      </div>
+
+      <div class="section">
+        <h2><span class="icon">👶</span>8. Privacidad de Menores</h2>
+        <p>La Aplicación no está dirigida a menores de 13 años. En cumplimiento de COPPA y las regulaciones aplicables:</p>
+        <ul>
+          <li>La Aplicación no proporciona contenido o servicios dirigidos a menores</li>
+          <li>No servimos publicidad dirigida a menores</li>
+          <li>Si descubrimos que hemos recopilado inadvertidamente información de un menor de 13 años, la eliminaremos inmediatamente</li>
+          <li>Se recomienda que los menores utilicen la Aplicación bajo la supervisión de un padre o tutor</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2><span class="icon">✅</span>9. Sus Derechos</h2>
+        <p>Según la legislación aplicable, usted tiene los siguientes derechos:</p>
+        <ul>
+          <li><strong>Derecho de acceso</strong>: Puede ver sus datos de uso y estado de compra en cualquier momento dentro de la configuración de la Aplicación</li>
+          <li><strong>Derecho de supresión</strong>: Puede eliminar todos los datos almacenados localmente desinstalando la Aplicación</li>
+          <li><strong>Derecho a retirar el consentimiento</strong>: Puede revocar los permisos otorgados en cualquier momento en la configuración de su sistema</li>
+          <li><strong>Derecho a la portabilidad de datos</strong>: Dado que todos los datos se almacenan localmente, usted tiene control total sobre sus datos</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2><span class="icon">📝</span>10. Cambios en esta Política</h2>
+        <p>Podemos actualizar esta Política de Privacidad periódicamente. Cuando se realicen cambios:</p>
+        <ul>
+          <li>Le notificaremos a través de ventanas emergentes o anuncios dentro de la Aplicación</li>
+          <li>La Política de Privacidad actualizada se publicará en esta página</li>
+          <li>El uso continuado de la Aplicación constituye la aceptación de la Política de Privacidad revisada</li>
+          <li>Para cambios significativos, solicitaremos su consentimiento explícito</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2><span class="icon">📧</span>11. Contáctenos</h2>
+        <p>Si tiene alguna pregunta, comentario o sugerencia sobre esta Política de Privacidad, contáctenos en:</p>
+        <div class="highlight-box">
+          <p><strong>Correo electrónico:</strong> xinyoushanhai888@gmail.com</p>
+          <p style="margin-top:8px">Responderemos a su solicitud dentro de 15 días hábiles.</p>
         </div>
       </div>
 
@@ -659,12 +1098,10 @@
       btns.forEach(function(btn) {
         btn.classList.remove('active');
       });
-      if (lang === 'zh') {
-        btns[0].classList.add('active');
-      } else {
-        btns[1].classList.add('active');
-      }
-      document.documentElement.lang = lang === 'zh' ? 'zh' : 'en';
+      var langMap = { zh: 0, en: 1, ja: 2, es: 3 };
+      btns[langMap[lang]].classList.add('active');
+      var htmlLangMap = { zh: 'zh', en: 'en', ja: 'ja', es: 'es' };
+      document.documentElement.lang = htmlLangMap[lang];
     }
   </script>
 

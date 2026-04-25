@@ -9,7 +9,7 @@ import 'package:video_player/video_player.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:ffmpeg_kit_flutter_new/ffmpeg_kit.dart';
 import 'package:ffmpeg_kit_flutter_new/return_code.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:xixi_media_tool/l10n/app_localizations.dart';
 import '../utils/top_notify.dart';
 // 条件导入
 import '../utils/native_file_helper.dart'

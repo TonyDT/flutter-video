@@ -2,7 +2,7 @@
 library;
 
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:xixi_media_tool/l10n/app_localizations.dart';
 import '../utils/top_notify.dart';
 import '../theme/app_theme.dart';
 import 'merge_video_page.dart';

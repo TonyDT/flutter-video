@@ -2,7 +2,7 @@
 library;
 
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:xixi_media_tool/l10n/app_localizations.dart';
 
 import 'settings_page.dart';
 import 'video_tools_page.dart';

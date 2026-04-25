@@ -17,6 +17,7 @@
   "viewThirdPartyServices": "View third-party services",
   "openSourceNotice": "Built with FFmpeg, Flutter and other open-source technologies. Thanks to the open-source community.",
   "harmonyDeveloping": "HarmonyOS version is under development",
+  "language": "Language",
 
   "toolMerge": "Merge Videos",
   "toolMergeDesc": "Merge multiple video files into one",

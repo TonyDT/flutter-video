@@ -2,12 +2,32 @@
 library;
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+/// 支持的语言列表
+const List<Locale> kSupportedLocales = [
+  Locale('zh'),
+  Locale('en'),
+  Locale('ja'),
+  Locale('es'),
+];
+
+/// 语言显示名称映射
+const Map<String, String> kLocaleNames = {
+  'zh': '中文',
+  'en': 'English',
+  'ja': '日本語',
+  'es': 'Español',
+};
 
 /// 全局主题状态，支持浅色/深色切换和语言切换
 class AppTheme extends ChangeNotifier {
   static final AppTheme _instance = AppTheme._internal();
   factory AppTheme() => _instance;
   AppTheme._internal();
+
+  static const String _keyThemeMode = 'app_theme_mode';
+  static const String _keyLocale = 'app_locale';
 
   ThemeMode _mode = ThemeMode.light;
   Locale _locale = const Locale('zh');
@@ -16,9 +36,24 @@ class AppTheme extends ChangeNotifier {
   bool get isDark => _mode == ThemeMode.dark;
   Locale get locale => _locale;
 
+  /// 从本地存储加载偏好设置
+  Future<void> loadPrefs() async {
+    final prefs = await SharedPreferences.getInstance();
+    final modeIndex = prefs.getInt(_keyThemeMode);
+    if (modeIndex != null && modeIndex >= 0 && modeIndex < ThemeMode.values.length) {
+      _mode = ThemeMode.values[modeIndex];
+    }
+    final localeCode = prefs.getString(_keyLocale);
+    if (localeCode != null && kSupportedLocales.any((l) => l.languageCode == localeCode)) {
+      _locale = Locale(localeCode);
+    }
+    notifyListeners();
+  }
+
   /// 切换主题
   void toggle() {
     _mode = isDark ? ThemeMode.light : ThemeMode.dark;
+    _saveThemeMode();
     notifyListeners();
   }
 
@@ -26,6 +61,7 @@ class AppTheme extends ChangeNotifier {
   void setMode(ThemeMode m) {
     if (_mode != m) {
       _mode = m;
+      _saveThemeMode();
       notifyListeners();
     }
   }
@@ -34,6 +70,7 @@ class AppTheme extends ChangeNotifier {
   void setLocale(Locale l) {
     if (_locale != l) {
       _locale = l;
+      _saveLocale();
       notifyListeners();
     }
   }
@@ -41,7 +78,18 @@ class AppTheme extends ChangeNotifier {
   /// 切换中英文
   void toggleLocale() {
     _locale = _locale.languageCode == 'zh' ? const Locale('en') : const Locale('zh');
+    _saveLocale();
     notifyListeners();
+  }
+
+  Future<void> _saveThemeMode() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt(_keyThemeMode, _mode.index);
+  }
+
+  Future<void> _saveLocale() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_keyLocale, _locale.languageCode);
   }
 
   // --- 颜色常量 ---

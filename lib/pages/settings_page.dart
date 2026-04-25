@@ -2,7 +2,7 @@
 library;
 
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:xixi_media_tool/l10n/app_localizations.dart';
 // ignore_for_file: use_build_context_synchronously
 import 'privacy_policy_page.dart';
 import 'sdk_list_page.dart';
@@ -27,6 +27,12 @@ class SettingsPage extends StatelessWidget {
       ]),
       const SizedBox(height: 16),
 
+      // 语言切换卡片
+      _buildSectionCard(context, icon: Icons.language, title: l10n.language, children: [
+        _buildLanguageSwitch(context),
+      ]),
+      const SizedBox(height: 16),
+
       _buildSectionCard(context, icon: Icons.info_outline_rounded, title: l10n.aboutApp, children: [
         _buildInfoRow(context, l10n.appNameLabel, 'Video ToolKit'),
         _buildInfoRow(context, l10n.versionLabel, '1.0.0'),
@@ -43,6 +49,43 @@ class SettingsPage extends StatelessWidget {
         onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const SdkListPage()))),
       const SizedBox(height: 40),
     ])));
+  }
+
+  Widget _buildLanguageSwitch(BuildContext context) {
+    final appTheme = AppTheme();
+    return Container(
+      padding: const EdgeInsets.all(4),
+      decoration: BoxDecoration(
+        color: AppTheme.iconBg(context),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Wrap(
+        spacing: 4,
+        runSpacing: 4,
+        children: kSupportedLocales.map((locale) {
+          final isSelected = appTheme.locale.languageCode == locale.languageCode;
+          return GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () => appTheme.setLocale(locale),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              decoration: BoxDecoration(
+                color: isSelected ? AppTheme.accentColor(context) : Colors.transparent,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(
+                kLocaleNames[locale.languageCode]!,
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500,
+                  color: isSelected ? Colors.white : AppTheme.textSecondary(context),
+                ),
+              ),
+            ),
+          );
+        }).toList(),
+      ),
+    );
   }
 
   Widget _buildThemeSwitch(BuildContext context) {

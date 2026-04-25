@@ -17,6 +17,7 @@
   "viewThirdPartyServices": "查看第三方服务",
   "openSourceNotice": "基于 FFmpeg、Flutter 等开源技术构建，感谢开源社区贡献。",
   "harmonyDeveloping": "鸿蒙版正在开发中",
+  "language": "语言",
 
   "toolMerge": "合并视频",
   "toolMergeDesc": "将多个视频文件合并成一个",
