@@ -178,10 +178,10 @@
   <p data-lang="ja">プライバシーポリシー</p>
   <p data-lang="es">Política de Privacidad</p>
   <div class="lang-switch">
-    <button class="lang-btn active" onclick="switchLang('zh')">中文</button>
-    <button class="lang-btn" onclick="switchLang('en')">English</button>
-    <button class="lang-btn" onclick="switchLang('ja')">日本語</button>
-    <button class="lang-btn" onclick="switchLang('es')">Español</button>
+    <button class="lang-btn active" data-lang-target="zh">中文</button>
+    <button class="lang-btn" data-lang-target="en">English</button>
+    <button class="lang-btn" data-lang-target="ja">日本語</button>
+    <button class="lang-btn" data-lang-target="es">Español</button>
   </div>
 </div>
 
@@ -1078,17 +1078,37 @@
 </div>
 
 <script>
-  function switchLang(lang) {
-    document.body.className = 'lang-' + lang;
+  (function() {
+    function switchLang(lang) {
+      document.body.className = 'lang-' + lang;
+      document.documentElement.lang = lang;
+      var btns = document.querySelectorAll('.lang-btn');
+      for (var i = 0; i < btns.length; i++) {
+        var btn = btns[i];
+        if (btn.getAttribute('data-lang-target') === lang) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      }
+      try { localStorage.setItem('yszc_lang', lang); } catch(e) {}
+    }
+
     var btns = document.querySelectorAll('.lang-btn');
-    btns.forEach(function(btn) {
-      btn.classList.remove('active');
-    });
-    var langMap = { zh: 0, en: 1, ja: 2, es: 3 };
-    btns[langMap[lang]].classList.add('active');
-    var htmlLangMap = { zh: 'zh', en: 'en', ja: 'ja', es: 'es' };
-    document.documentElement.lang = htmlLangMap[lang];
-  }
+    for (var i = 0; i < btns.length; i++) {
+      (function(btn) {
+        btn.addEventListener('click', function() {
+          switchLang(btn.getAttribute('data-lang-target'));
+        });
+      })(btns[i]);
+    }
+
+    var saved = null;
+    try { saved = localStorage.getItem('yszc_lang'); } catch(e) {}
+    if (saved && /^(zh|en|ja|es)$/.test(saved)) {
+      switchLang(saved);
+    }
+  })();
 </script>
 
 </body>
