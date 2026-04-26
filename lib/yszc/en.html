@@ -30,37 +30,6 @@
         }
         .header h1 { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
         .header p { font-size: 15px; opacity: 0.85; }
-        .lang-switch {
-          display: flex;
-          justify-content: center;
-          gap: 0;
-          margin-top: 20px;
-          background: rgba(255,255,255,0.15);
-          border-radius: 12px;
-          overflow: hidden;
-          width: fit-content;
-          margin-left: auto;
-          margin-right: auto;
-          flex-wrap: wrap;
-        }
-        .lang-btn {
-          padding: 10px 20px;
-          font-size: 14px;
-          font-weight: 600;
-          border: none;
-          cursor: pointer;
-          background: transparent;
-          color: rgba(255,255,250.7);
-          transition: all 0.3s;
-          text-decoration: none;
-          display: inline-block;
-        }
-        .lang-btn.active {
-          background: white;
-          color: var(--primary);
-          border-radius: 10px;
-        }
-        .lang-btn:hover:not(.active) { color: white; }
         .container {
           max-width: 800px;
           margin: 0 auto;
@@ -155,7 +124,6 @@
           .meta-card { padding: 16px; }
           .data-table { font-size: 13px; }
           .data-table th, .data-table td { padding: 10px 8px; }
-          .lang-btn { padding: 8px 14px; font-size: 13px; }
         }
     </style>
 </head>
@@ -164,12 +132,6 @@
 <div class="header">
     <h1>ToolKit</h1>
     <p>Privacy Policy</p>
-    <div class="lang-switch">
-        <a class="lang-btn" href="./yszc.html">中文</a>
-        <a class="lang-btn" href="./en.html">English</a>
-        <a class="lang-btn" href="./ja.html">日本語</a>
-        <a class="lang-btn" href="./es.html">Español</a>
-    </div>
 </div>
 
 <div class="container">
@@ -395,23 +357,6 @@
 <div class="footer">
     <p>&copy; 2026 ToolKit. All rights reserved.</p>
 </div>
-
-<!-- 自动高亮当前语言按钮 -->
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const currentPage = window.location.pathname.split('/').pop();
-      const buttons = document.querySelectorAll('.lang-btn');
-
-      buttons.forEach(btn => btn.classList.remove('active'));
-
-      buttons.forEach(btn => {
-        const btnHref = btn.getAttribute('href').replace('./', '');
-        if (currentPage === btnHref) {
-          btn.classList.add('active');
-        }
-      });
-    });
-</script>
 
 </body>
 </html>

@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToolKit - 隐私政策</title>
+    <style>
+        :root {
+          --primary: #7C3AED;
+          --primary-light: #A78BFA;
+          --bg: #F9FAFB;
+          --card-bg: #FFFFFF;
+          --text: #1F2937;
+          --text-secondary: #6B7280;
+          --border: #E5E7EB;
+          --accent-bg: #F3F0FF;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans SC', sans-serif;
+          background: var(--bg);
+          color: var(--text);
+          line-height: 1.7;
+        }
+        .header {
+          background: linear-gradient(135deg, #7C3AED 0%, #5B21B6 100%);
+          color: white;
+          padding: 48px 24px 36px;
+          text-align: center;
+        }
+        .header h1 { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+        .header p { font-size: 15px; opacity: 0.85; }
+        .lang-switch {
+          display: flex;
+          justify-content: center;
+          gap: 0;
+          margin-top: 20px;
+          background: rgba(255,255,255,0.15);
+          border-radius: 12px;
+          overflow: hidden;
+          width: fit-content;
+          margin-left: auto;
+          margin-right: auto;
+          flex-wrap: wrap;
+        }
+        .lang-btn {
+          padding: 10px 20px;
+          font-size: 14px;
+          font-weight: 600;
+          border: none;
+          cursor: pointer;
+          background: transparent;
+          color: rgba(255,255,255,0.7);
+          transition: all 0.3s;
+          text-decoration: none;
+          display: inline-block;
+        }
+        .lang-btn.active {
+          background: white;
+          color: var(--primary);
+          border-radius: 10px;
+        }
+        .lang-btn:hover:not(.active) { color: white; }
+        .container {
+          max-width: 800px;
+          margin: 0 auto;
+          padding: 32px 20px 64px;
+        }
+        .meta-card {
+          background: var(--card-bg);
+          border-radius: 16px;
+          padding: 20px 24px;
+          margin-bottom: 24px;
+          border: 1px solid var(--border);
+          display: flex;
+          flex-wrap: wrap;
+          gap: 16px;
+        }
+        .meta-item {
+          flex: 1;
+          min-width: 200px;
+        }
+        .meta-label { font-size: 12px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
+        .meta-value { font-size: 15px; font-weight: 500; margin-top: 4px; }
+        .section {
+          background: var(--card-bg);
+          border-radius: 16px;
+          padding: 24px 28px;
+          margin-bottom: 16px;
+          border: 1px solid var(--border);
+        }
+        .section h2 {
+          font-size: 18px;
+          font-weight: 700;
+          color: var(--primary);
+          margin-bottom: 14px;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+        .section h2 .icon {
+          width: 32px;
+          height: 32px;
+          background: var(--accent-bg);
+          border-radius: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 16px;
+          flex-shrink: 0;
+        }
+        .section p { font-size: 14.5px; color: var(--text); margin-bottom: 10px; }
+        .section ul { padding-left: 20px; margin-bottom: 10px; }
+        .section li { font-size: 14.5px; color: var(--text); margin-bottom: 6px; line-height: 1.6; }
+        .highlight-box {
+          background: var(--accent-bg);
+          border-radius: 12px;
+          padding: 16px 20px;
+          margin: 12px 0;
+          border-left: 4px solid var(--primary);
+        }
+        .highlight-box p { margin-bottom: 0; font-size: 14px; color: #4C1D95; }
+        .data-table {
+          width: 100%;
+          border-collapse: collapse;
+          margin: 12px 0;
+          font-size: 14px;
+        }
+        .data-table th {
+          background: var(--accent-bg);
+          color: var(--primary);
+          padding: 12px 16px;
+          text-align: left;
+          font-weight: 600;
+          font-size: 13px;
+        }
+        .data-table td {
+          padding: 12px 16px;
+          border-bottom: 1px solid var(--border);
+          vertical-align: top;
+        }
+        .data-table tr:last-child td { border-bottom: none; }
+        .footer {
+          text-align: center;
+          padding: 32px 20px;
+          color: var(--text-secondary);
+          font-size: 13px;
+        }
+        @media (max-width: 600px) {
+          .header { padding: 36px 16px 28px; }
+          .header h1 { font-size: 22px; }
+          .container { padding: 20px 12px 48px; }
+          .section { padding: 18px 16px; }
+          .meta-card { padding: 16px; }
+          .data-table { font-size: 13px; }
+          .data-table th, .data-table td { padding: 10px 8px; }
+          .lang-btn { padding: 8px 14px; font-size: 13px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>ToolKit</h1>
+    <p>隐私政策</p>
+    <div class="lang-switch">
+        <a class="lang-btn" href="yszc.html">中文</a>
+        <a class="lang-btn" href="en.html">English</a>
+        <a class="lang-btn" href="ja.html">日本語</a>
+        <a class="lang-btn" href="es.html">Español</a>
+    </div>
+</div>
+
+<div class="container">
+    <div class="meta-card">
+        <div class="meta-item">
+            <div class="meta-label">生效日期</div>
+            <div class="meta-value">2026年4月24日</div>
+        </div>
+        <div class="meta-item">
+            <div class="meta-label">开发者</div>
+            <div class="meta-value">xinyoushanhai888@gmail.com</div>
+        </div>
+        <div class="meta-item">
+            <div class="meta-label">适用范围</div>
+            <div class="meta-value">ToolKit Android / iOS</div>
+        </div>
+    </div>
+
+    <div class="highlight-box">
+        <p>本隐私政策说明 ToolKit（以下简称"本应用"）如何收集、使用、存储和保护您的个人信息。使用本应用即表示您同意本隐私政策所述内容。</p>
+    </div>
+
+    <div class="section">
+        <h2><span class="icon">📋</span>一、我们收集的信息</h2>
+        <p>本应用仅收集为提供核心功能所必需的最少信息。我们不会收集、上传或存储您的个人身份信息（如姓名、邮箱、电话号码等）。</p>
+        <table class="data-table">
+            <thead>
+            <tr>
+                <th>信息类型</th>
+                <th>具体内容</th>
+                <th>收集目的</th>
+                <th>是否上传服务器</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><strong>媒体文件</strong></td>
+                <td>您主动选择的视频/音频文件</td>
+                <td>仅在设备本地进行音视频处理</td>
+                <td>否</td>
+            </tr>
+            <tr>
+                <td><strong>设备信息</strong></td>
+                <td>品牌、型号、制造商、硬件标识</td>
+                <td>生成设备指纹，管理免费试用次数</td>
+                <td>否</td>
+            </tr>
+            <tr>
+                <td><strong>购买记录</strong></td>
+                <td>通过 Google Play / App Store 的购买状态</td>
+                <td>验证高级版购买状态，解锁功能</td>
+                <td>由 Google/Apple 处理</td>
+            </tr>
+            <tr>
+                <td><strong>使用计数</strong></td>
+                <td>免费功能剩余使用次数</td>
+                <td>免费试用次数管理</td>
+                <td>否</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2><span class="icon">🔧</span>二、信息的使用方式</h2>
+        <p>我们收集的信息仅用于以下目的：</p>
+        <ul>
+            <li><strong>音视频处理</strong>：您选择的媒体文件仅在设备本地处理，处理完成后结果由您决定保存或删除</li>
+            <li><strong>免费试用管理</strong>：使用设备基本信息生成设备指纹，用于管理7次免费试用额度，防止试用次数被篡改</li>
+            <li><strong>购买验证</strong>：通过 Google Play Billing 或 Apple StoreKit 验证您的购买状态，确认高级版功能是否解锁</li>
+            <li><strong>数据安全</strong>：使用 AES-256-CBC 加密算法保护本地存储的敏感数据，防止篡改和未授权访问</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2><span class="icon">🔒</span>三、信息的存储与安全</h2>
+        <p>我们高度重视您的数据安全，采取以下措施保护您的信息：</p>
+        <ul>
+            <li><strong>本地存储</strong>：所有数据（包括使用计数、购买状态）均存储在您的设备本地，不上传至任何远程服务器</li>
+            <li><strong>AES-256-CBC 加密</strong>：敏感数据（免费次数、购买状态）使用 AES-256-CBC 算法加密后存储，每次加密使用随机生成的 IV</li>
+            <li><strong>设备指纹密钥绑定</strong>：加密密钥由设备硬件指纹派生（SHA-256），与设备绑定，无法在其他设备上解密</li>
+            <li><strong>HMAC-SHA256 完整性校验</strong>：加密数据附带完整性校验码，可检测任何篡改行为，篡改后数据将被重置而非误判</li>
+            <li><strong>临时文件清理</strong>：音视频处理产生的临时文件存储在系统临时目录，可由您手动清理</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2><span class="icon">🤝</span>四、信息的共享与披露</h2>
+        <p>我们不会将您的个人信息出售、交易或转让给任何第三方。以下情况除外：</p>
+        <ul>
+            <li><strong>应用内购买</strong>：购买交易由 Google Play 或 Apple App Store 处理，受 Google 和 Apple 各自的隐私政策约束</li>
+            <li><strong>法律要求</strong>：根据法律法规、法律程序或政府部门的强制性要求</li>
+            <li><strong>用户同意</strong>：在获得您明确同意后</li>
+        </ul>
+        <div class="highlight-box">
+            <p>我们不会出于广告目的而共享、出售或分发您的个人信息。</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2><span class="icon">⏱️</span>五、数据的保留与删除</h2>
+        <ul>
+            <li><strong>媒体文件</strong>：仅在处理过程中临时使用，处理完成后不保留任何副本</li>
+            <li><strong>使用计数与购买状态</strong>：存储在设备本地，卸载应用将自动清除所有数据</li>
+            <li><strong>临时文件</strong>：存储在系统临时目录，可由您手动清理或系统自动回收</li>
+            <li>您可随时通过卸载本应用来删除所有本地存储的数据</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2><span class="icon">🔑</span>六、应用权限说明</h2>
+        <p>本应用请求以下系统权限以实现核心功能：</p>
+        <table class="data-table">
+            <thead>
+            <tr>
+                <th>权限</th>
+                <th>用途</th>
+                <th>是否必须</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><strong>存储/相册</strong></td>
+                <td>读取您选择的视频文件；将处理后的文件保存到系统相册</td>
+                <td>是</td>
+            </tr>
+            <tr>
+                <td><strong>麦克风</strong></td>
+                <td>仅在配音功能中使用，用于录制音频</td>
+                <td>否（仅使用配音功能时需要）</td>
+            </tr>
+            <tr>
+                <td><strong>网络</strong></td>
+                <td>用于验证应用内购买状态（Google Play Billing）</td>
+                <td>是（购买功能需要）</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2><span class="icon">📦</span>七、第三方服务</h2>
+        <p>本应用集成了以下第三方SDK/服务，这些服务可能有其独立的隐私政策：</p>
+        <table class="data-table">
+            <thead>
+            <tr>
+                <th>SDK / 服务</th>
+                <th>用途</th>
+                <th>数据收集</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><strong>Google Play Billing</strong></td>
+                <td>处理应用内购买</td>
+                <td>购买交易信息，受 Google 隐私政策约束</td>
+            </tr>
+            <tr>
+                <td><strong>Apple StoreKit</strong></td>
+                <td>处理应用内购买（iOS）</td>
+                <td>购买交易信息，受 Apple 隐私政策约束</td>
+            </tr>
+            <tr>
+                <td><strong>FFmpeg</strong></td>
+                <td>音视频处理引擎</td>
+                <td>无数据收集，完全本地运行</td>
+            </tr>
+            <tr>
+                <td><strong>device_info_plus</strong></td>
+                <td>获取设备基本信息</td>
+                <td>设备品牌、型号、制造商等，仅本地使用</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2><span class="icon">👶</span>八、儿童隐私保护</h2>
+        <p>本应用不面向13岁以下儿童，我们不会故意收集儿童的个人信息。根据 COPPA 和相关法规：</p>
+        <ul>
+            <li>本应用不提供面向儿童的定向内容或服务</li>
+            <li>我们不会在儿童群体中投放定向广告</li>
+            <li>如果我们发现无意中收集了13岁以下儿童的信息，将立即删除</li>
+            <li>建议未成年人在监护人指导下使用本应用</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2><span class="icon">✅</span>九、您的权利</h2>
+        <p>根据适用法律，您享有以下权利：</p>
+        <ul>
+            <li><strong>访问权</strong>：您可以随时在应用设置中查看您的使用数据和购买状态</li>
+            <li><strong>删除权</strong>：您可以通过卸载应用来删除所有本地存储的数据</li>
+            <li><strong>撤销同意</strong>：您可以随时在系统设置中撤销已授予的权限</li>
+            <li><strong>数据可携带权</strong>：由于所有数据均在本地存储，您可以完全掌控自己的数据</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2><span class="icon">📝</span>十、隐私政策变更</h2>
+        <p>我们可能会不时更新本隐私政策。当政策发生变更时：</p>
+        <ul>
+            <li>我们会在应用内通过弹窗或公告的方式通知您</li>
+            <li>更新后的隐私政策将在本页面发布</li>
+            <li>继续使用本应用即视为同意修订后的隐私政策</li>
+            <li>重大变更时，我们会征求您的明确同意</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2><span class="icon">📧</span>十一、联系我们</h2>
+        <p>如您对本隐私政策有任何疑问、意见或建议，请通过以下方式联系我们：</p>
+        <div class="highlight-box">
+            <p><strong>电子邮箱：</strong>xinyoushanhai888@gmail.com</p>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <p>&copy; 2026 ToolKit. All rights reserved.</p>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const curr = window.location.pathname.split('/').pop();
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('href') === curr);
+      });
+    });
+</script>
+</body>
+</html>
