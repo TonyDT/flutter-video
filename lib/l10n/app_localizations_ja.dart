@@ -921,4 +921,85 @@ class AppLocalizationsJa extends AppLocalizations {
   String selectVideoFailedWithError(String error) {
     return '動画の選択に失敗しました: $error';
   }
+
+  @override
+  String get premiumVersion => 'プレミアム版';
+
+  @override
+  String get alreadyPremium => 'すでにプレミアムユーザーです！';
+
+  @override
+  String get alreadyPremiumDesc => 'ご支援ありがとうございます。すべての機能がアンロックされています';
+
+  @override
+  String get unlockPremium => 'プレミアム版をアンロック';
+
+  @override
+  String get unlockPremiumDesc => '一度の購入で、すべての機能を永久にご利用いただけます';
+
+  @override
+  String get featureUnlimitedSave => 'アルバムへの無制限保存';
+
+  @override
+  String get featureUnlimitedTools => 'すべてのツールの無制限使用';
+
+  @override
+  String get featureFreeUpdates => '将来の新機能の無料アップデート';
+
+  @override
+  String get featureNoAds => '広告なし体験';
+
+  @override
+  String get unlockNow => '今すぐアンロック';
+
+  @override
+  String get restorePurchases => '購入記録を復元';
+
+  @override
+  String get video1LoadFailed => '動画1の読み込みに失敗しました';
+
+  @override
+  String get video2LoadFailed => '動画2の読み込みに失敗しました';
+
+  @override
+  String get selectVideoLabel => '動画を選択';
+
+  @override
+  String get videoChanged => '動画を変更';
+
+  @override
+  String get saveVideoOnly => '動画のみ保存';
+
+  @override
+  String get videoOnlySaved => '動画のみ保存しました';
+
+  @override
+  String get sourceFileNotExist => 'ソースファイルが存在しません';
+
+  @override
+  String saveLabel(String label) {
+    return '$label を保存';
+  }
+
+  @override
+  String labelSaved(String label) {
+    return '$label を保存しました';
+  }
+
+  @override
+  String saveLabelError(String error) {
+    return '保存エラー: $error';
+  }
+
+  @override
+  String get noImagesExtractedShort => '画像を抽出できませんでした';
+
+  @override
+  String get reMerge => '再結合';
+
+  @override
+  String get originalLabel => '元の:';
+
+  @override
+  String get segmentCount => 'セグメント';
 }

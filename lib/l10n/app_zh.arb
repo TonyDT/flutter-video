@@ -284,5 +284,32 @@
   "licenseLabel": "许可证: {license}",
 
   "videoInitFailed": "视频初始化失败: {error}",
-  "selectVideoFailedWithError": "选择视频失败: {error}"
+  "selectVideoFailedWithError": "选择视频失败: {error}",
+
+  "premiumVersion": "高级版",
+  "alreadyPremium": "您已经是高级用户！",
+  "alreadyPremiumDesc": "感谢您的支持，所有功能已解锁",
+  "unlockPremium": "解锁高级版",
+  "unlockPremiumDesc": "一次购买，永久使用所有功能",
+  "featureUnlimitedSave": "无限次保存到相册",
+  "featureUnlimitedTools": "所有工具无限制使用",
+  "featureFreeUpdates": "未来新功能免费更新",
+  "featureNoAds": "无广告干扰",
+  "unlockNow": "立即解锁",
+  "restorePurchases": "恢复购买记录",
+
+  "video1LoadFailed": "视频1加载失败",
+  "video2LoadFailed": "视频2加载失败",
+  "selectVideoLabel": "选择视频",
+  "videoChanged": "更换视频",
+  "saveVideoOnly": "保存纯视频",
+  "videoOnlySaved": "纯视频已保存",
+  "sourceFileNotExist": "源文件不存在",
+  "saveLabel": "保存{label}",
+  "labelSaved": "{label} 已保存",
+  "saveLabelError": "保存出错: {error}",
+  "noImagesExtractedShort": "未能提取到图片",
+  "reMerge": "重新合并",
+  "originalLabel": "原始:",
+  "segmentCount": "段"
 }

@@ -8,6 +8,7 @@ import 'package:video_player/video_player.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:ffmpeg_kit_flutter_new/ffmpeg_kit.dart';
 import 'package:ffmpeg_kit_flutter_new/return_code.dart';
+import 'package:xixi_media_tool/l10n/app_localizations.dart';
 import '../utils/top_notify.dart';
 import '../utils/native_file_helper.dart'
     if (dart.library.io) '../utils/native_file_helper.dart'
@@ -44,6 +45,7 @@ class _CompressVideoPageState extends State<CompressVideoPage> {
 
   Future<void> _pickVideo() async {
     if (!mounted || _isLoading) return;
+    final l10n = AppLocalizations.of(context)!;
     try {
       final result = await FilePicker.platform.pickFiles(type: FileType.video, allowMultiple: false, withData: kIsWeb);
       if (!mounted || result == null || result.files.isEmpty) return;
@@ -58,13 +60,14 @@ class _CompressVideoPageState extends State<CompressVideoPage> {
       setState(() { _controller = ctrl; _isLoading = false; });
       await ctrl.play();
     } catch (e) {
-      if (mounted) _showError('选择视频失败');
+      if (mounted) _showError(l10n.selectVideoFailed);
       setState(() => _isLoading = false);
     }
   }
 
   Future<void> _compress() async {
     if (_videoPath == null || kIsWeb) return;
+    final l10n = AppLocalizations.of(context)!;
     _controller?.pause();
     setState(() => _isProcessing = true);
     try {
@@ -76,12 +79,12 @@ class _CompressVideoPageState extends State<CompressVideoPage> {
       if (ReturnCode.isSuccess(rc)) {
         _resultPath = output;
         _resultSize = await File(output).length();
-        _showSuccess('压缩完成！');
+        _showSuccess(l10n.compressSuccess);
       } else {
-        _showError('压缩失败');
+        _showError(l10n.compressFailed);
       }
     } catch (e) {
-      _showError('压缩出错: $e');
+      _showError(l10n.compressError(e.toString()));
     }
     setState(() => _isProcessing = false);
   }
@@ -96,55 +99,57 @@ class _CompressVideoPageState extends State<CompressVideoPage> {
   String _fmtSize(int bytes) => bytes < 1024*1024 ? '${(bytes/1024).toStringAsFixed(1)} KB' : '${(bytes/(1024*1024)).toStringAsFixed(1)} MB';
 
   @override
-  Widget build(BuildContext context) => Scaffold(
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    return Scaffold(
     body: Container(decoration: const BoxDecoration(gradient: _bg), child: SafeArea(child: Column(children: [
-      _buildAppBar(), Expanded(child: _videoPath == null ? _buildPickArea() : _buildWorkArea()),
-    ]))),
-  );
+      _buildAppBar(l10n), Expanded(child: _videoPath == null ? _buildPickArea(l10n) : _buildWorkArea(l10n)),
+    ]))));
+  }
 
-  Widget _buildAppBar() => Container(padding: const EdgeInsets.symmetric(horizontal:8,vertical:8), child: Row(children: [
+  Widget _buildAppBar(AppLocalizations l10n) => Container(padding: const EdgeInsets.symmetric(horizontal:8,vertical:8), child: Row(children: [
     IconButton(icon: const Icon(Icons.arrow_back,color:Colors.white), onPressed: () => Navigator.pop(context)),
-    const Expanded(child: Text('视频压缩', style: TextStyle(color:Colors.white,fontSize:20,fontWeight:FontWeight.bold), textAlign:TextAlign.center, maxLines:1, overflow:TextOverflow.ellipsis)),
+    Expanded(child: Text(l10n.compressVideo, style: const TextStyle(color:Colors.white,fontSize:20,fontWeight:FontWeight.bold), textAlign:TextAlign.center, maxLines:1, overflow:TextOverflow.ellipsis)),
     const SizedBox(width:48),
   ]));
 
-  Widget _buildPickArea() => Center(child: InkWell(onTap: _isLoading?null:_pickVideo, child: Container(
+  Widget _buildPickArea(AppLocalizations l10n) => Center(child: InkWell(onTap: _isLoading?null:_pickVideo, child: Container(
     padding: const EdgeInsets.all(32), decoration: BoxDecoration(color: Colors.white.withValues(alpha:0.15), borderRadius: BorderRadius.circular(20), border: Border.all(color: Colors.white24)),
     child: Column(mainAxisSize: MainAxisSize.min, children: [
       _isLoading ? const CircularProgressIndicator(color: Colors.white) : const Icon(Icons.compress, size: 64, color: Colors.white70),
-      const SizedBox(height:16), Text(_isLoading?'加载中...':'点击选择视频', style: const TextStyle(color:Colors.white,fontSize:18)),
+      const SizedBox(height:16), Text(_isLoading?l10n.loading:l10n.tapToSelectVideo, style: const TextStyle(color:Colors.white,fontSize:18)),
     ]),
   )));
 
-  Widget _buildWorkArea() => SingleChildScrollView(padding: const EdgeInsets.all(16), child: Column(children: [
+  Widget _buildWorkArea(AppLocalizations l10n) => SingleChildScrollView(padding: const EdgeInsets.all(16), child: Column(children: [
     Container(height:200, decoration: BoxDecoration(color:Colors.black87, borderRadius:BorderRadius.circular(16)),
       child: _controller!=null&&_controller!.value.isInitialized ? ClipRRect(borderRadius:BorderRadius.circular(16), child: AspectRatio(aspectRatio:_controller!.value.aspectRatio, child: VideoPlayer(_controller!))) : const Center(child: CircularProgressIndicator(color:Colors.white))),
     const SizedBox(height:16),
     Container(padding: const EdgeInsets.all(16), decoration: BoxDecoration(color:Colors.white, borderRadius:BorderRadius.circular(16)), child: Column(crossAxisAlignment:CrossAxisAlignment.start, children: [
-      Row(children: [Icon(Icons.folder,color:const Color(0xFF2E7D32)), const SizedBox(width:8), Expanded(child: Text('原始大小: ${_fmtSize(_originalSize)}', style: const TextStyle(fontWeight:FontWeight.w600), overflow: TextOverflow.ellipsis))]),
+      Row(children: [Icon(Icons.folder,color:const Color(0xFF2E7D32)), const SizedBox(width:8), Expanded(child: Text(l10n.originalSize(_fmtSize(_originalSize)), style: const TextStyle(fontWeight:FontWeight.w600), overflow: TextOverflow.ellipsis))]),
       const SizedBox(height:16),
-      Text('压缩质量 (CRF): ${_crf.toInt()}', style: const TextStyle(fontWeight:FontWeight.w600)),
+      Text(l10n.compressQuality(_crf.toInt()), style: const TextStyle(fontWeight:FontWeight.w600)),
       Slider(value: _crf, min:18, max:51, divisions:33, label: _crf.toInt().toString(), onChanged: (v) => setState(() => _crf = v)),
-      Text('提示: 数值越大压缩越多，画质越低', style: TextStyle(fontSize:13,color:Colors.grey.shade600), overflow: TextOverflow.ellipsis, maxLines: 2),
+      Text(l10n.compressTip, style: TextStyle(fontSize:13,color:Colors.grey.shade600), overflow: TextOverflow.ellipsis, maxLines: 2),
       const SizedBox(height:12),
-      const Text('编码速度:', style: TextStyle(fontWeight:FontWeight.w600)),
+      Text(l10n.encodeSpeed, style: const TextStyle(fontWeight:FontWeight.w600)),
       const SizedBox(height:8),
       Wrap(spacing:8, children: ['ultrafast','fast','medium','slow'].map((p) => ChoiceChip(label: Text(p), selected: _preset==p, onSelected: (_)=>setState(()=>_preset=p))).toList()),
       if (_resultPath != null) ...[
         const SizedBox(height:16), const Divider(), const SizedBox(height:8),
-        Row(children: [Icon(Icons.check_circle,color:Colors.green.shade700), const SizedBox(width:8), Expanded(child: Text('压缩后: ${_fmtSize(_resultSize)}', style: TextStyle(color:Colors.green.shade700,fontWeight:FontWeight.w600), overflow: TextOverflow.ellipsis))]),
+        Row(children: [Icon(Icons.check_circle,color:Colors.green.shade700), const SizedBox(width:8), Expanded(child: Text(l10n.compressedSize(_fmtSize(_resultSize)), style: TextStyle(color:Colors.green.shade700,fontWeight:FontWeight.w600), overflow: TextOverflow.ellipsis))]),
         const SizedBox(height:4),
-        Text('节省: ${_fmtSize(_originalSize-_resultSize)} (${((_originalSize-_resultSize)/_originalSize*100).toStringAsFixed(1)}%)', style: TextStyle(color:Colors.blue.shade700,fontWeight:FontWeight.w600), overflow: TextOverflow.ellipsis, maxLines: 2),
+        Text(l10n.savedSpace(_fmtSize(_originalSize-_resultSize), ((_originalSize-_resultSize)/_originalSize*100).toStringAsFixed(1)), style: TextStyle(color:Colors.blue.shade700,fontWeight:FontWeight.w600), overflow: TextOverflow.ellipsis, maxLines: 2),
       ],
     ])),
     const SizedBox(height:20),
     if (_resultPath == null) SizedBox(width:double.infinity,height:52, child: ElevatedButton(onPressed: _isProcessing?null:_compress,
       style: ElevatedButton.styleFrom(backgroundColor:const Color(0xFF2E7D32),foregroundColor:Colors.white,shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(26)),elevation:0),
-      child: _isProcessing ? const Row(mainAxisAlignment:MainAxisAlignment.center,children:[SizedBox(width:24,height:24,child:CircularProgressIndicator(color:Colors.white,strokeWidth:2.5)),SizedBox(width:12),Text('压缩中...',style:TextStyle(fontSize:16,fontWeight:FontWeight.w600))]) : const Text('开始压缩',style:TextStyle(fontSize:17,fontWeight:FontWeight.w600)),
+      child: _isProcessing ? Row(mainAxisAlignment:MainAxisAlignment.center,children:[SizedBox(width:24,height:24,child:CircularProgressIndicator(color:Colors.white,strokeWidth:2.5)),SizedBox(width:12),Text(l10n.compressing,style:TextStyle(fontSize:16,fontWeight:FontWeight.w600))]) : Text(l10n.startCompress,style:TextStyle(fontSize:17,fontWeight:FontWeight.w600)),
     )) else Row(children: [
-      Expanded(child: ElevatedButton(onPressed:_saveToGallery, style:ElevatedButton.styleFrom(backgroundColor:const Color(0xFF2E7D32),foregroundColor:Colors.white,padding:const EdgeInsets.symmetric(vertical:14),shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(12))), child: Row(mainAxisAlignment:MainAxisAlignment.center,children:[const Icon(Icons.download),const SizedBox(width:8),Flexible(child: Text('保存到相册',overflow:TextOverflow.ellipsis))]))),
+      Expanded(child: ElevatedButton(onPressed:_saveToGallery, style:ElevatedButton.styleFrom(backgroundColor:const Color(0xFF2E7D32),foregroundColor:Colors.white,padding:const EdgeInsets.symmetric(vertical:14),shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(12))), child: Row(mainAxisAlignment:MainAxisAlignment.center,children:[const Icon(Icons.download),const SizedBox(width:8),Flexible(child: Text(l10n.saveToAlbum,overflow:TextOverflow.ellipsis))]))),
       const SizedBox(width:12),
-      Expanded(child: ElevatedButton(onPressed:(){ _controller?.dispose(); setState((){_resultPath=null;_controller=null;}); _pickVideo(); }, style:ElevatedButton.styleFrom(backgroundColor:const Color(0xFF43A047),foregroundColor:Colors.white,padding:const EdgeInsets.symmetric(vertical:14),shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(12))), child: Row(mainAxisAlignment:MainAxisAlignment.center,children:[const Icon(Icons.refresh),const SizedBox(width:8),Flexible(child: Text('重新选择',overflow:TextOverflow.ellipsis))]))),
+      Expanded(child: ElevatedButton(onPressed:(){ _controller?.dispose(); setState((){_resultPath=null;_controller=null;}); _pickVideo(); }, style:ElevatedButton.styleFrom(backgroundColor:const Color(0xFF43A047),foregroundColor:Colors.white,padding:const EdgeInsets.symmetric(vertical:14),shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(12))), child: Row(mainAxisAlignment:MainAxisAlignment.center,children:[const Icon(Icons.refresh),const SizedBox(width:8),Flexible(child: Text(l10n.reselect,overflow:TextOverflow.ellipsis))]))),
     ]),
   ]));
 }

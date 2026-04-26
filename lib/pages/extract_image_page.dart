@@ -8,6 +8,7 @@ import 'package:video_player/video_player.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:ffmpeg_kit_flutter_new/ffmpeg_kit.dart';
 import 'package:ffmpeg_kit_flutter_new/return_code.dart';
+import 'package:xixi_media_tool/l10n/app_localizations.dart';
 import '../utils/top_notify.dart';
 import '../utils/native_file_helper.dart'
     if (dart.library.io) '../utils/native_file_helper.dart'
@@ -44,6 +45,7 @@ class _ExtractImagePageState extends State<ExtractImagePage> {
 
   Future<void> _pickVideo() async {
     if (!mounted || _isLoading) return;
+    final l10n = AppLocalizations.of(context)!;
     try {
       final result = await FilePicker.platform.pickFiles(type: FileType.video, allowMultiple: false, withData: kIsWeb);
       if (!mounted || result == null || result.files.isEmpty) return;
@@ -62,14 +64,15 @@ class _ExtractImagePageState extends State<ExtractImagePage> {
         _isLoading = false;
       });
     } catch (e) {
-      if (mounted) _showError('选择视频失败');
+      if (mounted) _showError(l10n.selectVideoFailed);
       setState(() => _isLoading = false);
     }
   }
 
   Future<void> _extract() async {
     if (_videoPath == null || kIsWeb) return;
-    if (_startTime >= _endTime) { _showError('开始时间必须小于结束时间'); return; }
+    final l10n = AppLocalizations.of(context)!;
+    if (_startTime >= _endTime) { _showError(l10n.startTimeMustBeBeforeEnd); return; }
     setState(() => _isProcessing = true);
     try {
       final tempDir = await TempDirHelper.getTemporaryDirectory();
@@ -77,7 +80,6 @@ class _ExtractImagePageState extends State<ExtractImagePage> {
       await Directory(outputDir).create();
       final startSec = (_startTime.inMilliseconds / 1000.0).toStringAsFixed(3);
       final durationSec = ((_endTime - _startTime).inMilliseconds / 1000.0).toStringAsFixed(3);
-      // -ss 在 -i 前面：快速 seek；-t 指定持续时长；fps 滤镜提取帧
       final cmd = '-ss $startSec -i "$_videoPath" -t $durationSec -vf fps=$_fps "$outputDir/frame_%04d.jpg" -y';
       final session = await FFmpegKit.execute(cmd);
       final rc = await session.getReturnCode();
@@ -86,10 +88,6 @@ class _ExtractImagePageState extends State<ExtractImagePage> {
         final files = await dir.list().map((e) => e.path).where((p) => p.endsWith('.jpg')).toList();
         files.sort();
         if (files.isEmpty) {
-          // 如果没有 jpg，检查是否有其他格式
-          final allFiles = await dir.list().map((e) => e.path).toList();
-          allFiles.sort();
-          // 尝试不带 fps 滤镜重新提取（每秒一帧兜底）
           final fallbackCmd = '-ss $startSec -i "$_videoPath" -t $durationSec -r 1 "$outputDir/frame_%04d.jpg" -y';
           final fallbackSession = await FFmpegKit.execute(fallbackCmd);
           final fallbackRc = await fallbackSession.getReturnCode();
@@ -98,21 +96,16 @@ class _ExtractImagePageState extends State<ExtractImagePage> {
             fallbackFiles.sort();
             if (fallbackFiles.isNotEmpty && mounted) {
               setState(() { _extractedImages = fallbackFiles; });
-              _showSuccess('提取了 ${fallbackFiles.length} 张图片');
-            } else {
-              _showError('未能提取到图片，请检查视频文件');
-            }
-          } else {
-            _showError('提取失败');
-          }
+              _showSuccess(l10n.extractedCount(fallbackFiles.length));
+            } else { _showError(l10n.noImagesExtracted); }
+          } else { _showError(l10n.extractFailed); }
         } else {
           if (mounted) {
             setState(() { _extractedImages = files; });
-            _showSuccess('提取了 ${files.length} 张图片');
+            _showSuccess(l10n.extractedCount(files.length));
           }
         }
       } else {
-        // 主命令失败，尝试简单方式
         final fallbackCmd = '-i "$_videoPath" -ss $startSec -t $durationSec -r 1 "$outputDir/frame_%04d.jpg" -y';
         final fallbackSession = await FFmpegKit.execute(fallbackCmd);
         final fallbackRc = await fallbackSession.getReturnCode();
@@ -121,21 +114,18 @@ class _ExtractImagePageState extends State<ExtractImagePage> {
           fallbackFiles.sort();
           if (fallbackFiles.isNotEmpty && mounted) {
             setState(() { _extractedImages = fallbackFiles; });
-            _showSuccess('提取了 ${fallbackFiles.length} 张图片');
-          } else {
-            _showError('未能提取到图片');
-          }
-        } else {
-          _showError('提取失败');
-        }
+            _showSuccess(l10n.extractedCount(fallbackFiles.length));
+          } else { _showError(l10n.noImagesExtractedShort); }
+        } else { _showError(l10n.extractFailed); }
       }
-    } catch (e) { _showError('提取出错: $e'); }
+    } catch (e) { _showError(l10n.extractError(e.toString())); }
     if (mounted) setState(() => _isProcessing = false);
   }
 
   Future<void> _saveAllToGallery() async {
     if (_extractedImages.isEmpty) return;
-    await SaveToGallery.saveAll(_extractedImages, context, unit: '张图片');
+    final l10n = AppLocalizations.of(context)!;
+    await SaveToGallery.saveAll(_extractedImages, context, unit: l10n.segmentCount);
   }
 
   void _showError(String m) { if (mounted) TopNotify.error(context, m); }
@@ -143,76 +133,71 @@ class _ExtractImagePageState extends State<ExtractImagePage> {
   String _fmt(Duration d) => '${d.inMinutes.toString().padLeft(2,'0')}:${(d.inSeconds%60).toString().padLeft(2,'0')}';
 
   @override
-  Widget build(BuildContext context) => Scaffold(
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    return Scaffold(
     body: Container(decoration: const BoxDecoration(gradient: _bg), child: SafeArea(child: Column(children: [
-      _buildAppBar(), Expanded(child: _videoPath == null ? _buildPickArea() : _buildWorkArea()),
-    ]))),
-  );
+      _buildAppBar(l10n), Expanded(child: _videoPath == null ? _buildPickArea(l10n) : _buildWorkArea(l10n)),
+    ]))));
+  }
 
-  Widget _buildAppBar() => Container(padding: const EdgeInsets.symmetric(horizontal:8,vertical:8), child: Row(children: [
+  Widget _buildAppBar(AppLocalizations l10n) => Container(padding: const EdgeInsets.symmetric(horizontal:8,vertical:8), child: Row(children: [
     IconButton(icon: const Icon(Icons.arrow_back,color:Colors.white), onPressed: () => Navigator.pop(context)),
-    const Expanded(child: Text('提取图片', style: TextStyle(color:Colors.white,fontSize:20,fontWeight:FontWeight.bold), textAlign:TextAlign.center, maxLines:1, overflow:TextOverflow.ellipsis)),
+    Expanded(child: Text(l10n.extractImages, style: const TextStyle(color:Colors.white,fontSize:20,fontWeight:FontWeight.bold), textAlign:TextAlign.center, maxLines:1, overflow:TextOverflow.ellipsis)),
     const SizedBox(width:48),
   ]));
 
-  Widget _buildPickArea() => Center(child: InkWell(onTap: _isLoading?null:_pickVideo, child: Container(
+  Widget _buildPickArea(AppLocalizations l10n) => Center(child: InkWell(onTap: _isLoading?null:_pickVideo, child: Container(
     padding: const EdgeInsets.all(32), decoration: BoxDecoration(color: Colors.white.withValues(alpha:0.15), borderRadius: BorderRadius.circular(20), border: Border.all(color: Colors.white24)),
     child: Column(mainAxisSize: MainAxisSize.min, children: [
       _isLoading ? const CircularProgressIndicator(color: Colors.white) : const Icon(Icons.image, size: 64, color: Colors.white70),
-      const SizedBox(height:16), Text(_isLoading?'加载中...':'点击选择视频', style: const TextStyle(color:Colors.white,fontSize:18)),
+      const SizedBox(height:16), Text(_isLoading?l10n.loading:l10n.tapToSelectVideo, style: const TextStyle(color:Colors.white,fontSize:18)),
     ]),
   )));
 
-  Widget _buildWorkArea() => SingleChildScrollView(padding: const EdgeInsets.all(16), child: Column(children: [
+  Widget _buildWorkArea(AppLocalizations l10n) => SingleChildScrollView(padding: const EdgeInsets.all(16), child: Column(children: [
     Container(height:180, decoration: BoxDecoration(color:Colors.black87, borderRadius:BorderRadius.circular(16)),
       child: _controller!=null&&_controller!.value.isInitialized ? ClipRRect(borderRadius:BorderRadius.circular(16), child: AspectRatio(aspectRatio:_controller!.value.aspectRatio, child: VideoPlayer(_controller!))) : const Center(child: CircularProgressIndicator(color:Colors.white))),
     const SizedBox(height:16),
     Container(padding: const EdgeInsets.all(16), decoration: BoxDecoration(color:Colors.white, borderRadius:BorderRadius.circular(16)), child: Column(crossAxisAlignment:CrossAxisAlignment.start, children: [
-      Row(children: [const Icon(Icons.timer,color:Colors.teal), const SizedBox(width:8), Expanded(child: Text('视频时长: ${_fmt(_duration)}', style: const TextStyle(fontWeight:FontWeight.w600), overflow: TextOverflow.ellipsis))]),
+      Row(children: [const Icon(Icons.timer,color:Colors.teal), const SizedBox(width:8), Expanded(child: Text(l10n.videoDuration(_fmt(_duration)), style: const TextStyle(fontWeight:FontWeight.w600), overflow: TextOverflow.ellipsis))]),
       const SizedBox(height:12),
-      // 时间范围选择
-      _buildTimeSlider('开始时间', _startTime, Colors.green, (v) {
+      _buildTimeSlider(l10n.startTime, _startTime, Colors.green, (v) {
         setState(() {
           _startTime = Duration(milliseconds: v.toInt());
-          if (_startTime >= _endTime) {
-            _endTime = _startTime + const Duration(seconds: 1);
-            if (_endTime > _duration) _endTime = _duration;
-          }
+          if (_startTime >= _endTime) { _endTime = _startTime + const Duration(seconds: 1); if (_endTime > _duration) _endTime = _duration; }
         });
       }),
       const SizedBox(height:4),
-      _buildTimeSlider('结束时间', _endTime, Colors.orange, (v) {
+      _buildTimeSlider(l10n.endTime, _endTime, Colors.orange, (v) {
         setState(() {
           _endTime = Duration(milliseconds: v.toInt());
-          if (_endTime <= _startTime) {
-            _startTime = _endTime - const Duration(seconds: 1);
-            if (_startTime < Duration.zero) _startTime = Duration.zero;
-          }
+          if (_endTime <= _startTime) { _startTime = _endTime - const Duration(seconds: 1); if (_startTime < Duration.zero) _startTime = Duration.zero; }
         });
       }),
       const SizedBox(height:8),
-      Text('提取范围: ${_fmt(_startTime)} - ${_fmt(_endTime)}  (共 ${_fmt(_endTime - _startTime)})', style: TextStyle(color:Colors.teal.shade700, fontWeight:FontWeight.w600), overflow: TextOverflow.ellipsis),
+      Text(l10n.extractRange(_fmt(_startTime), _fmt(_endTime), _fmt(_endTime - _startTime)), style: TextStyle(color:Colors.teal.shade700, fontWeight:FontWeight.w600), overflow: TextOverflow.ellipsis),
       const SizedBox(height:12),
-      Text('提取频率: ${_fps.toStringAsFixed(_fps==_fps.roundToDouble()?0:1)} 帧/秒', style: const TextStyle(fontWeight:FontWeight.w600), overflow: TextOverflow.ellipsis),
+      Text(l10n.extractFps(_fps.toStringAsFixed(_fps==_fps.roundToDouble()?0:1)), style: const TextStyle(fontWeight:FontWeight.w600), overflow: TextOverflow.ellipsis),
       Slider(value: _fps, min:0.5, max:30, divisions:59, label: _fps.toStringAsFixed(1), onChanged: (v)=>setState(()=>_fps=v)),
-      Text('预计提取约 ${((_endTime - _startTime).inSeconds * _fps).round()} 张图片', style: TextStyle(fontSize:13,color:Colors.grey.shade600), overflow: TextOverflow.ellipsis),
+      Text(l10n.estimatedImages(((_endTime - _startTime).inSeconds * _fps).round()), style: TextStyle(fontSize:13,color:Colors.grey.shade600), overflow: TextOverflow.ellipsis),
     ])),
     const SizedBox(height:20),
     if (_extractedImages.isEmpty) SizedBox(width:double.infinity,height:52, child: ElevatedButton(onPressed: _isProcessing?null:_extract,
       style: ElevatedButton.styleFrom(backgroundColor:const Color(0xFF2E7D32),foregroundColor:Colors.white,shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(26)),elevation:0),
-      child: _isProcessing ? const Row(mainAxisAlignment:MainAxisAlignment.center,children:[SizedBox(width:24,height:24,child:CircularProgressIndicator(color:Colors.white,strokeWidth:2.5)),SizedBox(width:12),Text('提取中...',style:TextStyle(fontSize:16,fontWeight:FontWeight.w600))]) : const Text('开始提取',style:TextStyle(fontSize:17,fontWeight:FontWeight.w600)),
+      child: _isProcessing ? Row(mainAxisAlignment:MainAxisAlignment.center,children:[SizedBox(width:24,height:24,child:CircularProgressIndicator(color:Colors.white,strokeWidth:2.5)),SizedBox(width:12),Text(l10n.extracting,style:TextStyle(fontSize:16,fontWeight:FontWeight.w600))]) : Text(l10n.startExtract,style:TextStyle(fontSize:17,fontWeight:FontWeight.w600)),
     )) else Column(crossAxisAlignment:CrossAxisAlignment.start, children: [
-      Text('已提取 ${_extractedImages.length} 张图片', style: const TextStyle(fontWeight:FontWeight.w600,fontSize:16)),
+      Text(l10n.extractedImagesCount(_extractedImages.length), style: const TextStyle(fontWeight:FontWeight.w600,fontSize:16)),
       const SizedBox(height:12),
       SizedBox(height:200, child: GridView.builder(gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount:3, crossAxisSpacing:4, mainAxisSpacing:4), itemCount: _extractedImages.length.clamp(0, 30),
         itemBuilder: (_,i) => ClipRRect(borderRadius:BorderRadius.circular(8), child: Image.file(File(_extractedImages[i]), fit:BoxFit.cover)),
       )),
-      if (_extractedImages.length > 30) Padding(padding: const EdgeInsets.only(top:8), child: Text('仅显示前30张，共 ${_extractedImages.length} 张', style: TextStyle(color:Colors.grey.shade600,fontSize:12))),
+      if (_extractedImages.length > 30) Padding(padding: const EdgeInsets.only(top:8), child: Text(l10n.showingFirst30(_extractedImages.length), style: TextStyle(color:Colors.grey.shade600,fontSize:12))),
       const SizedBox(height:12),
-      SizedBox(width:double.infinity, child: ElevatedButton(onPressed: _saveAllToGallery, style: ElevatedButton.styleFrom(backgroundColor:const Color(0xFF2E7D32),foregroundColor:Colors.white,padding:const EdgeInsets.symmetric(vertical:14),shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(12))), child: Row(mainAxisAlignment:MainAxisAlignment.center,children:[const Icon(Icons.download),const SizedBox(width:8),Flexible(child: Text('保存全部 ${_extractedImages.length} 张',overflow:TextOverflow.ellipsis))]))),
+      SizedBox(width:double.infinity, child: ElevatedButton(onPressed: _saveAllToGallery, style: ElevatedButton.styleFrom(backgroundColor:const Color(0xFF2E7D32),foregroundColor:Colors.white,padding:const EdgeInsets.symmetric(vertical:14),shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(12))), child: Row(mainAxisAlignment:MainAxisAlignment.center,children:[const Icon(Icons.download),const SizedBox(width:8),Flexible(child: Text(l10n.saveAllCount(_extractedImages.length),overflow:TextOverflow.ellipsis))]))),
     ]),
     const SizedBox(height:12),
-    TextButton.icon(onPressed: _pickVideo, icon: const Icon(Icons.swap_horiz,color:Colors.white70), label: const Text('更换视频',style:TextStyle(color:Colors.white70))),
+    TextButton.icon(onPressed: _pickVideo, icon: const Icon(Icons.swap_horiz,color:Colors.white70), label: Text(l10n.changeVideo,style:const TextStyle(color:Colors.white70))),
   ]));
 
   Widget _buildTimeSlider(String label, Duration value, Color color, ValueChanged<double> onChanged) {

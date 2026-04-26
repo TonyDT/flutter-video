@@ -31,7 +31,7 @@ class MergeVideoPage extends StatefulWidget {
 }
 
 class _MergeVideoPageState extends State<MergeVideoPage> {
-  // 两个视频的路径和时长（不保存控制器）
+  // 两个视频的路径和时长
   String? _path1;
   Uint8List? _bytes1;
   String? _webUrl1;
@@ -46,11 +46,9 @@ class _MergeVideoPageState extends State<MergeVideoPage> {
   Duration _start2 = Duration.zero;
   Duration _end2 = Duration.zero;
 
-  // 预览用控制器（按需创建，用完即释放）
   VideoPlayerController? _previewController;
-  int _previewTarget = -1; // 0=视频1, 1=视频2, -1=合并结果
+  int _previewTarget = -1;
 
-  // 状态
   bool _isMerging = false;
   bool _isLoadingVideo = false;
   String? _mergedVideoPath;
@@ -64,46 +62,27 @@ class _MergeVideoPageState extends State<MergeVideoPage> {
   @override
   void dispose() {
     _previewController?.dispose();
-    if (_webUrl1 != null) {
-      try { VideoPlayerWebHelper.revokeBlobUrl(_webUrl1!); } catch (_) {}
-    }
-    if (_webUrl2 != null) {
-      try { VideoPlayerWebHelper.revokeBlobUrl(_webUrl2!); } catch (_) {}
-    }
+    if (_webUrl1 != null) { try { VideoPlayerWebHelper.revokeBlobUrl(_webUrl1!); } catch (_) {} }
+    if (_webUrl2 != null) { try { VideoPlayerWebHelper.revokeBlobUrl(_webUrl2!); } catch (_) {} }
     super.dispose();
   }
 
   Future<void> _pickVideo1() async {
     if (!mounted || _isLoadingVideo) return;
-
     try {
-      final result = await FilePicker.platform.pickFiles(
-        type: FileType.video,
-        allowMultiple: false,
-        withData: kIsWeb, // 只在 Web 上读取字节数据，移动端只获取路径
-      );
-
+      final result = await FilePicker.platform.pickFiles(type: FileType.video, allowMultiple: false, withData: kIsWeb);
       if (!mounted || result == null || result.files.isEmpty) return;
-
       final file = result.files.first;
-
-      // 释放预览控制器
       await _disposePreviewController();
-
       if (kIsWeb) {
         if (file.bytes != null) {
           _bytes1 = file.bytes;
-          if (_webUrl1 != null) {
-            try { VideoPlayerWebHelper.revokeBlobUrl(_webUrl1!); } catch (_) {}
-          }
+          if (_webUrl1 != null) { try { VideoPlayerWebHelper.revokeBlobUrl(_webUrl1!); } catch (_) {} }
           _webUrl1 = VideoPlayerWebHelper.bytesToBlobUrl(file.bytes!);
           await _loadDuration1();
         }
       } else {
-        if (file.path != null) {
-          _path1 = file.path;
-          await _loadDuration1();
-        }
+        if (file.path != null) { _path1 = file.path; await _loadDuration1(); }
       }
     } catch (e) {
       if (mounted) _showError(AppLocalizations.of(context)!.selectVideoFailed);
@@ -112,76 +91,48 @@ class _MergeVideoPageState extends State<MergeVideoPage> {
 
   Future<void> _pickVideo2() async {
     if (!mounted || _isLoadingVideo) return;
-
     try {
-      final result = await FilePicker.platform.pickFiles(
-        type: FileType.video,
-        allowMultiple: false,
-        withData: kIsWeb, // 只在 Web 上读取字节数据，移动端只获取路径
-      );
-
+      final result = await FilePicker.platform.pickFiles(type: FileType.video, allowMultiple: false, withData: kIsWeb);
       if (!mounted || result == null || result.files.isEmpty) return;
-
       final file = result.files.first;
-
-      // 释放预览控制器
       await _disposePreviewController();
-
       if (kIsWeb) {
         if (file.bytes != null) {
           _bytes2 = file.bytes;
-          if (_webUrl2 != null) {
-            try { VideoPlayerWebHelper.revokeBlobUrl(_webUrl2!); } catch (_) {}
-          }
+          if (_webUrl2 != null) { try { VideoPlayerWebHelper.revokeBlobUrl(_webUrl2!); } catch (_) {} }
           _webUrl2 = VideoPlayerWebHelper.bytesToBlobUrl(file.bytes!);
           await _loadDuration2();
         }
       } else {
-        if (file.path != null) {
-          _path2 = file.path;
-          await _loadDuration2();
-        }
+        if (file.path != null) { _path2 = file.path; await _loadDuration2(); }
       }
     } catch (e) {
       if (mounted) _showError(AppLocalizations.of(context)!.selectVideoFailed);
     }
   }
 
-  /// 仅加载视频时长，不创建长时间存活的控制器
   Future<void> _loadDuration1() async {
     if (!mounted) return;
-
+    final l10n = AppLocalizations.of(context)!;
     setState(() => _isLoadingVideo = true);
-
     VideoPlayerController? tempController;
-
     try {
       if (kIsWeb && _webUrl1 != null) {
         tempController = VideoPlayerController.networkUrl(Uri.parse(_webUrl1!));
       } else if (_path1 != null) {
         final file = NativeFileHelper.getFile(_path1!);
         tempController = VideoPlayerController.file(file);
-      } else {
-        setState(() => _isLoadingVideo = false);
-        return;
-      }
-
+      } else { setState(() => _isLoadingVideo = false); return; }
       await tempController.initialize();
-
-      if (!mounted) {
-        tempController.dispose();
-        return;
-      }
-
+      if (!mounted) { tempController.dispose(); return; }
       _duration1 = tempController.value.duration;
       _start1 = Duration.zero;
       _end1 = _duration1;
-
       setState(() {});
     } catch (e, stack) {
       debugPrint('Video1 load error: $e\n$stack');
       tempController?.dispose();
-      if (mounted) _showError('视频1加载失败');
+      if (mounted) _showError(l10n.video1LoadFailed);
     } finally {
       tempController?.dispose();
       if (mounted) setState(() => _isLoadingVideo = false);
@@ -190,38 +141,26 @@ class _MergeVideoPageState extends State<MergeVideoPage> {
 
   Future<void> _loadDuration2() async {
     if (!mounted) return;
-
+    final l10n = AppLocalizations.of(context)!;
     setState(() => _isLoadingVideo = true);
-
     VideoPlayerController? tempController;
-
     try {
       if (kIsWeb && _webUrl2 != null) {
         tempController = VideoPlayerController.networkUrl(Uri.parse(_webUrl2!));
       } else if (_path2 != null) {
         final file = NativeFileHelper.getFile(_path2!);
         tempController = VideoPlayerController.file(file);
-      } else {
-        setState(() => _isLoadingVideo = false);
-        return;
-      }
-
+      } else { setState(() => _isLoadingVideo = false); return; }
       await tempController.initialize();
-
-      if (!mounted) {
-        tempController.dispose();
-        return;
-      }
-
+      if (!mounted) { tempController.dispose(); return; }
       _duration2 = tempController.value.duration;
       _start2 = Duration.zero;
       _end2 = _duration2;
-
       setState(() {});
     } catch (e, stack) {
       debugPrint('Video2 load error: $e\n$stack');
       tempController?.dispose();
-      if (mounted) _showError('视频2加载失败');
+      if (mounted) _showError(l10n.video2LoadFailed);
     } finally {
       tempController?.dispose();
       if (mounted) setState(() => _isLoadingVideo = false);
@@ -230,95 +169,53 @@ class _MergeVideoPageState extends State<MergeVideoPage> {
 
   Future<void> _disposePreviewController() async {
     if (_previewController != null) {
-      try {
-        _previewController!.pause();
-        _previewController!.dispose();
-      } catch (_) {}
+      try { _previewController!.pause(); _previewController!.dispose(); } catch (_) {}
       _previewController = null;
       _previewTarget = -1;
     }
   }
 
-  /// 按需预览视频（用完立即释放）
   Future<void> _previewVideo(int index) async {
     if (!mounted) return;
     if (index == 0 && _path1 == null && _bytes1 == null) return;
     if (index == 1 && _path2 == null && _bytes2 == null) return;
-
-    // 如果已经在预览同一个视频，不重复加载
+    final l10n = AppLocalizations.of(context)!;
     if (_previewTarget == index && _previewController != null) {
-      // 切换播放/暂停
-      if (_previewController!.value.isPlaying) {
-        await _previewController!.pause();
-      } else {
-        await _previewController!.play();
-      }
+      if (_previewController!.value.isPlaying) { await _previewController!.pause(); }
+      else { await _previewController!.play(); }
       if (mounted) setState(() {});
       return;
     }
-
-    // 释放旧控制器
     await _disposePreviewController();
-
     VideoPlayerController? controller;
-
     try {
       if (index == 0) {
-        if (kIsWeb && _webUrl1 != null) {
-          controller = VideoPlayerController.networkUrl(Uri.parse(_webUrl1!));
-        } else if (_path1 != null) {
-          final file = NativeFileHelper.getFile(_path1!);
-          controller = VideoPlayerController.file(file);
-        }
+        if (kIsWeb && _webUrl1 != null) { controller = VideoPlayerController.networkUrl(Uri.parse(_webUrl1!)); }
+        else if (_path1 != null) { final file = NativeFileHelper.getFile(_path1!); controller = VideoPlayerController.file(file); }
       } else {
-        if (kIsWeb && _webUrl2 != null) {
-          controller = VideoPlayerController.networkUrl(Uri.parse(_webUrl2!));
-        } else if (_path2 != null) {
-          final file = NativeFileHelper.getFile(_path2!);
-          controller = VideoPlayerController.file(file);
-        }
+        if (kIsWeb && _webUrl2 != null) { controller = VideoPlayerController.networkUrl(Uri.parse(_webUrl2!)); }
+        else if (_path2 != null) { final file = NativeFileHelper.getFile(_path2!); controller = VideoPlayerController.file(file); }
       }
-
       if (controller == null) return;
-
       await controller.initialize();
-
-      if (!controller.value.isInitialized) {
-        controller.dispose();
-        if (mounted) _showError('预览失败');
-        return;
-      }
-
-      if (!mounted) {
-        controller.dispose();
-        return;
-      }
-
-      // 跳转到开始时间
+      if (!controller.value.isInitialized) { controller.dispose(); if (mounted) _showError(l10n.previewFailed); return; }
+      if (!mounted) { controller.dispose(); return; }
       final startTime = index == 0 ? _start1 : _start2;
       await controller.seekTo(startTime);
       await controller.play();
-
       _previewController = controller;
       _previewTarget = index;
-
       setState(() {});
     } catch (e) {
       controller?.dispose();
-      if (mounted) _showError('预览失败');
+      if (mounted) _showError(l10n.previewFailed);
     }
   }
 
   Future<void> _mergeVideos() async {
-    if (_path1 == null || _path2 == null) {
-      _showError('请先选择两个视频');
-      return;
-    }
-
-    if (kIsWeb) {
-      _showError('Web 平台暂不支持合并');
-      return;
-    }
+    final l10n = AppLocalizations.of(context)!;
+    if (_path1 == null || _path2 == null) { _showError(l10n.pleaseSelectTwoVideos); return; }
+    if (kIsWeb) { _showError(l10n.webNotSupportMerge); return; }
 
     await _disposePreviewController();
     setState(() => _isMerging = true);
@@ -330,128 +227,69 @@ class _MergeVideoPageState extends State<MergeVideoPage> {
       final clip2Path = '${tempDir.path}/clip2_$ts.mp4';
       final outputPath = '${tempDir.path}/merged_$ts.mp4';
 
-      // 第一步：裁剪视频1（应用起止时间 + 统一编码参数）
-      // 注意：FFmpeg -ss/-to 参数单位是秒，不是毫秒
       final ss1 = (_start1.inMilliseconds / 1000.0).toStringAsFixed(3);
       final to1 = (_end1.inMilliseconds / 1000.0).toStringAsFixed(3);
-      final clip1Args = [
-        '-i', _path1!,
-        '-ss', ss1,
-        '-to', to1,
-        '-c:v', 'libx264',
-        '-preset', 'fast',
-        '-c:a', 'aac',
-        '-ar', '44100',
-        '-ac', '2',
-        '-vf', 'scale=trunc(iw/2)*2:trunc(ih/2)*2',
-        '-r', '30',
-        '-pix_fmt', 'yuv420p',
-        clip1Path,
-        '-y',
-      ];
-
+      final clip1Args = ['-i', _path1!, '-ss', ss1, '-to', to1, '-c:v', 'libx264', '-preset', 'fast', '-c:a', 'aac', '-ar', '44100', '-ac', '2', '-vf', 'scale=trunc(iw/2)*2:trunc(ih/2)*2', '-r', '30', '-pix_fmt', 'yuv420p', clip1Path, '-y'];
       debugPrint('FFmpeg clip1: ${clip1Args.join(' ')}');
       final session1 = await FFmpegKit.execute(clip1Args.join(' '));
       final rc1 = await session1.getReturnCode();
       if (!ReturnCode.isSuccess(rc1)) {
-        if (mounted) _showError(AppLocalizations.of(context)!.video1CropFailed);
+        if (mounted) _showError(l10n.video1CropFailed);
         setState(() => _isMerging = false);
         return;
       }
 
-      // 获取裁剪后视频1的分辨率，用于统一视频2的尺寸
       String? resolution;
       final probeArgs = '-v error -select_streams v:0 -show_entries stream=width,height -of csv=s=x:p=0 "$clip1Path"';
       final probeSession = await FFmpegKit.execute(probeArgs);
       final probeOutput = await probeSession.getOutput();
       if (probeOutput != null) {
         final lines = probeOutput.split('\n').where((l) => l.contains('x')).toList();
-        if (lines.isNotEmpty) {
-          resolution = lines.first.trim();
-          debugPrint('Detected clip1 resolution: $resolution');
-        }
+        if (lines.isNotEmpty) { resolution = lines.first.trim(); debugPrint('Detected clip1 resolution: $resolution'); }
       }
 
-      // 第二步：裁剪视频2（应用起止时间 + 统一编码参数 + 统一分辨率）
       final ss2 = (_start2.inMilliseconds / 1000.0).toStringAsFixed(3);
       final to2 = (_end2.inMilliseconds / 1000.0).toStringAsFixed(3);
-      // 如果获取到了视频1的分辨率，视频2缩放到相同尺寸（确保偶数对齐）
       final scaleFilter = resolution != null && resolution.contains('x')
           ? 'scale=trunc(${resolution.split('x')[0]}/2)*2:trunc(${resolution.split('x')[1]}/2)*2'
           : 'scale=trunc(iw/2)*2:trunc(ih/2)*2';
-      final clip2Args = [
-        '-i', _path2!,
-        '-ss', ss2,
-        '-to', to2,
-        '-c:v', 'libx264',
-        '-preset', 'fast',
-        '-c:a', 'aac',
-        '-ar', '44100',
-        '-ac', '2',
-        '-vf', scaleFilter,
-        '-r', '30',
-        '-pix_fmt', 'yuv420p',
-        clip2Path,
-        '-y',
-      ];
-
+      final clip2Args = ['-i', _path2!, '-ss', ss2, '-to', to2, '-c:v', 'libx264', '-preset', 'fast', '-c:a', 'aac', '-ar', '44100', '-ac', '2', '-vf', scaleFilter, '-r', '30', '-pix_fmt', 'yuv420p', clip2Path, '-y'];
       debugPrint('FFmpeg clip2: ${clip2Args.join(' ')}');
       final session2 = await FFmpegKit.execute(clip2Args.join(' '));
       final rc2 = await session2.getReturnCode();
       if (!ReturnCode.isSuccess(rc2)) {
-        if (mounted) _showError(AppLocalizations.of(context)!.video2CropFailed);
+        if (mounted) _showError(l10n.video2CropFailed);
         setState(() => _isMerging = false);
         return;
       }
 
-      // 第三步：合并裁剪后的两个片段
       final fileListPath = '${tempDir.path}/filelist_$ts.txt';
       final listContent = "file '${clip1Path}'\nfile '${clip2Path}'";
       await File(fileListPath).writeAsString(listContent);
-
-      final mergeArgs = [
-        '-f', 'concat',
-        '-safe', '0',
-        '-i', fileListPath,
-        '-c', 'copy',
-        '-movflags', '+faststart',
-        outputPath,
-        '-y',
-      ];
-
+      final mergeArgs = ['-f', 'concat', '-safe', '0', '-i', fileListPath, '-c', 'copy', '-movflags', '+faststart', outputPath, '-y'];
       debugPrint('FFmpeg merge: ${mergeArgs.join(' ')}');
       final session3 = await FFmpegKit.execute(mergeArgs.join(' '));
       final rc3 = await session3.getReturnCode();
 
-      if (!mounted) {
-        setState(() => _isMerging = false);
-        return;
-      }
+      if (!mounted) { setState(() => _isMerging = false); return; }
 
       if (ReturnCode.isSuccess(rc3)) {
         _mergedVideoPath = outputPath;
-        _showSuccess('合并成功！');
+        _showSuccess(l10n.mergeSuccess);
         await _initPreview(outputPath);
-      } else {
-        _showError('合并失败');
-      }
+      } else { _showError(l10n.mergeFailed); }
 
-      // 清理中间文件
-      try {
-        await File(clip1Path).delete();
-        await File(clip2Path).delete();
-        await File(fileListPath).delete();
-      } catch (_) {}
-
+      try { await File(clip1Path).delete(); await File(clip2Path).delete(); await File(fileListPath).delete(); } catch (_) {}
       setState(() => _isMerging = false);
     } catch (e) {
       debugPrint('Merge error: $e');
-      if (mounted) _showError('合并异常: $e');
+      if (mounted) _showError(l10n.mergeError(e.toString()));
       setState(() => _isMerging = false);
     }
   }
 
   Future<void> _initPreview(String path) async {
+    final l10n = AppLocalizations.of(context)!;
     try {
       _previewController?.dispose();
       final file = NativeFileHelper.getFile(path);
@@ -463,18 +301,13 @@ class _MergeVideoPageState extends State<MergeVideoPage> {
       await ctrl.play();
       _previewTarget = -1;
       if (mounted) setState(() {});
-    } catch (e) {
-      _showError('预览初始化失败');
-    }
+    } catch (e) { _showError(l10n.previewInitFailed); }
   }
 
   void _toggleMergePreview() {
     if (_previewController != null && _previewController!.value.isInitialized) {
-      if (_previewController!.value.isPlaying) {
-        _previewController!.pause();
-      } else {
-        _previewController!.play();
-      }
+      if (_previewController!.value.isPlaying) { _previewController!.pause(); }
+      else { _previewController!.play(); }
       setState(() {});
     }
   }
@@ -488,20 +321,11 @@ class _MergeVideoPageState extends State<MergeVideoPage> {
     _previewController?.dispose();
     _previewController = null;
     _previewTarget = -1;
-    setState(() {
-      _mergedVideoPath = null;
-    });
+    setState(() { _mergedVideoPath = null; });
   }
 
-  void _showError(String msg) {
-    if (!mounted) return;
-    TopNotify.error(context, msg);
-  }
-
-  void _showSuccess(String msg) {
-    if (!mounted) return;
-    TopNotify.success(context, msg);
-  }
+  void _showError(String msg) { if (!mounted) return; TopNotify.error(context, msg); }
+  void _showSuccess(String msg) { if (!mounted) return; TopNotify.success(context, msg); }
 
   String _formatDuration(Duration d) {
     return '${d.inMinutes.toString().padLeft(2, '0')}:${(d.inSeconds % 60).toString().padLeft(2, '0')}';
@@ -509,16 +333,15 @@ class _MergeVideoPageState extends State<MergeVideoPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(gradient: _backgroundGradient),
         child: SafeArea(
           child: Column(
             children: [
-              _buildAppBar(),
-              Expanded(
-                child: _mergedVideoPath != null ? _buildPreview() : _buildMergeSection(),
-              ),
+              _buildAppBar(l10n),
+              Expanded(child: _mergedVideoPath != null ? _buildPreview(l10n) : _buildMergeSection(l10n)),
             ],
           ),
         ),
@@ -526,88 +349,55 @@ class _MergeVideoPageState extends State<MergeVideoPage> {
     );
   }
 
-  Widget _buildAppBar() {
+  Widget _buildAppBar(AppLocalizations l10n) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
       child: Row(
         children: [
-          IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () => Navigator.pop(context),
-          ),
-          const Expanded(
-            child: Text(
-              '合并视频',
-              style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
+          IconButton(icon: const Icon(Icons.arrow_back, color: Colors.white), onPressed: () => Navigator.pop(context)),
+          Expanded(child: Text(l10n.mergeVideo, style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold), textAlign: TextAlign.center, maxLines: 1, overflow: TextOverflow.ellipsis)),
           const SizedBox(width: 48),
         ],
       ),
     );
   }
 
-  Widget _buildMergeSection() {
+  Widget _buildMergeSection(AppLocalizations l10n) {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Column(
         children: [
           Container(
             padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.15),
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.white24),
-            ),
-            child: const Row(
+            decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.15), borderRadius: BorderRadius.circular(12), border: Border.all(color: Colors.white24)),
+            child: Row(
               children: [
-                Icon(Icons.video_library, color: Color(0xFF2E7D32), size: 24),
-                SizedBox(width: 12),
-                Expanded(
-                  child: Text(
-                    '选择两个视频进行合并',
-                    style: TextStyle(color: Colors.white, fontSize: 14),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
+                const Icon(Icons.video_library, color: Color(0xFF2E7D32), size: 24),
+                const SizedBox(width: 12),
+                Expanded(child: Text(l10n.selectTwoVideosToMerge, style: const TextStyle(color: Colors.white, fontSize: 14), maxLines: 2, overflow: TextOverflow.ellipsis)),
               ],
             ),
           ),
           const SizedBox(height: 20),
-          _buildVideoCard1(),
+          _buildVideoCard1(l10n),
           const SizedBox(height: 14),
-          _buildVideoCard2(),
+          _buildVideoCard2(l10n),
           const SizedBox(height: 28),
-          _buildMergeButton(),
+          _buildMergeButton(l10n),
         ],
       ),
     );
   }
 
-  Widget _buildVideoCard1() {
+  Widget _buildVideoCard1(AppLocalizations l10n) {
     final hasVideo = _path1 != null || _bytes1 != null;
-
     return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.08),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: hasVideo ? _buildVideoInfo1() : _buildVideoEmpty1(),
+      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16), boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.08), blurRadius: 10, offset: const Offset(0, 4))]),
+      child: hasVideo ? _buildVideoInfo1(l10n) : _buildVideoEmpty1(l10n),
     );
   }
 
-  Widget _buildVideoEmpty1() {
+  Widget _buildVideoEmpty1(AppLocalizations l10n) {
     return InkWell(
       onTap: _isLoadingVideo ? null : _pickVideo1,
       borderRadius: BorderRadius.circular(16),
@@ -618,35 +408,18 @@ class _MergeVideoPageState extends State<MergeVideoPage> {
           children: [
             Container(
               padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: const Color(0xFF2E7D32).withValues(alpha: 0.1),
-                shape: BoxShape.circle,
-              ),
+              decoration: BoxDecoration(color: const Color(0xFF2E7D32).withValues(alpha: 0.1), shape: BoxShape.circle),
               child: _isLoadingVideo
                   ? SizedBox(width: 28, height: 28, child: CircularProgressIndicator(strokeWidth: 2, color: const Color(0xFF2E7D32)))
                   : Icon(Icons.video_call, size: 28, color: const Color(0xFF2E7D32)),
             ),
             const SizedBox(width: 16),
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    '选择视频 1',
-                    style: TextStyle(
-                      color: Colors.grey.shade700,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 15,
-                    ),
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    _isLoadingVideo ? '加载中...' : '点击选择第一个视频',
-                    style: TextStyle(color: Colors.grey.shade400, fontSize: 12),
-                  ),
-                ],
-              ),
+              child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.center, children: [
+                Text(l10n.selectVideo1, style: TextStyle(color: Colors.grey.shade700, fontWeight: FontWeight.w600, fontSize: 15)),
+                const SizedBox(height: 2),
+                Text(_isLoadingVideo ? l10n.loading : l10n.tapToSelectFirstVideo, style: TextStyle(color: Colors.grey.shade400, fontSize: 12)),
+              ]),
             ),
             Icon(Icons.chevron_right, color: Colors.grey.shade400),
           ],
@@ -655,53 +428,29 @@ class _MergeVideoPageState extends State<MergeVideoPage> {
     );
   }
 
-  Widget _buildVideoInfo1() {
+  Widget _buildVideoInfo1(AppLocalizations l10n) {
     final isPreviewing = _previewController != null && _previewController!.value.isInitialized && _previewTarget == 0;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // 预览区域
         InkWell(
           onTap: () => _previewVideo(0),
           child: Stack(
             children: [
               Container(
-                height: 160,
-                width: double.infinity,
-                color: Colors.black87,
+                height: 160, width: double.infinity, color: Colors.black87,
                 child: isPreviewing
-                    ? AspectRatio(
-                        aspectRatio: _previewController!.value.aspectRatio,
-                        child: VideoPlayer(_previewController!),
-                      )
-                    : Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.play_circle_outline, size: 48, color: Colors.white54),
-                            const SizedBox(height: 8),
-                            Text(
-                              '点击预览',
-                              style: TextStyle(color: Colors.white54, fontSize: 12),
-                            ),
-                          ],
-                        ),
-                      ),
+                    ? AspectRatio(aspectRatio: _previewController!.value.aspectRatio, child: VideoPlayer(_previewController!))
+                    : Center(child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                        Icon(Icons.play_circle_outline, size: 48, color: Colors.white54),
+                        const SizedBox(height: 8),
+                        Text(l10n.tapToPreview, style: TextStyle(color: Colors.white54, fontSize: 12)),
+                      ])),
               ),
               if (isPreviewing)
-                Positioned.fill(
-                  child: Center(
-                    child: Icon(
-                      _previewController!.value.isPlaying ? Icons.pause_circle_filled : Icons.play_circle_filled,
-                      size: 56,
-                      color: Colors.white70,
-                    ),
-                  ),
-                ),
+                Positioned.fill(child: Center(child: Icon(_previewController!.value.isPlaying ? Icons.pause_circle_filled : Icons.play_circle_filled, size: 56, color: Colors.white70))),
               Positioned(
-                bottom: 8,
-                right: 8,
+                bottom: 8, right: 8,
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(color: Colors.black45, borderRadius: BorderRadius.circular(4)),
@@ -711,7 +460,6 @@ class _MergeVideoPageState extends State<MergeVideoPage> {
             ],
           ),
         ),
-        // 信息区域
         Padding(
           padding: const EdgeInsets.all(14),
           child: Column(
@@ -721,25 +469,25 @@ class _MergeVideoPageState extends State<MergeVideoPage> {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                     decoration: BoxDecoration(color: const Color(0xFF2E7D32).withValues(alpha: 0.1), borderRadius: BorderRadius.circular(12)),
-                    child: Text('视频 1', style: const TextStyle(color: Color(0xFF2E7D32), fontWeight: FontWeight.w600, fontSize: 13)),
+                    child: Text(l10n.video1, style: const TextStyle(color: Color(0xFF2E7D32), fontWeight: FontWeight.w600, fontSize: 13)),
                   ),
                   const Spacer(),
                   TextButton.icon(
                     onPressed: _pickVideo1,
                     icon: const Icon(Icons.refresh, size: 16),
-                    label: const Text('更换'),
+                    label: Text(l10n.change),
                     style: TextButton.styleFrom(foregroundColor: Colors.grey.shade600),
                   ),
                 ],
               ),
               const SizedBox(height: 8),
-              _buildSlider('开始', _start1, _duration1, Colors.green, (v) => setState(() {
+              _buildSlider(l10n.start, _start1, _duration1, Colors.green, (v) => setState(() {
                 _start1 = Duration(milliseconds: v.toInt());
                 if (_start1 >= _end1) _end1 = _start1 + const Duration(seconds: 1);
                 if (_end1 > _duration1) _end1 = _duration1;
               })),
               const SizedBox(height: 4),
-              _buildSlider('结束', _end1, _duration1, Colors.orange, (v) => setState(() {
+              _buildSlider(l10n.end, _end1, _duration1, Colors.orange, (v) => setState(() {
                 _end1 = Duration(milliseconds: v.toInt());
                 if (_end1 <= _start1) _start1 = _end1 - const Duration(seconds: 1);
                 if (_start1 < Duration.zero) _start1 = Duration.zero;
@@ -751,26 +499,15 @@ class _MergeVideoPageState extends State<MergeVideoPage> {
     );
   }
 
-  Widget _buildVideoCard2() {
+  Widget _buildVideoCard2(AppLocalizations l10n) {
     final hasVideo = _path2 != null || _bytes2 != null;
-
     return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.08),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: hasVideo ? _buildVideoInfo2() : _buildVideoEmpty2(),
+      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16), boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.08), blurRadius: 10, offset: const Offset(0, 4))]),
+      child: hasVideo ? _buildVideoInfo2(l10n) : _buildVideoEmpty2(l10n),
     );
   }
 
-  Widget _buildVideoEmpty2() {
+  Widget _buildVideoEmpty2(AppLocalizations l10n) {
     return InkWell(
       onTap: _isLoadingVideo ? null : _pickVideo2,
       borderRadius: BorderRadius.circular(16),
@@ -781,35 +518,18 @@ class _MergeVideoPageState extends State<MergeVideoPage> {
           children: [
             Container(
               padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: const Color(0xFF43A047).withValues(alpha: 0.1),
-                shape: BoxShape.circle,
-              ),
+              decoration: BoxDecoration(color: const Color(0xFF43A047).withValues(alpha: 0.1), shape: BoxShape.circle),
               child: _isLoadingVideo
                   ? SizedBox(width: 28, height: 28, child: CircularProgressIndicator(strokeWidth: 2, color: const Color(0xFF43A047)))
                   : Icon(Icons.video_call, size: 28, color: const Color(0xFF43A047)),
             ),
             const SizedBox(width: 16),
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    '选择视频 2',
-                    style: TextStyle(
-                      color: Colors.grey.shade700,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 15,
-                    ),
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    _isLoadingVideo ? '加载中...' : '点击选择第二个视频',
-                    style: TextStyle(color: Colors.grey.shade400, fontSize: 12),
-                  ),
-                ],
-              ),
+              child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.center, children: [
+                Text(l10n.selectVideo2, style: TextStyle(color: Colors.grey.shade700, fontWeight: FontWeight.w600, fontSize: 15)),
+                const SizedBox(height: 2),
+                Text(_isLoadingVideo ? l10n.loading : l10n.tapToSelectSecondVideo, style: TextStyle(color: Colors.grey.shade400, fontSize: 12)),
+              ]),
             ),
             Icon(Icons.chevron_right, color: Colors.grey.shade400),
           ],
@@ -818,53 +538,29 @@ class _MergeVideoPageState extends State<MergeVideoPage> {
     );
   }
 
-  Widget _buildVideoInfo2() {
+  Widget _buildVideoInfo2(AppLocalizations l10n) {
     final isPreviewing = _previewController != null && _previewController!.value.isInitialized && _previewTarget == 1;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // 预览区域
         InkWell(
           onTap: () => _previewVideo(1),
           child: Stack(
             children: [
               Container(
-                height: 160,
-                width: double.infinity,
-                color: Colors.black87,
+                height: 160, width: double.infinity, color: Colors.black87,
                 child: isPreviewing
-                    ? AspectRatio(
-                        aspectRatio: _previewController!.value.aspectRatio,
-                        child: VideoPlayer(_previewController!),
-                      )
-                    : Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.play_circle_outline, size: 48, color: Colors.white54),
-                            const SizedBox(height: 8),
-                            Text(
-                              '点击预览',
-                              style: TextStyle(color: Colors.white54, fontSize: 12),
-                            ),
-                          ],
-                        ),
-                      ),
+                    ? AspectRatio(aspectRatio: _previewController!.value.aspectRatio, child: VideoPlayer(_previewController!))
+                    : Center(child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                        Icon(Icons.play_circle_outline, size: 48, color: Colors.white54),
+                        const SizedBox(height: 8),
+                        Text(l10n.tapToPreview, style: TextStyle(color: Colors.white54, fontSize: 12)),
+                      ])),
               ),
               if (isPreviewing)
-                Positioned.fill(
-                  child: Center(
-                    child: Icon(
-                      _previewController!.value.isPlaying ? Icons.pause_circle_filled : Icons.play_circle_filled,
-                      size: 56,
-                      color: Colors.white70,
-                    ),
-                  ),
-                ),
+                Positioned.fill(child: Center(child: Icon(_previewController!.value.isPlaying ? Icons.pause_circle_filled : Icons.play_circle_filled, size: 56, color: Colors.white70))),
               Positioned(
-                bottom: 8,
-                right: 8,
+                bottom: 8, right: 8,
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(color: Colors.black45, borderRadius: BorderRadius.circular(4)),
@@ -874,7 +570,6 @@ class _MergeVideoPageState extends State<MergeVideoPage> {
             ],
           ),
         ),
-        // 信息区域
         Padding(
           padding: const EdgeInsets.all(14),
           child: Column(
@@ -884,25 +579,25 @@ class _MergeVideoPageState extends State<MergeVideoPage> {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                     decoration: BoxDecoration(color: const Color(0xFF43A047).withValues(alpha: 0.1), borderRadius: BorderRadius.circular(12)),
-                    child: Text('视频 2', style: const TextStyle(color: Color(0xFF43A047), fontWeight: FontWeight.w600, fontSize: 13)),
+                    child: Text(l10n.video2, style: const TextStyle(color: Color(0xFF43A047), fontWeight: FontWeight.w600, fontSize: 13)),
                   ),
                   const Spacer(),
                   TextButton.icon(
                     onPressed: _pickVideo2,
                     icon: const Icon(Icons.refresh, size: 16),
-                    label: const Text('更换'),
+                    label: Text(l10n.change),
                     style: TextButton.styleFrom(foregroundColor: Colors.grey.shade600),
                   ),
                 ],
               ),
               const SizedBox(height: 8),
-              _buildSlider('开始', _start2, _duration2, Colors.green, (v) => setState(() {
+              _buildSlider(l10n.start, _start2, _duration2, Colors.green, (v) => setState(() {
                 _start2 = Duration(milliseconds: v.toInt());
                 if (_start2 >= _end2) _end2 = _start2 + const Duration(seconds: 1);
                 if (_end2 > _duration2) _end2 = _duration2;
               })),
               const SizedBox(height: 4),
-              _buildSlider('结束', _end2, _duration2, Colors.orange, (v) => setState(() {
+              _buildSlider(l10n.end, _end2, _duration2, Colors.orange, (v) => setState(() {
                 _end2 = Duration(milliseconds: v.toInt());
                 if (_end2 <= _start2) _start2 = _end2 - const Duration(seconds: 1);
                 if (_start2 < Duration.zero) _start2 = Duration.zero;
@@ -917,120 +612,66 @@ class _MergeVideoPageState extends State<MergeVideoPage> {
   Widget _buildSlider(String label, Duration value, Duration max, Color color, ValueChanged<double> onChanged) {
     final double maxMs = max.inMilliseconds > 0 ? max.inMilliseconds.toDouble() : 1.0;
     final double valueMs = value.inMilliseconds.toDouble().clamp(0.0, maxMs);
-
     return Column(
       children: [
         Row(
           children: [
-            Icon(label == '开始' ? Icons.play_arrow : Icons.stop, size: 16, color: color),
+            Icon(label == AppLocalizations.of(context)!.start ? Icons.play_arrow : Icons.stop, size: 16, color: color),
             const SizedBox(width: 4),
             Expanded(child: Text(label, style: TextStyle(fontSize: 12, color: Colors.grey.shade600), overflow: TextOverflow.ellipsis)),
             Text(_formatDuration(value), style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Colors.grey.shade800), overflow: TextOverflow.ellipsis),
           ],
         ),
-        SliderTheme(
-          data: SliderThemeData(activeTrackColor: color, inactiveTrackColor: color.withValues(alpha: 0.2)),
-          child: Slider(
-            value: valueMs,
-            min: 0,
-            max: maxMs,
-            onChanged: onChanged,
-          ),
-        ),
+        SliderTheme(data: SliderThemeData(activeTrackColor: color, inactiveTrackColor: color.withValues(alpha: 0.2)), child: Slider(value: valueMs, min: 0, max: maxMs, onChanged: onChanged)),
       ],
     );
   }
 
-  Widget _buildMergeButton() {
+  Widget _buildMergeButton(AppLocalizations l10n) {
     final canMerge = _path1 != null && _path2 != null && !_isMerging;
-
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(28),
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0xFF2E7D32).withValues(alpha: canMerge ? 0.4 : 0.2),
-            blurRadius: 12,
-            offset: const Offset(0, 6),
-          ),
-        ],
+        boxShadow: [BoxShadow(color: const Color(0xFF2E7D32).withValues(alpha: canMerge ? 0.4 : 0.2), blurRadius: 12, offset: const Offset(0, 6))],
       ),
       child: SizedBox(
-        width: double.infinity,
-        height: 56,
+        width: double.infinity, height: 56,
         child: ElevatedButton(
           onPressed: canMerge ? _mergeVideos : null,
-          style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFF2E7D32),
-            foregroundColor: Colors.white,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
-            elevation: 0,
-          ),
+          style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF2E7D32), foregroundColor: Colors.white, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)), elevation: 0),
           child: _isMerging
-              ? const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(width: 24, height: 24, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2.5)),
-                    SizedBox(width: 12),
-                    Text('合并中...', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600)),
-                  ],
-                )
-              : Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(6),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.2),
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Icon(Icons.merge_type, size: 22),
-                    ),
-                    const SizedBox(width: 10),
-                    const Text('开始合并', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600)),
-                  ],
-                ),
+              ? Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  SizedBox(width: 24, height: 24, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2.5)),
+                  SizedBox(width: 12), Text(l10n.merging, style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600)),
+                ])
+              : Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Container(padding: const EdgeInsets.all(6), decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.2), shape: BoxShape.circle), child: const Icon(Icons.merge_type, size: 22)),
+                  const SizedBox(width: 10), Text(l10n.startMerge, style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600)),
+                ]),
         ),
       ),
     );
   }
 
-  Widget _buildPreview() {
+  Widget _buildPreview(AppLocalizations l10n) {
     final isInitialized = _previewController != null && _previewController!.value.isInitialized;
     return Column(
       children: <Widget>[
         Expanded(
           child: Container(
             margin: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Colors.black,
-              borderRadius: BorderRadius.circular(16),
-            ),
+            decoration: BoxDecoration(color: Colors.black, borderRadius: BorderRadius.circular(16)),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(16),
               child: isInitialized
-                  ? Stack(
-                      alignment: Alignment.center,
-                      children: <Widget>[
-                        AspectRatio(
-                          aspectRatio: _previewController!.value.aspectRatio,
-                          child: VideoPlayer(_previewController!),
-                        ),
-                        IconButton(
-                          onPressed: _toggleMergePreview,
-                          icon: Icon(
-                            _previewController!.value.isPlaying
-                                ? Icons.pause_circle_filled
-                                : Icons.play_circle_filled,
-                            size: 80,
-                            color: Colors.white70,
-                          ),
-                        ),
-                      ],
-                    )
-                  : const Center(
-                      child: CircularProgressIndicator(color: Colors.white),
-                    ),
+                  ? Stack(alignment: Alignment.center, children: <Widget>[
+                      AspectRatio(aspectRatio: _previewController!.value.aspectRatio, child: VideoPlayer(_previewController!)),
+                      IconButton(
+                        onPressed: _toggleMergePreview,
+                        icon: Icon(_previewController!.value.isPlaying ? Icons.pause_circle_filled : Icons.play_circle_filled, size: 80, color: Colors.white70),
+                      ),
+                    ])
+                  : const Center(child: CircularProgressIndicator(color: Colors.white)),
             ),
           ),
         ),
@@ -1041,44 +682,16 @@ class _MergeVideoPageState extends State<MergeVideoPage> {
               Expanded(
                 child: ElevatedButton(
                   onPressed: _saveToGallery,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF2E7D32),
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Icon(Icons.download),
-                      SizedBox(width: 8),
-                      Flexible(child: Text('保存到相册', overflow: TextOverflow.ellipsis)),
-                    ],
-                  ),
+                  style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF2E7D32), foregroundColor: Colors.white, padding: const EdgeInsets.symmetric(vertical: 16), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
+                  child: Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[Icon(Icons.download), SizedBox(width: 8), Flexible(child: Text(l10n.saveToAlbum, overflow: TextOverflow.ellipsis))]),
                 ),
               ),
               const SizedBox(width: 12),
               Expanded(
                 child: ElevatedButton(
                   onPressed: _reset,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF2E7D32),
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Icon(Icons.refresh),
-                      SizedBox(width: 8),
-                      Flexible(child: Text('重新合并', overflow: TextOverflow.ellipsis)),
-                    ],
-                  ),
+                  style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF2E7D32), foregroundColor: Colors.white, padding: const EdgeInsets.symmetric(vertical: 16), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
+                  child: Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[Icon(Icons.refresh), SizedBox(width: 8), Flexible(child: Text(l10n.reMerge, overflow: TextOverflow.ellipsis))]),
                 ),
               ),
             ],
@@ -1088,4 +701,3 @@ class _MergeVideoPageState extends State<MergeVideoPage> {
     );
   }
 }
-

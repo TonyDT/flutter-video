@@ -530,5 +530,47 @@
     "placeholders": {
       "error": { "type": "String" }
     }
-  }
+  },
+
+  "premiumVersion": "Premium",
+  "alreadyPremium": "You are already a Premium user!",
+  "alreadyPremiumDesc": "Thank you for your support, all features are unlocked",
+  "unlockPremium": "Unlock Premium",
+  "unlockPremiumDesc": "One-time purchase, permanent access to all features",
+  "featureUnlimitedSave": "Unlimited saves to album",
+  "featureUnlimitedTools": "Unrestricted use of all tools",
+  "featureFreeUpdates": "Free future updates",
+  "featureNoAds": "Ad-free experience",
+  "unlockNow": "Unlock Now",
+  "restorePurchases": "Restore Purchases",
+
+  "video1LoadFailed": "Video 1 load failed",
+  "video2LoadFailed": "Video 2 load failed",
+  "selectVideoLabel": "Select Video",
+  "videoChanged": "Change Video",
+  "saveVideoOnly": "Save Video Only",
+  "videoOnlySaved": "Video only saved",
+  "sourceFileNotExist": "Source file does not exist",
+  "saveLabel": "Save {label}",
+  "@saveLabel": {
+    "placeholders": {
+      "label": { "type": "String" }
+    }
+  },
+  "labelSaved": "{label} saved",
+  "@labelSaved": {
+    "placeholders": {
+      "label": { "type": "String" }
+    }
+  },
+  "saveLabelError": "Save error: {error}",
+  "@saveLabelError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "noImagesExtractedShort": "No images extracted",
+  "reMerge": "Re-merge",
+  "originalLabel": "Original:",
+  "segmentCount": "segments"
 }

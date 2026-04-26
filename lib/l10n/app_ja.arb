@@ -284,5 +284,32 @@
   "licenseLabel": "ライセンス: {license}",
 
   "videoInitFailed": "動画の初期化に失敗しました: {error}",
-  "selectVideoFailedWithError": "動画の選択に失敗しました: {error}"
+  "selectVideoFailedWithError": "動画の選択に失敗しました: {error}",
+
+  "premiumVersion": "プレミアム版",
+  "alreadyPremium": "すでにプレミアムユーザーです！",
+  "alreadyPremiumDesc": "ご支援ありがとうございます。すべての機能がアンロックされています",
+  "unlockPremium": "プレミアム版をアンロック",
+  "unlockPremiumDesc": "一度の購入で、すべての機能を永久にご利用いただけます",
+  "featureUnlimitedSave": "アルバムへの無制限保存",
+  "featureUnlimitedTools": "すべてのツールの無制限使用",
+  "featureFreeUpdates": "将来の新機能の無料アップデート",
+  "featureNoAds": "広告なし体験",
+  "unlockNow": "今すぐアンロック",
+  "restorePurchases": "購入記録を復元",
+
+  "video1LoadFailed": "動画1の読み込みに失敗しました",
+  "video2LoadFailed": "動画2の読み込みに失敗しました",
+  "selectVideoLabel": "動画を選択",
+  "videoChanged": "動画を変更",
+  "saveVideoOnly": "動画のみ保存",
+  "videoOnlySaved": "動画のみ保存しました",
+  "sourceFileNotExist": "ソースファイルが存在しません",
+  "saveLabel": "{label} を保存",
+  "labelSaved": "{label} を保存しました",
+  "saveLabelError": "保存エラー: {error}",
+  "noImagesExtractedShort": "画像を抽出できませんでした",
+  "reMerge": "再結合",
+  "originalLabel": "元の:",
+  "segmentCount": "セグメント"
 }

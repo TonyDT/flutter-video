@@ -7,6 +7,7 @@ import 'package:video_player/video_player.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:ffmpeg_kit_flutter_new/ffmpeg_kit.dart';
 import 'package:ffmpeg_kit_flutter_new/return_code.dart';
+import 'package:xixi_media_tool/l10n/app_localizations.dart';
 import '../utils/native_file_helper.dart'
     if (dart.library.io) '../utils/native_file_helper.dart'
     if (dart.library.html) '../utils/native_file_helper_web.dart';
@@ -41,6 +42,7 @@ class _ConvertFormatPageState extends State<ConvertFormatPage> {
 
   Future<void> _pickVideo() async {
     if (!mounted || _isLoading) return;
+    final l10n = AppLocalizations.of(context)!;
     try {
       final result = await FilePicker.platform.pickFiles(type: FileType.video, allowMultiple: false, withData: kIsWeb);
       if (!mounted || result == null || result.files.isEmpty) return;
@@ -53,13 +55,14 @@ class _ConvertFormatPageState extends State<ConvertFormatPage> {
       if (!mounted) { ctrl.dispose(); return; }
       setState(() { _controller = ctrl; _isLoading = false; });
     } catch (e) {
-      if (mounted) _showError('选择视频失败');
+      if (mounted) _showError(l10n.selectVideoFailed);
       setState(() => _isLoading = false);
     }
   }
 
   Future<void> _convert() async {
     if (_videoPath == null || kIsWeb) return;
+    final l10n = AppLocalizations.of(context)!;
     _controller?.pause();
     setState(() => _isProcessing = true);
     try {
@@ -77,9 +80,9 @@ class _ConvertFormatPageState extends State<ConvertFormatPage> {
       final rc = await session.getReturnCode();
       if (ReturnCode.isSuccess(rc)) {
         _resultPath = output;
-        _showSuccess('转换成功！');
-      } else { _showError('转换失败'); }
-    } catch (e) { _showError('转换出错: $e'); }
+        _showSuccess(l10n.convertSuccess);
+      } else { _showError(l10n.convertFailed); }
+    } catch (e) { _showError(l10n.convertError(e.toString())); }
     setState(() => _isProcessing = false);
   }
 
@@ -92,43 +95,45 @@ class _ConvertFormatPageState extends State<ConvertFormatPage> {
   void _showSuccess(String m) { if (mounted) TopNotify.success(context, m); }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    return Scaffold(
     body: Container(decoration: const BoxDecoration(gradient: _bg), child: SafeArea(child: Column(children: [
-      _buildAppBar(), Expanded(child: _videoPath == null ? _buildPickArea() : _buildWorkArea()),
-    ]))),
-  );
+      _buildAppBar(l10n), Expanded(child: _videoPath == null ? _buildPickArea(l10n) : _buildWorkArea(l10n)),
+    ]))));
+  }
 
-  Widget _buildAppBar() => Container(padding: const EdgeInsets.symmetric(horizontal:8,vertical:8), child: Row(children: [
+  Widget _buildAppBar(AppLocalizations l10n) => Container(padding: const EdgeInsets.symmetric(horizontal:8,vertical:8), child: Row(children: [
     IconButton(icon: const Icon(Icons.arrow_back,color:Colors.white), onPressed: () => Navigator.pop(context)),
-    const Expanded(child: Text('格式转换', style: TextStyle(color:Colors.white,fontSize:20,fontWeight:FontWeight.bold), textAlign:TextAlign.center, maxLines:1, overflow:TextOverflow.ellipsis)),
+    Expanded(child: Text(l10n.convertFormat, style: const TextStyle(color:Colors.white,fontSize:20,fontWeight:FontWeight.bold), textAlign:TextAlign.center, maxLines:1, overflow:TextOverflow.ellipsis)),
     const SizedBox(width:48),
   ]));
 
-  Widget _buildPickArea() => Center(child: InkWell(onTap: _isLoading?null:_pickVideo, child: Container(
+  Widget _buildPickArea(AppLocalizations l10n) => Center(child: InkWell(onTap: _isLoading?null:_pickVideo, child: Container(
     padding: const EdgeInsets.all(32), decoration: BoxDecoration(color: Colors.white.withValues(alpha:0.15), borderRadius: BorderRadius.circular(20), border: Border.all(color: Colors.white24)),
     child: Column(mainAxisSize: MainAxisSize.min, children: [
       _isLoading ? const CircularProgressIndicator(color: Colors.white) : const Icon(Icons.autorenew, size: 64, color: Colors.white70),
-      const SizedBox(height:16), Text(_isLoading?'加载中...':'点击选择视频', style: const TextStyle(color:Colors.white,fontSize:18)),
+      const SizedBox(height:16), Text(_isLoading?l10n.loading:l10n.tapToSelectVideo, style: const TextStyle(color:Colors.white,fontSize:18)),
     ]),
   )));
 
-  Widget _buildWorkArea() => SingleChildScrollView(padding: const EdgeInsets.all(16), child: Column(children: [
+  Widget _buildWorkArea(AppLocalizations l10n) => SingleChildScrollView(padding: const EdgeInsets.all(16), child: Column(children: [
     Container(height:180, decoration: BoxDecoration(color:Colors.black87, borderRadius:BorderRadius.circular(16)),
       child: _controller!=null&&_controller!.value.isInitialized ? ClipRRect(borderRadius:BorderRadius.circular(16), child: AspectRatio(aspectRatio:_controller!.value.aspectRatio, child: VideoPlayer(_controller!))) : const Center(child: CircularProgressIndicator(color:Colors.white))),
     const SizedBox(height:16),
     Container(padding: const EdgeInsets.all(16), decoration: BoxDecoration(color:Colors.white, borderRadius:BorderRadius.circular(16)), child: Column(crossAxisAlignment:CrossAxisAlignment.start, children: [
-      const Text('目标格式:', style: TextStyle(fontWeight:FontWeight.w600,fontSize:16)),
+      Text(l10n.targetFormat, style: const TextStyle(fontWeight:FontWeight.w600,fontSize:16)),
       const SizedBox(height:12),
       Wrap(spacing:8, runSpacing:8, children: _formats.map((f) => ChoiceChip(label: Text(f.toUpperCase()), selected: _targetFormat==f, onSelected: (_)=>setState(()=>_targetFormat=f))).toList()),
     ])),
     const SizedBox(height:20),
     if (_resultPath == null) SizedBox(width:double.infinity,height:52, child: ElevatedButton(onPressed: _isProcessing?null:_convert,
       style: ElevatedButton.styleFrom(backgroundColor:const Color(0xFF33691E),foregroundColor:Colors.white,shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(26)),elevation:0),
-      child: _isProcessing ? const Row(mainAxisAlignment:MainAxisAlignment.center,children:[SizedBox(width:24,height:24,child:CircularProgressIndicator(color:Colors.white,strokeWidth:2.5)),SizedBox(width:12),Text('转换中...',style:TextStyle(fontSize:16,fontWeight:FontWeight.w600))]) : Text('转换为 ${_targetFormat.toUpperCase()}',style:const TextStyle(fontSize:17,fontWeight:FontWeight.w600), overflow: TextOverflow.ellipsis),
+      child: _isProcessing ? Row(mainAxisAlignment:MainAxisAlignment.center,children:[SizedBox(width:24,height:24,child:CircularProgressIndicator(color:Colors.white,strokeWidth:2.5)),SizedBox(width:12),Text(l10n.converting,style:TextStyle(fontSize:16,fontWeight:FontWeight.w600))]) : Text(l10n.convertTo(_targetFormat.toUpperCase()),style:const TextStyle(fontSize:17,fontWeight:FontWeight.w600), overflow: TextOverflow.ellipsis),
     )) else Row(children: [
-      Expanded(child: ElevatedButton(onPressed:_saveToGallery, style:ElevatedButton.styleFrom(backgroundColor:const Color(0xFF2E7D32),foregroundColor:Colors.white,padding:const EdgeInsets.symmetric(vertical:14),shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(12))), child: Row(mainAxisAlignment:MainAxisAlignment.center,children:[const Icon(Icons.download),const SizedBox(width:8),Flexible(child: Text('保存到相册',overflow:TextOverflow.ellipsis))]))),
+      Expanded(child: ElevatedButton(onPressed:_saveToGallery, style:ElevatedButton.styleFrom(backgroundColor:const Color(0xFF2E7D32),foregroundColor:Colors.white,padding:const EdgeInsets.symmetric(vertical:14),shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(12))), child: Row(mainAxisAlignment:MainAxisAlignment.center,children:[const Icon(Icons.download),const SizedBox(width:8),Flexible(child: Text(l10n.saveToAlbum,overflow:TextOverflow.ellipsis))]))),
       const SizedBox(width:12),
-      Expanded(child: ElevatedButton(onPressed:(){ _controller?.dispose(); setState((){_resultPath=null;_controller=null;}); _pickVideo(); }, style:ElevatedButton.styleFrom(backgroundColor:const Color(0xFF33691E),foregroundColor:Colors.white,padding:const EdgeInsets.symmetric(vertical:14),shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(12))), child: Row(mainAxisAlignment:MainAxisAlignment.center,children:[const Icon(Icons.refresh),const SizedBox(width:8),Flexible(child: Text('重新选择',overflow:TextOverflow.ellipsis))]))),
+      Expanded(child: ElevatedButton(onPressed:(){ _controller?.dispose(); setState((){_resultPath=null;_controller=null;}); _pickVideo(); }, style:ElevatedButton.styleFrom(backgroundColor:const Color(0xFF33691E),foregroundColor:Colors.white,padding:const EdgeInsets.symmetric(vertical:14),shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(12))), child: Row(mainAxisAlignment:MainAxisAlignment.center,children:[const Icon(Icons.refresh),const SizedBox(width:8),Flexible(child: Text(l10n.reselect,overflow:TextOverflow.ellipsis))]))),
     ]),
   ]));
 }

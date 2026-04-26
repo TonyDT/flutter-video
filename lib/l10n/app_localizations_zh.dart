@@ -916,4 +916,85 @@ class AppLocalizationsZh extends AppLocalizations {
   String selectVideoFailedWithError(String error) {
     return '选择视频失败: $error';
   }
+
+  @override
+  String get premiumVersion => '高级版';
+
+  @override
+  String get alreadyPremium => '您已经是高级用户！';
+
+  @override
+  String get alreadyPremiumDesc => '感谢您的支持，所有功能已解锁';
+
+  @override
+  String get unlockPremium => '解锁高级版';
+
+  @override
+  String get unlockPremiumDesc => '一次购买，永久使用所有功能';
+
+  @override
+  String get featureUnlimitedSave => '无限次保存到相册';
+
+  @override
+  String get featureUnlimitedTools => '所有工具无限制使用';
+
+  @override
+  String get featureFreeUpdates => '未来新功能免费更新';
+
+  @override
+  String get featureNoAds => '无广告干扰';
+
+  @override
+  String get unlockNow => '立即解锁';
+
+  @override
+  String get restorePurchases => '恢复购买记录';
+
+  @override
+  String get video1LoadFailed => '视频1加载失败';
+
+  @override
+  String get video2LoadFailed => '视频2加载失败';
+
+  @override
+  String get selectVideoLabel => '选择视频';
+
+  @override
+  String get videoChanged => '更换视频';
+
+  @override
+  String get saveVideoOnly => '保存纯视频';
+
+  @override
+  String get videoOnlySaved => '纯视频已保存';
+
+  @override
+  String get sourceFileNotExist => '源文件不存在';
+
+  @override
+  String saveLabel(String label) {
+    return '保存$label';
+  }
+
+  @override
+  String labelSaved(String label) {
+    return '$label 已保存';
+  }
+
+  @override
+  String saveLabelError(String error) {
+    return '保存出错: $error';
+  }
+
+  @override
+  String get noImagesExtractedShort => '未能提取到图片';
+
+  @override
+  String get reMerge => '重新合并';
+
+  @override
+  String get originalLabel => '原始:';
+
+  @override
+  String get segmentCount => '段';
 }

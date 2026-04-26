@@ -284,5 +284,32 @@
   "licenseLabel": "Licencia: {license}",
 
   "videoInitFailed": "Error al inicializar el vídeo: {error}",
-  "selectVideoFailedWithError": "Error al seleccionar vídeo: {error}"
+  "selectVideoFailedWithError": "Error al seleccionar vídeo: {error}",
+
+  "premiumVersion": "Versión Premium",
+  "alreadyPremium": "¡Ya eres usuario Premium!",
+  "alreadyPremiumDesc": "Gracias por tu apoyo, todas las funciones están desbloqueadas",
+  "unlockPremium": "Desbloquear Premium",
+  "unlockPremiumDesc": "Compra única, acceso permanente a todas las funciones",
+  "featureUnlimitedSave": "Guardado ilimitado en el álbum",
+  "featureUnlimitedTools": "Uso sin restricciones de todas las herramientas",
+  "featureFreeUpdates": "Actualizaciones futuras gratuitas",
+  "featureNoAds": "Experiencia sin anuncios",
+  "unlockNow": "Desbloquear ahora",
+  "restorePurchases": "Restaurar compras",
+
+  "video1LoadFailed": "Error al cargar el vídeo 1",
+  "video2LoadFailed": "Error al cargar el vídeo 2",
+  "selectVideoLabel": "Seleccionar vídeo",
+  "videoChanged": "Cambiar vídeo",
+  "saveVideoOnly": "Guardar solo vídeo",
+  "videoOnlySaved": "Solo vídeo guardado",
+  "sourceFileNotExist": "El archivo fuente no existe",
+  "saveLabel": "Guardar {label}",
+  "labelSaved": "{label} guardado",
+  "saveLabelError": "Error al guardar: {error}",
+  "noImagesExtractedShort": "No se extrajeron imágenes",
+  "reMerge": "Fusionar de nuevo",
+  "originalLabel": "Original:",
+  "segmentCount": "segmentos"
 }

@@ -5,16 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/iap_provider.dart';
 import '../theme/app_theme.dart';
+import 'package:xixi_media_tool/l10n/app_localizations.dart';
 
 class ShopPage extends StatelessWidget {
   const ShopPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: AppTheme.bg(context),
       appBar: AppBar(
-        title: const Text('高级版'),
+        title: Text(l10n.premiumVersion),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
@@ -29,9 +31,9 @@ class ShopPage extends StatelessWidget {
                 children: [
                   const Icon(Icons.check_circle, size: 72, color: Colors.green),
                   const SizedBox(height: 20),
-                  Text('您已经是高级用户！', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: AppTheme.textPrimary(context))),
+                  Text(l10n.alreadyPremium, style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: AppTheme.textPrimary(context))),
                   const SizedBox(height: 8),
-                  Text('感谢您的支持，所有功能已解锁', style: TextStyle(fontSize: 14, color: AppTheme.textSecondary(context))),
+                  Text(l10n.alreadyPremiumDesc, style: TextStyle(fontSize: 14, color: AppTheme.textSecondary(context))),
                 ],
               ),
             );
@@ -52,15 +54,15 @@ class ShopPage extends StatelessWidget {
                   child: const Icon(Icons.workspace_premium, size: 52, color: Colors.white),
                 ),
                 const SizedBox(height: 24),
-                Text('解锁高级版', style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: AppTheme.textPrimary(context))),
+                Text(l10n.unlockPremium, style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: AppTheme.textPrimary(context))),
                 const SizedBox(height: 8),
-                Text('一次购买，永久使用所有功能', style: TextStyle(fontSize: 15, color: AppTheme.textSecondary(context))),
+                Text(l10n.unlockPremiumDesc, style: TextStyle(fontSize: 15, color: AppTheme.textSecondary(context))),
                 const SizedBox(height: 36),
                 // 功能列表
-                _buildFeatureItem(context, Icons.all_inclusive, '无限次保存到相册'),
-                _buildFeatureItem(context, Icons.speed, '所有工具无限制使用'),
-                _buildFeatureItem(context, Icons.update, '未来新功能免费更新'),
-                _buildFeatureItem(context, Icons.block, '无广告干扰'),
+                _buildFeatureItem(context, Icons.all_inclusive, l10n.featureUnlimitedSave),
+                _buildFeatureItem(context, Icons.speed, l10n.featureUnlimitedTools),
+                _buildFeatureItem(context, Icons.update, l10n.featureFreeUpdates),
+                _buildFeatureItem(context, Icons.block, l10n.featureNoAds),
                 const SizedBox(height: 40),
                 // 购买按钮
                 SizedBox(
@@ -76,14 +78,14 @@ class ShopPage extends StatelessWidget {
                     ),
                     child: iap.isPurchasing
                         ? const SizedBox(width: 24, height: 24, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2.5))
-                        : const Text('立即解锁', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
+                        : Text(l10n.unlockNow, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
                   ),
                 ),
                 const SizedBox(height: 16),
                 // 恢复购买
                 TextButton(
                   onPressed: iap.isPurchasing ? null : () => iap.restorePurchases(),
-                  child: Text('恢复购买记录', style: TextStyle(color: AppTheme.textSecondary(context), fontSize: 14)),
+                  child: Text(l10n.restorePurchases, style: TextStyle(color: AppTheme.textSecondary(context), fontSize: 14)),
                 ),
                 // 错误提示
                 if (iap.error != null) ...[

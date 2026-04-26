@@ -1709,6 +1709,156 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Failed to select video: {error}'**
   String selectVideoFailedWithError(String error);
+
+  /// No description provided for @premiumVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'Premium'**
+  String get premiumVersion;
+
+  /// No description provided for @alreadyPremium.
+  ///
+  /// In en, this message translates to:
+  /// **'You are already a Premium user!'**
+  String get alreadyPremium;
+
+  /// No description provided for @alreadyPremiumDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Thank you for your support, all features are unlocked'**
+  String get alreadyPremiumDesc;
+
+  /// No description provided for @unlockPremium.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock Premium'**
+  String get unlockPremium;
+
+  /// No description provided for @unlockPremiumDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'One-time purchase, permanent access to all features'**
+  String get unlockPremiumDesc;
+
+  /// No description provided for @featureUnlimitedSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlimited saves to album'**
+  String get featureUnlimitedSave;
+
+  /// No description provided for @featureUnlimitedTools.
+  ///
+  /// In en, this message translates to:
+  /// **'Unrestricted use of all tools'**
+  String get featureUnlimitedTools;
+
+  /// No description provided for @featureFreeUpdates.
+  ///
+  /// In en, this message translates to:
+  /// **'Free future updates'**
+  String get featureFreeUpdates;
+
+  /// No description provided for @featureNoAds.
+  ///
+  /// In en, this message translates to:
+  /// **'Ad-free experience'**
+  String get featureNoAds;
+
+  /// No description provided for @unlockNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock Now'**
+  String get unlockNow;
+
+  /// No description provided for @restorePurchases.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore Purchases'**
+  String get restorePurchases;
+
+  /// No description provided for @video1LoadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Video 1 load failed'**
+  String get video1LoadFailed;
+
+  /// No description provided for @video2LoadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Video 2 load failed'**
+  String get video2LoadFailed;
+
+  /// No description provided for @selectVideoLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Video'**
+  String get selectVideoLabel;
+
+  /// No description provided for @videoChanged.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Video'**
+  String get videoChanged;
+
+  /// No description provided for @saveVideoOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Video Only'**
+  String get saveVideoOnly;
+
+  /// No description provided for @videoOnlySaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Video only saved'**
+  String get videoOnlySaved;
+
+  /// No description provided for @sourceFileNotExist.
+  ///
+  /// In en, this message translates to:
+  /// **'Source file does not exist'**
+  String get sourceFileNotExist;
+
+  /// No description provided for @saveLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Save {label}'**
+  String saveLabel(String label);
+
+  /// No description provided for @labelSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'{label} saved'**
+  String labelSaved(String label);
+
+  /// No description provided for @saveLabelError.
+  ///
+  /// In en, this message translates to:
+  /// **'Save error: {error}'**
+  String saveLabelError(String error);
+
+  /// No description provided for @noImagesExtractedShort.
+  ///
+  /// In en, this message translates to:
+  /// **'No images extracted'**
+  String get noImagesExtractedShort;
+
+  /// No description provided for @reMerge.
+  ///
+  /// In en, this message translates to:
+  /// **'Re-merge'**
+  String get reMerge;
+
+  /// No description provided for @originalLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Original:'**
+  String get originalLabel;
+
+  /// No description provided for @segmentCount.
+  ///
+  /// In en, this message translates to:
+  /// **'segments'**
+  String get segmentCount;
 }
 
 class _AppLocalizationsDelegate

@@ -945,4 +945,88 @@ class AppLocalizationsEs extends AppLocalizations {
   String selectVideoFailedWithError(String error) {
     return 'Error al seleccionar vídeo: $error';
   }
+
+  @override
+  String get premiumVersion => 'Versión Premium';
+
+  @override
+  String get alreadyPremium => '¡Ya eres usuario Premium!';
+
+  @override
+  String get alreadyPremiumDesc =>
+      'Gracias por tu apoyo, todas las funciones están desbloqueadas';
+
+  @override
+  String get unlockPremium => 'Desbloquear Premium';
+
+  @override
+  String get unlockPremiumDesc =>
+      'Compra única, acceso permanente a todas las funciones';
+
+  @override
+  String get featureUnlimitedSave => 'Guardado ilimitado en el álbum';
+
+  @override
+  String get featureUnlimitedTools =>
+      'Uso sin restricciones de todas las herramientas';
+
+  @override
+  String get featureFreeUpdates => 'Actualizaciones futuras gratuitas';
+
+  @override
+  String get featureNoAds => 'Experiencia sin anuncios';
+
+  @override
+  String get unlockNow => 'Desbloquear ahora';
+
+  @override
+  String get restorePurchases => 'Restaurar compras';
+
+  @override
+  String get video1LoadFailed => 'Error al cargar el vídeo 1';
+
+  @override
+  String get video2LoadFailed => 'Error al cargar el vídeo 2';
+
+  @override
+  String get selectVideoLabel => 'Seleccionar vídeo';
+
+  @override
+  String get videoChanged => 'Cambiar vídeo';
+
+  @override
+  String get saveVideoOnly => 'Guardar solo vídeo';
+
+  @override
+  String get videoOnlySaved => 'Solo vídeo guardado';
+
+  @override
+  String get sourceFileNotExist => 'El archivo fuente no existe';
+
+  @override
+  String saveLabel(String label) {
+    return 'Guardar $label';
+  }
+
+  @override
+  String labelSaved(String label) {
+    return '$label guardado';
+  }
+
+  @override
+  String saveLabelError(String error) {
+    return 'Error al guardar: $error';
+  }
+
+  @override
+  String get noImagesExtractedShort => 'No se extrajeron imágenes';
+
+  @override
+  String get reMerge => 'Fusionar de nuevo';
+
+  @override
+  String get originalLabel => 'Original:';
+
+  @override
+  String get segmentCount => 'segmentos';
 }

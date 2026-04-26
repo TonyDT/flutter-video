@@ -7,6 +7,7 @@ import 'package:video_player/video_player.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:ffmpeg_kit_flutter_new/ffmpeg_kit.dart';
 import 'package:ffmpeg_kit_flutter_new/return_code.dart';
+import 'package:xixi_media_tool/l10n/app_localizations.dart';
 import '../utils/native_file_helper.dart'
     if (dart.library.io) '../utils/native_file_helper.dart'
     if (dart.library.html) '../utils/native_file_helper_web.dart';
@@ -54,13 +55,13 @@ class _CropVideoPageState extends State<CropVideoPage> {
 
   Future<void> _pickVideo() async {
     if (!mounted || _isLoading) return;
+    final l10n = AppLocalizations.of(context)!;
     try {
       final result = await FilePicker.platform.pickFiles(type: FileType.video, allowMultiple: false, withData: kIsWeb);
       if (!mounted || result == null || result.files.isEmpty) return;
       final file = result.files.first;
       if (file.path == null) return;
 
-      // 先清理旧 controller
       final oldCtrl = _controller;
       _controller = null;
 
@@ -70,7 +71,6 @@ class _CropVideoPageState extends State<CropVideoPage> {
         _cropLeft = 0.05; _cropTop = 0.05; _cropRight = 0.95; _cropBottom = 0.95;
       });
 
-      // dispose 在 setState 之后
       oldCtrl?.dispose();
 
       final ctrl = VideoPlayerController.file(NativeFileHelper.getFile(file.path!));
@@ -79,7 +79,7 @@ class _CropVideoPageState extends State<CropVideoPage> {
       } catch (e) {
         if (mounted) {
           setState(() { _isLoading = false; _controllerError = true; });
-          _showError('视频初始化失败: $e');
+          _showError(l10n.videoInitFailed(e.toString()));
         }
         ctrl.dispose();
         return;
@@ -93,13 +93,14 @@ class _CropVideoPageState extends State<CropVideoPage> {
       if (!mounted) { ctrl.dispose(); return; }
       setState(() { _controller = ctrl; _isLoading = false; });
     } catch (e) {
-      if (mounted) _showError('选择视频失败: $e');
+      if (mounted) _showError(l10n.selectVideoFailedWithError(e.toString()));
       if (mounted) setState(() => _isLoading = false);
     }
   }
 
   Future<void> _crop() async {
     if (_videoPath == null || kIsWeb || _videoWidth == null || _videoHeight == null) return;
+    final l10n = AppLocalizations.of(context)!;
     _controller?.pause();
     setState(() => _isProcessing = true);
     try {
@@ -109,7 +110,6 @@ class _CropVideoPageState extends State<CropVideoPage> {
       final h = (_videoHeight! * (_cropBottom - _cropTop)).toInt();
       final x = (_videoWidth! * _cropLeft).toInt();
       final y = (_videoHeight! * _cropTop).toInt();
-      // 确保宽高为偶数
       final ew = w - (w % 2);
       final eh = h - (h % 2);
       final cmd = '-i "$_videoPath" -vf "crop=$ew:$eh:$x:$y" -c:v libx264 -preset fast -c:a copy "$output" -y';
@@ -118,7 +118,7 @@ class _CropVideoPageState extends State<CropVideoPage> {
       if (ReturnCode.isSuccess(rc)) {
         if (mounted) {
           _resultPath = output;
-          _showSuccess('裁剪成功！');
+          _showSuccess(l10n.cropSuccess);
           final oldCtrl = _controller;
           _controller = null;
           oldCtrl?.dispose();
@@ -131,15 +131,15 @@ class _CropVideoPageState extends State<CropVideoPage> {
               if (mounted) setState(() { _controller = newCtrl; });
             } else { newCtrl.dispose(); }
           } catch (e) {
-            if (mounted) _showError('预览裁剪结果失败，但文件已生成');
+            if (mounted) _showError(l10n.cropPreviewFailedButSaved);
             newCtrl.dispose();
           }
         }
       } else {
-        if (mounted) _showError('裁剪失败');
+        if (mounted) _showError(l10n.cropFailed);
       }
     } catch (e) {
-      if (mounted) _showError('裁剪出错: $e');
+      if (mounted) _showError(l10n.cropError(e.toString()));
     }
     if (mounted) setState(() => _isProcessing = false);
   }
@@ -166,23 +166,25 @@ class _CropVideoPageState extends State<CropVideoPage> {
   bool get _hasCropChanged => (_cropRight - _cropLeft) < 0.94 || (_cropBottom - _cropTop) < 0.94;
 
   @override
-  Widget build(BuildContext context) => Scaffold(
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    return Scaffold(
     body: Container(decoration: const BoxDecoration(gradient: _bg), child: SafeArea(child: Column(children: [
-      _buildAppBar(),
-      Expanded(child: _videoPath == null ? _buildPickArea() : _buildWorkArea()),
-    ]))),
-  );
+      _buildAppBar(l10n),
+      Expanded(child: _videoPath == null ? _buildPickArea(l10n) : _buildWorkArea(l10n)),
+    ]))));
+  }
 
-  Widget _buildAppBar() => Container(
+  Widget _buildAppBar(AppLocalizations l10n) => Container(
     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
     child: Row(children: [
       IconButton(icon: const Icon(Icons.arrow_back, color: Colors.white), onPressed: () => Navigator.pop(context)),
-      const Expanded(child: Text('视频裁剪', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold), textAlign: TextAlign.center, maxLines: 1, overflow: TextOverflow.ellipsis)),
+      Expanded(child: Text(l10n.cropVideo, style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold), textAlign: TextAlign.center, maxLines: 1, overflow: TextOverflow.ellipsis)),
       const SizedBox(width: 48),
     ]),
   );
 
-  Widget _buildPickArea() => Center(child: InkWell(
+  Widget _buildPickArea(AppLocalizations l10n) => Center(child: InkWell(
     onTap: _isLoading ? null : _pickVideo,
     child: Container(
       padding: const EdgeInsets.all(32),
@@ -190,82 +192,78 @@ class _CropVideoPageState extends State<CropVideoPage> {
       child: Column(mainAxisSize: MainAxisSize.min, children: [
         _isLoading ? const CircularProgressIndicator(color: Colors.white) : const Icon(Icons.crop, size: 64, color: Colors.white70),
         const SizedBox(height: 16),
-        Text(_isLoading ? '加载中...' : '点击选择视频', style: const TextStyle(color: Colors.white, fontSize: 18)),
+        Text(_isLoading ? l10n.loading : l10n.tapToSelectVideo, style: const TextStyle(color: Colors.white, fontSize: 18)),
       ]),
     ),
   ));
 
-  Widget _buildWorkArea() => SingleChildScrollView(
+  Widget _buildWorkArea(AppLocalizations l10n) => SingleChildScrollView(
     padding: const EdgeInsets.all(16),
     child: Column(children: [
-      // 视频预览 + 裁剪框
-      _buildVideoPreview(),
+      _buildVideoPreview(l10n),
       const SizedBox(height: 12),
-      // 裁剪尺寸信息
       if (_videoWidth != null && _videoHeight != null)
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(12)),
           child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Text('原始: ${_videoWidth}x$_videoHeight', style: const TextStyle(fontSize: 13, color: Colors.grey), overflow: TextOverflow.ellipsis),
+            Text(l10n.originalResolution(_videoWidth!, _videoHeight!), style: const TextStyle(fontSize: 13, color: Colors.grey), overflow: TextOverflow.ellipsis),
             const SizedBox(width: 8),
             const Icon(Icons.arrow_forward, size: 16, color: Colors.grey),
             const SizedBox(width: 8),
-            Text('裁剪: ${(_videoWidth! * (_cropRight - _cropLeft)).toInt()}x${(_videoHeight! * (_cropBottom - _cropTop)).toInt()}',
+            Text(l10n.cropResolution((_videoWidth! * (_cropRight - _cropLeft)).toInt(), (_videoHeight! * (_cropBottom - _cropTop)).toInt()),
               style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.red), overflow: TextOverflow.ellipsis),
           ]),
         ),
       const SizedBox(height: 12),
-      // 操作提示
       if (_resultPath == null)
         Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.7), borderRadius: BorderRadius.circular(12)),
-          child: const Row(children: [
-            Icon(Icons.touch_app, color: Colors.red, size: 20), SizedBox(width: 8),
-            Expanded(child: Text('拖动绿色方块或边线调整裁剪区域，拖动框内移动位置', style: TextStyle(fontSize: 13), overflow: TextOverflow.ellipsis, maxLines: 2)),
+          child: Row(children: [
+            const Icon(Icons.touch_app, color: Colors.red, size: 20), const SizedBox(width: 8),
+            Expanded(child: Text(l10n.cropDragTip, style: const TextStyle(fontSize: 13), overflow: TextOverflow.ellipsis, maxLines: 2)),
           ]),
         ),
       const SizedBox(height: 16),
-      // 按钮
       if (_resultPath == null) ...[
         if (_hasCropChanged)
           TextButton.icon(
             onPressed: () => setState(() { _cropLeft = 0.05; _cropTop = 0.05; _cropRight = 0.95; _cropBottom = 0.95; }),
             icon: const Icon(Icons.crop_free, color: Colors.white70),
-            label: const Text('重置裁剪区域', style: TextStyle(color: Colors.white70)),
+            label: Text(l10n.resetCrop, style: const TextStyle(color: Colors.white70)),
           ),
         const SizedBox(height: 8),
         SizedBox(width: double.infinity, height: 52, child: ElevatedButton(
           onPressed: (_hasCropChanged && !_isProcessing) ? _crop : null,
           style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF2E7D32), foregroundColor: Colors.white, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(26)), elevation: 0),
           child: _isProcessing
-            ? const Row(mainAxisSize: MainAxisSize.min, children: [SizedBox(width: 24, height: 24, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2.5)), SizedBox(width: 12), Text('裁剪中...', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600))])
-            : const Text('开始裁剪', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600)),
+            ? Row(mainAxisSize: MainAxisSize.min, children: [SizedBox(width: 24, height: 24, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2.5)), SizedBox(width: 12), Text(l10n.cropping, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600))])
+            : Text(l10n.startCrop, style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600)),
         )),
       ] else ...[
         Row(children: [
           Expanded(child: ElevatedButton(onPressed: _saveToGallery,
             style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF2E7D32), foregroundColor: Colors.white, padding: const EdgeInsets.symmetric(vertical: 14), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
-            child: const Row(mainAxisAlignment: MainAxisAlignment.center, children: [Icon(Icons.download), SizedBox(width: 8), Flexible(child: Text('保存到相册', overflow: TextOverflow.ellipsis))]))),
+            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [Icon(Icons.download), SizedBox(width: 8), Flexible(child: Text(l10n.saveToAlbum, overflow: TextOverflow.ellipsis))]))),
           const SizedBox(width: 12),
           Expanded(child: ElevatedButton(onPressed: _reset,
             style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF43A047), foregroundColor: Colors.white, padding: const EdgeInsets.symmetric(vertical: 14), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
-            child: const Row(mainAxisAlignment: MainAxisAlignment.center, children: [Icon(Icons.refresh), SizedBox(width: 8), Flexible(child: Text('重新选择', overflow: TextOverflow.ellipsis))]))),
+            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [Icon(Icons.refresh), SizedBox(width: 8), Flexible(child: Text(l10n.reselect, overflow: TextOverflow.ellipsis))]))),
         ]),
       ],
       const SizedBox(height: 12),
-      TextButton.icon(onPressed: _pickVideo, icon: const Icon(Icons.swap_horiz, color: Colors.white70), label: const Text('更换视频', style: TextStyle(color: Colors.white70))),
+      TextButton.icon(onPressed: _pickVideo, icon: const Icon(Icons.swap_horiz, color: Colors.white70), label: Text(l10n.changeVideo, style: const TextStyle(color: Colors.white70))),
     ]),
   );
 
-  Widget _buildVideoPreview() {
+  Widget _buildVideoPreview(AppLocalizations l10n) {
     if (_controllerError) {
       return Container(
         height: 240, decoration: BoxDecoration(color: Colors.black87, borderRadius: BorderRadius.circular(16)),
-        child: const Center(child: Column(mainAxisSize: MainAxisSize.min, children: [
-          Icon(Icons.error_outline, color: Colors.white54, size: 40),
-          SizedBox(height: 8), Text('视频加载失败', style: TextStyle(color: Colors.white54)),
+        child: Center(child: Column(mainAxisSize: MainAxisSize.min, children: [
+          const Icon(Icons.error_outline, color: Colors.white54, size: 40),
+          const SizedBox(height: 8), Text(l10n.videoLoadFailed, style: const TextStyle(color: Colors.white54)),
         ])),
       );
     }
@@ -282,7 +280,6 @@ class _CropVideoPageState extends State<CropVideoPage> {
     return Container(
       decoration: BoxDecoration(color: Colors.black87, borderRadius: BorderRadius.circular(16)),
       child: Column(children: [
-        // 视频画面 + 裁剪框
         ClipRRect(
           borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
           child: _CropOverlay(
@@ -292,7 +289,6 @@ class _CropVideoPageState extends State<CropVideoPage> {
             onCropChanged: (l, t, r, b) { setState(() { _cropLeft = l; _cropTop = t; _cropRight = r; _cropBottom = b; }); },
           ),
         ),
-        // 视频进度条
         _buildVideoControls(controller),
       ]),
     );
@@ -405,7 +401,6 @@ class _CropOverlayState extends State<_CropOverlay> {
     return Container(
       decoration: BoxDecoration(border: Border.all(color: Colors.green, width: 2)),
       child: Stack(children: [
-        // 三分法网格
         Column(children: [
           Expanded(child: Row(children: [
             Expanded(child: Container(decoration: BoxDecoration(border: Border(right: BorderSide(color: Colors.white24, width: 0.5))))),
@@ -423,12 +418,10 @@ class _CropOverlayState extends State<_CropOverlay> {
             const Expanded(child: SizedBox()),
           ])),
         ]),
-        // 四角手柄
         _corner(Alignment.topLeft, const BorderRadius.only(topLeft: Radius.circular(4))),
         _corner(Alignment.topRight, const BorderRadius.only(topRight: Radius.circular(4))),
         _corner(Alignment.bottomLeft, const BorderRadius.only(bottomLeft: Radius.circular(4))),
         _corner(Alignment.bottomRight, const BorderRadius.only(bottomRight: Radius.circular(4))),
-        // 四边中点手柄（上下手柄更宽更高便于触摸）
         _edge(Alignment.topCenter, 48, 8),
         _edge(Alignment.bottomCenter, 48, 8),
         _edge(Alignment.centerLeft, 8, 48),
@@ -450,11 +443,10 @@ class _CropOverlayState extends State<_CropOverlay> {
   void _handlePanStart(DragStartDetails d, double w, double h) {
     final nx = (d.localPosition.dx / w).clamp(0.0, 1.0);
     final ny = (d.localPosition.dy / h).clamp(0.0, 1.0);
-    // 上下边使用更大的触摸阈值，因为视频通常宽>高，归一化后纵向更短
     final thresholdX = 0.06;
-    final thresholdY = (h / w) * 0.06; // 根据宽高比自适应，竖屏视频纵向阈值更大
-    final edgeThresholdY = (thresholdY * 2.5).clamp(0.04, 0.12); // 上下边额外加大
-    final edgeThresholdX = (thresholdX * 2.5).clamp(0.04, 0.12); // 左右边额外加大
+    final thresholdY = (h / w) * 0.06;
+    final edgeThresholdY = (thresholdY * 2.5).clamp(0.04, 0.12);
+    final edgeThresholdX = (thresholdX * 2.5).clamp(0.04, 0.12);
 
     _DragHandle? handle;
     if ((nx - widget.cropLeft).abs() < thresholdX && (ny - widget.cropTop).abs() < thresholdY) {

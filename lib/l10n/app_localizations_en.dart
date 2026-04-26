@@ -938,4 +938,87 @@ class AppLocalizationsEn extends AppLocalizations {
   String selectVideoFailedWithError(String error) {
     return 'Failed to select video: $error';
   }
+
+  @override
+  String get premiumVersion => 'Premium';
+
+  @override
+  String get alreadyPremium => 'You are already a Premium user!';
+
+  @override
+  String get alreadyPremiumDesc =>
+      'Thank you for your support, all features are unlocked';
+
+  @override
+  String get unlockPremium => 'Unlock Premium';
+
+  @override
+  String get unlockPremiumDesc =>
+      'One-time purchase, permanent access to all features';
+
+  @override
+  String get featureUnlimitedSave => 'Unlimited saves to album';
+
+  @override
+  String get featureUnlimitedTools => 'Unrestricted use of all tools';
+
+  @override
+  String get featureFreeUpdates => 'Free future updates';
+
+  @override
+  String get featureNoAds => 'Ad-free experience';
+
+  @override
+  String get unlockNow => 'Unlock Now';
+
+  @override
+  String get restorePurchases => 'Restore Purchases';
+
+  @override
+  String get video1LoadFailed => 'Video 1 load failed';
+
+  @override
+  String get video2LoadFailed => 'Video 2 load failed';
+
+  @override
+  String get selectVideoLabel => 'Select Video';
+
+  @override
+  String get videoChanged => 'Change Video';
+
+  @override
+  String get saveVideoOnly => 'Save Video Only';
+
+  @override
+  String get videoOnlySaved => 'Video only saved';
+
+  @override
+  String get sourceFileNotExist => 'Source file does not exist';
+
+  @override
+  String saveLabel(String label) {
+    return 'Save $label';
+  }
+
+  @override
+  String labelSaved(String label) {
+    return '$label saved';
+  }
+
+  @override
+  String saveLabelError(String error) {
+    return 'Save error: $error';
+  }
+
+  @override
+  String get noImagesExtractedShort => 'No images extracted';
+
+  @override
+  String get reMerge => 'Re-merge';
+
+  @override
+  String get originalLabel => 'Original:';
+
+  @override
+  String get segmentCount => 'segments';
 }

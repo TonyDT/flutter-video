@@ -4,6 +4,7 @@
 library;
 
 import 'package:flutter/material.dart';
+import 'package:xixi_media_tool/l10n/app_localizations.dart';
 
 class SdkListPage extends StatelessWidget {
   const SdkListPage({super.key});
@@ -14,87 +15,6 @@ class SdkListPage extends StatelessWidget {
     colors: [Color(0xFF1E3A5F), Color(0xFF3D5A80), Color(0xFF98C1D9)],
     stops: [0.0, 0.4, 1.0],
   );
-
-  static const _sdks = [
-    _SdkInfo(
-      name: 'Flutter',
-      version: '3.x',
-      description: '跨平台应用开发框架，用于构建应用界面与交互逻辑',
-      license: 'BSD 3-Clause',
-    ),
-    _SdkInfo(
-      name: 'FFmpeg',
-      version: '4.1',
-      description: '音视频处理核心库，用于视频裁剪、压缩、格式转换等功能',
-      license: 'LGPL 2.1',
-    ),
-    _SdkInfo(
-      name: 'video_player',
-      version: '2.9.3',
-      description: '视频播放组件，用于视频预览功能',
-      license: 'BSD 3-Clause',
-    ),
-    _SdkInfo(
-      name: 'file_picker',
-      version: '8.1.6',
-      description: '文件选择器，用于选择本地视频和音频文件',
-      license: 'MIT',
-    ),
-    _SdkInfo(
-      name: 'image_gallery_saver_plus',
-      version: '3.0.5',
-      description: '相册保存工具，用于将处理后的文件保存到系统相册',
-      license: 'MIT',
-    ),
-    _SdkInfo(
-      name: 'permission_handler',
-      version: '11.3.1',
-      description: '权限管理组件，用于请求存储、相册等系统权限',
-      license: 'MIT',
-    ),
-    _SdkInfo(
-      name: 'path_provider',
-      version: '2.1.2',
-      description: '路径提供者，用于获取临时目录和文档目录',
-      license: 'BSD 3-Clause',
-    ),
-    _SdkInfo(
-      name: 'provider',
-      version: '6.1.2',
-      description: '状态管理库，用于应用内状态共享与管理',
-      license: 'MIT',
-    ),
-    _SdkInfo(
-      name: 'shared_preferences',
-      version: '2.2.0',
-      description: '本地键值存储，用于持久化应用数据',
-      license: 'BSD 3-Clause',
-    ),
-    _SdkInfo(
-      name: 'device_info_plus',
-      version: '10.1.0',
-      description: '设备信息采集，用于获取设备品牌型号等基本信息',
-      license: 'BSD 3-Clause',
-    ),
-    _SdkInfo(
-      name: 'encrypt',
-      version: '5.0.3',
-      description: 'AES-256加密库，用于本地数据加密存储',
-      license: 'MIT',
-    ),
-    _SdkInfo(
-      name: 'crypto',
-      version: '3.0.3',
-      description: '加密算法库，用于密钥派生与数据完整性校验',
-      license: 'BSD 3-Clause',
-    ),
-    _SdkInfo(
-      name: 'in_app_purchase',
-      version: '3.2.3',
-      description: '应用内购买组件，用于处理高级版购买与恢复',
-      license: 'BSD 3-Clause',
-    ),
-  ];
 
   // 每个SDK卡片的渐变色
   static const _cardGradients = [
@@ -113,22 +33,34 @@ class SdkListPage extends StatelessWidget {
     [Color(0xFFA18CD1), Color(0xFFDBC7A8)],
   ];
 
+  List<_SdkInfo> _getSdks(AppLocalizations l10n) => [
+    _SdkInfo(name: 'Flutter', version: '3.x', description: l10n.sdkFlutterDesc, license: 'BSD 3-Clause'),
+    _SdkInfo(name: 'FFmpeg', version: '4.1', description: l10n.sdkFfmpegDesc, license: 'LGPL 2.1'),
+    _SdkInfo(name: 'video_player', version: '2.9.3', description: l10n.sdkVideoPlayerDesc, license: 'BSD 3-Clause'),
+    _SdkInfo(name: 'file_picker', version: '8.1.6', description: l10n.sdkFilePickerDesc, license: 'MIT'),
+    _SdkInfo(name: 'image_gallery_saver_plus', version: '3.0.5', description: l10n.sdkGallerySaverDesc, license: 'MIT'),
+    _SdkInfo(name: 'permission_handler', version: '11.3.1', description: l10n.sdkPermissionDesc, license: 'MIT'),
+    _SdkInfo(name: 'path_provider', version: '2.1.2', description: l10n.sdkPathProviderDesc, license: 'BSD 3-Clause'),
+    _SdkInfo(name: 'provider', version: '6.1.2', description: l10n.sdkProviderDesc, license: 'MIT'),
+  ];
+
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final sdks = _getSdks(l10n);
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(gradient: _bg),
         child: SafeArea(
           child: Column(
             children: [
-              _buildAppBar(context),
+              _buildAppBar(l10n, context),
               Expanded(
                 child: ListView.separated(
                   padding: const EdgeInsets.all(16),
-                  itemCount: _sdks.length,
+                  itemCount: sdks.length,
                   separatorBuilder: (_, __) => const SizedBox(height: 12),
-                  itemBuilder: (context, index) =>
-                      _buildSdkCard(_sdks[index], _cardGradients[index]),
+                  itemBuilder: (context, index) => _buildSdkCard(sdks[index], _cardGradients[index % _cardGradients.length], l10n),
                 ),
               ),
             ],
@@ -138,107 +70,48 @@ class SdkListPage extends StatelessWidget {
     );
   }
 
-  Widget _buildAppBar(BuildContext context) {
+  Widget _buildAppBar(AppLocalizations l10n, BuildContext ctx) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
       child: Row(
         children: [
-          IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () => Navigator.pop(context),
-          ),
-          const Expanded(
-            child: Text(
-              '第三方SDK列表',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-              textAlign: TextAlign.center,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
+          IconButton(icon: const Icon(Icons.arrow_back, color: Colors.white), onPressed: () => Navigator.pop(ctx)),
+          Expanded(child: Text(l10n.sdkList, style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold), textAlign: TextAlign.center, maxLines: 1, overflow: TextOverflow.ellipsis)),
           const SizedBox(width: 48),
         ],
       ),
     );
   }
 
-  Widget _buildSdkCard(_SdkInfo sdk, List<Color> gradient) {
+  Widget _buildSdkCard(_SdkInfo sdk, List<Color> gradient, AppLocalizations l10n) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: gradient,
-        ),
+        gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: gradient),
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: gradient[0].withValues(alpha: 0.3),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
+        boxShadow: [BoxShadow(color: gradient[0].withValues(alpha: 0.3), blurRadius: 10, offset: const Offset(0, 4))],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Expanded(
-                child: Text(
-                  sdk.name,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
+              Expanded(child: Text(sdk.name, style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600), maxLines: 1, overflow: TextOverflow.ellipsis)),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.2),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Text(
-                  'v${sdk.version}',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
+                decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.2), borderRadius: BorderRadius.circular(8)),
+                child: Text('v${sdk.version}', style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w500)),
               ),
             ],
           ),
           const SizedBox(height: 8),
-          Text(
-            sdk.description,
-            style: TextStyle(
-              color: Colors.white.withValues(alpha: 0.9),
-              fontSize: 13,
-              height: 1.4,
-            ),
-          ),
+          Text(sdk.description, style: TextStyle(color: Colors.white.withValues(alpha: 0.9), fontSize: 13, height: 1.4)),
           const SizedBox(height: 8),
           Row(
             children: [
               Icon(Icons.gavel, size: 14, color: Colors.white.withValues(alpha: 0.7)),
               const SizedBox(width: 4),
-              Text(
-                '许可证: ${sdk.license}',
-                style: TextStyle(
-                  color: Colors.white.withValues(alpha: 0.7),
-                  fontSize: 12,
-                ),
-              ),
+              Text(l10n.licenseLabel(sdk.license), style: TextStyle(color: Colors.white.withValues(alpha: 0.7), fontSize: 12)),
             ],
           ),
         ],
@@ -253,10 +126,5 @@ class _SdkInfo {
   final String description;
   final String license;
 
-  const _SdkInfo({
-    required this.name,
-    required this.version,
-    required this.description,
-    required this.license,
-  });
+  const _SdkInfo({required this.name, required this.version, required this.description, required this.license});
 }
