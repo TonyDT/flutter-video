@@ -9,7 +9,7 @@ class AppLocalizationsEs extends AppLocalizations {
   AppLocalizationsEs([String locale = 'es']) : super(locale);
 
   @override
-  String get appName => 'Video ToolKit';
+  String get appName => 'ToolKit';
 
   @override
   String get tabAll => 'Todo';
@@ -52,6 +52,76 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get viewThirdPartyServices => 'Ver servicios de terceros';
+
+  @override
+  String get iapDescription => 'Compras dentro de la app';
+
+  @override
+  String get viewIapDetails => 'Ver detalles de compras y suscripciones';
+
+  @override
+  String get iapSection1Title => '1. Artículos de compra';
+
+  @override
+  String get iapSection1Content =>
+      'Esta aplicación ofrece una compra integrada de \"Versión Premium\", que es una compra única, no una suscripción de renovación automática. Después de la compra, desbloqueará permanentemente todas las funciones, incluyendo: guardado ilimitado en el álbum, uso sin restricciones de todas las herramientas, actualizaciones futuras gratuitas y experiencia sin anuncios.';
+
+  @override
+  String get iapSection2Title => '2. Pago y confirmación';
+
+  @override
+  String get iapSection2Content =>
+      'La compra se cargará a su cuenta de Apple ID / Google Play. Una vez confirmada, el importe se deducirá de su cuenta.';
+
+  @override
+  String get iapSection3Title => '3. Restaurar compras';
+
+  @override
+  String get iapSection3Content =>
+      'Si cambia de dispositivo o reinstala la aplicación, puede tocar \"Restaurar compras\" en la página de Configuración o Tienda para restaurar su acceso premium gratis, sin pagar de nuevo.';
+
+  @override
+  String get iapSection4Title => '4. Cancelación y reembolso';
+
+  @override
+  String get iapSection4Content =>
+      'Esta es una compra única. No se admiten reembolsos después de la compra. Si necesita un reembolso, solicítelo a través de los canales oficiales de Apple / Google Play.';
+
+  @override
+  String get iapSection5Title => '5. Contáctenos';
+
+  @override
+  String get iapSection5Content =>
+      'Si tiene preguntas sobre las compras dentro de la app, contáctenos en:\nxinyoushanhai888@gmail.com';
+
+  @override
+  String get welcomeTitle => 'Bienvenido a ToolKit';
+
+  @override
+  String welcomeFreeCount(int count) {
+    return 'Tiene $count usos gratuitos. Cada guardado en el álbum consume 1 uso.';
+  }
+
+  @override
+  String get welcomeUpgradeHint =>
+      'Actualice a Premium para acceso ilimitado a todas las funciones';
+
+  @override
+  String get welcomeGotIt => 'Entendido';
+
+  @override
+  String get welcomeUpgrade => 'Actualizar a Premium';
+
+  @override
+  String freeCountRemaining(int count) {
+    return '$count restantes';
+  }
+
+  @override
+  String get freeCountExhausted => 'Usos gratuitos agotados';
+
+  @override
+  String get upgradeToUnlock => 'Actualice a Premium para uso ilimitado';
 
   @override
   String get openSourceNotice =>

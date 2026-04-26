@@ -9,7 +9,7 @@ class AppLocalizationsZh extends AppLocalizations {
   AppLocalizationsZh([String locale = 'zh']) : super(locale);
 
   @override
-  String get appName => 'Video ToolKit';
+  String get appName => 'ToolKit';
 
   @override
   String get tabAll => '全部';
@@ -52,6 +52,75 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get viewThirdPartyServices => '查看第三方服务';
+
+  @override
+  String get iapDescription => '内购说明';
+
+  @override
+  String get viewIapDetails => '查看内购项目与订阅详情';
+
+  @override
+  String get iapSection1Title => '一、内购项目';
+
+  @override
+  String get iapSection1Content =>
+      '本应用提供「高级版」内购项目，为一次性购买，非自动续期订阅。购买后即可永久解锁全部功能，包括：无限次保存到相册、所有工具无限制使用、未来新功能免费更新、无广告干扰。';
+
+  @override
+  String get iapSection2Title => '二、付款与确认';
+
+  @override
+  String get iapSection2Content =>
+      '购买将通过您的 Apple ID / Google Play 账户扣款。确认购买后，款项将从您的账户中扣除。';
+
+  @override
+  String get iapSection3Title => '三、恢复购买';
+
+  @override
+  String get iapSection3Content =>
+      '若您更换设备或重新安装应用，可在设置页面或商店页面点击「恢复购买记录」，即可免费恢复已购买的高级版权限，无需重复付费。';
+
+  @override
+  String get iapSection4Title => '四、取消与退款';
+
+  @override
+  String get iapSection4Content =>
+      '本内购为一次性购买，购买成功后不支持退款。如需退款，请通过 Apple / Google Play 官方渠道申请。';
+
+  @override
+  String get iapSection5Title => '五、联系我们';
+
+  @override
+  String get iapSection5Content =>
+      '如您对内购有任何疑问，请联系：\nxinyoushanhai888@gmail.com';
+
+  @override
+  String get welcomeTitle => '欢迎使用 ToolKit';
+
+  @override
+  String welcomeFreeCount(int count) {
+    return '您有 $count 次免费使用机会，每次保存到相册将消耗 1 次。';
+  }
+
+  @override
+  String get welcomeUpgradeHint => '升级高级版可无限次使用所有功能';
+
+  @override
+  String get welcomeGotIt => '知道了';
+
+  @override
+  String get welcomeUpgrade => '升级高级版';
+
+  @override
+  String freeCountRemaining(int count) {
+    return '剩余 $count 次';
+  }
+
+  @override
+  String get freeCountExhausted => '免费次数已用完';
+
+  @override
+  String get upgradeToUnlock => '升级高级版解锁无限次使用';
 
   @override
   String get openSourceNotice => '基于 FFmpeg、Flutter 等开源技术构建，感谢开源社区贡献。';

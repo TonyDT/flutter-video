@@ -9,7 +9,7 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get appName => 'Video ToolKit';
+  String get appName => 'ToolKit';
 
   @override
   String get tabAll => 'All';
@@ -52,6 +52,76 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get viewThirdPartyServices => 'View third-party services';
+
+  @override
+  String get iapDescription => 'In-App Purchase';
+
+  @override
+  String get viewIapDetails => 'View in-app purchase and subscription details';
+
+  @override
+  String get iapSection1Title => '1. In-App Purchase Items';
+
+  @override
+  String get iapSection1Content =>
+      'This app offers a \"Premium\" in-app purchase, which is a one-time purchase, not an auto-renewing subscription. After purchase, you will permanently unlock all features, including: unlimited saves to album, unrestricted use of all tools, free future updates, and ad-free experience.';
+
+  @override
+  String get iapSection2Title => '2. Payment & Confirmation';
+
+  @override
+  String get iapSection2Content =>
+      'The purchase will be charged to your Apple ID / Google Play account. Once confirmed, the amount will be deducted from your account.';
+
+  @override
+  String get iapSection3Title => '3. Restore Purchases';
+
+  @override
+  String get iapSection3Content =>
+      'If you change devices or reinstall the app, you can tap \"Restore Purchases\" on the Settings or Shop page to restore your premium access for free, without paying again.';
+
+  @override
+  String get iapSection4Title => '4. Cancellation & Refund';
+
+  @override
+  String get iapSection4Content =>
+      'This is a one-time purchase. Refunds are not supported after purchase. If you need a refund, please apply through the official Apple / Google Play channels.';
+
+  @override
+  String get iapSection5Title => '5. Contact Us';
+
+  @override
+  String get iapSection5Content =>
+      'If you have any questions about in-app purchases, please contact:\nxinyoushanhai888@gmail.com';
+
+  @override
+  String get welcomeTitle => 'Welcome to ToolKit';
+
+  @override
+  String welcomeFreeCount(int count) {
+    return 'You have $count free uses. Each save to album consumes 1 use.';
+  }
+
+  @override
+  String get welcomeUpgradeHint =>
+      'Upgrade to Premium for unlimited access to all features';
+
+  @override
+  String get welcomeGotIt => 'Got it';
+
+  @override
+  String get welcomeUpgrade => 'Upgrade to Premium';
+
+  @override
+  String freeCountRemaining(int count) {
+    return '$count remaining';
+  }
+
+  @override
+  String get freeCountExhausted => 'Free uses exhausted';
+
+  @override
+  String get upgradeToUnlock => 'Upgrade to Premium for unlimited use';
 
   @override
   String get openSourceNotice =>

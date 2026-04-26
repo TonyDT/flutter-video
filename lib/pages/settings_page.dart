@@ -6,6 +6,7 @@ import 'package:xixi_media_tool/l10n/app_localizations.dart';
 // ignore_for_file: use_build_context_synchronously
 import 'privacy_policy_page.dart';
 import 'sdk_list_page.dart';
+import 'iap_description_page.dart';
 import '../theme/app_theme.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -15,9 +16,8 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     return Container(color: AppTheme.bg(context), child: SafeArea(child: ListView(padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8), children: [
-      Container(padding: const EdgeInsets.only(left: 4, top: 8, bottom: 16), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Text('ToolKit', style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: AppTheme.primaryLight, letterSpacing: -0.5)),
-        const SizedBox(height: 4), Text(l10n.settingsAbout, style: TextStyle(fontSize: 14, color: AppTheme.textSecondary(context))),
+      Container(padding: const EdgeInsets.only(top: 8, bottom: 16), child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+        Center(child: Text('ToolKit', style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: AppTheme.primaryLight, letterSpacing: -0.5))),
       ])),
       const SizedBox(height: 8),
 
@@ -34,7 +34,7 @@ class SettingsPage extends StatelessWidget {
       const SizedBox(height: 16),
 
       _buildSectionCard(context, icon: Icons.info_outline_rounded, title: l10n.aboutApp, children: [
-        _buildInfoRow(context, l10n.appNameLabel, 'Video ToolKit'),
+        _buildInfoRow(context, l10n.appNameLabel, 'ToolKit'),
         _buildInfoRow(context, l10n.versionLabel, '1.0.0'),
         _buildInfoRow(context, l10n.developerLabel, 'xinyoushanhai888@gmail.com'),
         const SizedBox(height: 12), _buildOpenSourceNotice(context),
@@ -47,6 +47,10 @@ class SettingsPage extends StatelessWidget {
 
       _buildNavigateCard(context, icon: Icons.extension_outlined, title: l10n.sdkList, subtitle: l10n.viewThirdPartyServices,
         onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const SdkListPage()))),
+      const SizedBox(height: 12),
+
+      _buildNavigateCard(context, icon: Icons.shop_outlined, title: l10n.iapDescription, subtitle: l10n.viewIapDetails,
+        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const IapDescriptionPage()))),
       const SizedBox(height: 40),
     ])));
   }

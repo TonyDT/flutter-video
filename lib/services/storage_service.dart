@@ -14,6 +14,7 @@ class StorageService {
   // 存储键
   static const String _keyIsPremium = 'is_premium_unlocked_v2';
   static const String _keyFreeCount = 'free_count_secure';
+  static const String _keyFirstLaunchShown = 'first_launch_shown_v2';
 
   // 初始免费次数
   static const int initialFreeCount = 7;
@@ -174,5 +175,24 @@ class StorageService {
     if (decrypted == null) return false;
 
     return decrypted == '1';
+  }
+
+  // ==================== 首次启动标记 ====================
+
+  /// 是否已显示过首次启动欢迎弹窗
+  Future<bool> isFirstLaunchShown() async {
+    final prefs = await SharedPreferences.getInstance();
+    final payload = prefs.getString(_keyFirstLaunchShown);
+    if (payload == null) return false;
+
+    final decrypted = await _decrypt(payload);
+    return decrypted == '1';
+  }
+
+  /// 标记首次启动欢迎弹窗已显示
+  Future<void> setFirstLaunchShown() async {
+    final prefs = await SharedPreferences.getInstance();
+    final encrypted = await _encrypt('1');
+    await prefs.setString(_keyFirstLaunchShown, encrypted);
   }
 }

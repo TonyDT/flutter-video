@@ -1,6 +1,6 @@
 {
   "@@locale": "en",
-  "appName": "Video ToolKit",
+  "appName": "ToolKit",
   "tabAll": "All",
   "tabSettings": "Settings",
   "settingsAbout": "Settings & About",
@@ -15,6 +15,37 @@
   "viewPrivacyTerms": "View privacy terms",
   "sdkList": "Third-party SDK List",
   "viewThirdPartyServices": "View third-party services",
+  "iapDescription": "In-App Purchase",
+  "viewIapDetails": "View in-app purchase and subscription details",
+  "iapSection1Title": "1. In-App Purchase Items",
+  "iapSection1Content": "This app offers a \"Premium\" in-app purchase, which is a one-time purchase, not an auto-renewing subscription. After purchase, you will permanently unlock all features, including: unlimited saves to album, unrestricted use of all tools, free future updates, and ad-free experience.",
+  "iapSection2Title": "2. Payment & Confirmation",
+  "iapSection2Content": "The purchase will be charged to your Apple ID / Google Play account. Once confirmed, the amount will be deducted from your account.",
+  "iapSection3Title": "3. Restore Purchases",
+  "iapSection3Content": "If you change devices or reinstall the app, you can tap \"Restore Purchases\" on the Settings or Shop page to restore your premium access for free, without paying again.",
+  "iapSection4Title": "4. Cancellation & Refund",
+  "iapSection4Content": "This is a one-time purchase. Refunds are not supported after purchase. If you need a refund, please apply through the official Apple / Google Play channels.",
+  "iapSection5Title": "5. Contact Us",
+  "iapSection5Content": "If you have any questions about in-app purchases, please contact:\nxinyoushanhai888@gmail.com",
+
+  "welcomeTitle": "Welcome to ToolKit",
+  "welcomeFreeCount": "You have {count} free uses. Each save to album consumes 1 use.",
+  "@welcomeFreeCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "welcomeUpgradeHint": "Upgrade to Premium for unlimited access to all features",
+  "welcomeGotIt": "Got it",
+  "welcomeUpgrade": "Upgrade to Premium",
+  "freeCountRemaining": "{count} remaining",
+  "@freeCountRemaining": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "freeCountExhausted": "Free uses exhausted",
+  "upgradeToUnlock": "Upgrade to Premium for unlimited use",
   "openSourceNotice": "Built with FFmpeg, Flutter and other open-source technologies. Thanks to the open-source community.",
   "harmonyDeveloping": "HarmonyOS version is under development",
   "language": "Language",

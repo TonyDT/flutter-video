@@ -57,9 +57,7 @@ class VideoToolsPage extends StatelessWidget {
 
   Widget _buildHeader(BuildContext ctx) => Container(
     padding: const EdgeInsets.only(left: 20, right: 20, top: kToolbarHeight + 4, bottom: 16),
-    child: Row(children: [
-      Text('ToolKit', style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: AppTheme.primaryLight, letterSpacing: -0.5)),
-    ]),
+    child: Center(child: Text('ToolKit', style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: AppTheme.primaryLight, letterSpacing: -0.5))),
   );
 
   Widget _buildCard(BuildContext context, _Tool tool) {

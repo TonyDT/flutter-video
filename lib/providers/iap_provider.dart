@@ -15,12 +15,16 @@ class IAPProvider extends ChangeNotifier {
   bool _isPurchasing = false;
   String? _error;
   bool _isInitialized = false;
+  int _freeCount = 0;
+  bool _firstLaunchShown = false;
 
   bool get isAvailable => _isAvailable;
   bool get hasPurchased => _hasPurchased;
   bool get isPurchasing => _isPurchasing;
   String? get error => _error;
   bool get isInitialized => _isInitialized;
+  int get freeCount => _freeCount;
+  bool get firstLaunchShown => _firstLaunchShown;
 
   /// 商品ID（需与商店配置一致）
   static const String _premiumProductId = 'premium_unlock';
@@ -30,6 +34,14 @@ class IAPProvider extends ChangeNotifier {
     // 1. 先从本地加密存储读取购买状态
     _hasPurchased = await _storage.isPremiumUnlocked();
     log('Loaded from secure storage: hasPurchased=$_hasPurchased');
+
+    // 2. 读取免费次数
+    _freeCount = await _storage.getFreeCount();
+    log('Free count: $_freeCount');
+
+    // 3. 读取首次启动标记
+    _firstLaunchShown = await _storage.isFirstLaunchShown();
+    log('First launch shown: $_firstLaunchShown');
     notifyListeners();
 
     // 2. 检查商店是否可用
@@ -155,5 +167,21 @@ class IAPProvider extends ChangeNotifier {
     _error = null;
     notifyListeners();
     await _inAppPurchase.restorePurchases();
+  }
+
+  /// 消费1次免费次数，返回剩余次数
+  Future<int> consumeFreeCount() async {
+    if (_hasPurchased) return StorageService.initialFreeCount; // 已购买不扣减
+    final remaining = await _storage.decrementFreeCount();
+    _freeCount = remaining;
+    notifyListeners();
+    return remaining;
+  }
+
+  /// 标记首次启动欢迎弹窗已显示
+  Future<void> markFirstLaunchShown() async {
+    await _storage.setFirstLaunchShown();
+    _firstLaunchShown = true;
+    notifyListeners();
   }
 }

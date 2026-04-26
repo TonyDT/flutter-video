@@ -105,7 +105,7 @@ abstract class AppLocalizations {
   /// No description provided for @appName.
   ///
   /// In en, this message translates to:
-  /// **'Video ToolKit'**
+  /// **'ToolKit'**
   String get appName;
 
   /// No description provided for @tabAll.
@@ -191,6 +191,126 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'View third-party services'**
   String get viewThirdPartyServices;
+
+  /// No description provided for @iapDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'In-App Purchase'**
+  String get iapDescription;
+
+  /// No description provided for @viewIapDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'View in-app purchase and subscription details'**
+  String get viewIapDetails;
+
+  /// No description provided for @iapSection1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'1. In-App Purchase Items'**
+  String get iapSection1Title;
+
+  /// No description provided for @iapSection1Content.
+  ///
+  /// In en, this message translates to:
+  /// **'This app offers a \"Premium\" in-app purchase, which is a one-time purchase, not an auto-renewing subscription. After purchase, you will permanently unlock all features, including: unlimited saves to album, unrestricted use of all tools, free future updates, and ad-free experience.'**
+  String get iapSection1Content;
+
+  /// No description provided for @iapSection2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'2. Payment & Confirmation'**
+  String get iapSection2Title;
+
+  /// No description provided for @iapSection2Content.
+  ///
+  /// In en, this message translates to:
+  /// **'The purchase will be charged to your Apple ID / Google Play account. Once confirmed, the amount will be deducted from your account.'**
+  String get iapSection2Content;
+
+  /// No description provided for @iapSection3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'3. Restore Purchases'**
+  String get iapSection3Title;
+
+  /// No description provided for @iapSection3Content.
+  ///
+  /// In en, this message translates to:
+  /// **'If you change devices or reinstall the app, you can tap \"Restore Purchases\" on the Settings or Shop page to restore your premium access for free, without paying again.'**
+  String get iapSection3Content;
+
+  /// No description provided for @iapSection4Title.
+  ///
+  /// In en, this message translates to:
+  /// **'4. Cancellation & Refund'**
+  String get iapSection4Title;
+
+  /// No description provided for @iapSection4Content.
+  ///
+  /// In en, this message translates to:
+  /// **'This is a one-time purchase. Refunds are not supported after purchase. If you need a refund, please apply through the official Apple / Google Play channels.'**
+  String get iapSection4Content;
+
+  /// No description provided for @iapSection5Title.
+  ///
+  /// In en, this message translates to:
+  /// **'5. Contact Us'**
+  String get iapSection5Title;
+
+  /// No description provided for @iapSection5Content.
+  ///
+  /// In en, this message translates to:
+  /// **'If you have any questions about in-app purchases, please contact:\nxinyoushanhai888@gmail.com'**
+  String get iapSection5Content;
+
+  /// No description provided for @welcomeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to ToolKit'**
+  String get welcomeTitle;
+
+  /// No description provided for @welcomeFreeCount.
+  ///
+  /// In en, this message translates to:
+  /// **'You have {count} free uses. Each save to album consumes 1 use.'**
+  String welcomeFreeCount(int count);
+
+  /// No description provided for @welcomeUpgradeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Upgrade to Premium for unlimited access to all features'**
+  String get welcomeUpgradeHint;
+
+  /// No description provided for @welcomeGotIt.
+  ///
+  /// In en, this message translates to:
+  /// **'Got it'**
+  String get welcomeGotIt;
+
+  /// No description provided for @welcomeUpgrade.
+  ///
+  /// In en, this message translates to:
+  /// **'Upgrade to Premium'**
+  String get welcomeUpgrade;
+
+  /// No description provided for @freeCountRemaining.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} remaining'**
+  String freeCountRemaining(int count);
+
+  /// No description provided for @freeCountExhausted.
+  ///
+  /// In en, this message translates to:
+  /// **'Free uses exhausted'**
+  String get freeCountExhausted;
+
+  /// No description provided for @upgradeToUnlock.
+  ///
+  /// In en, this message translates to:
+  /// **'Upgrade to Premium for unlimited use'**
+  String get upgradeToUnlock;
 
   /// No description provided for @openSourceNotice.
   ///

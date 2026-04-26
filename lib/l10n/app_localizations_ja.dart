@@ -9,7 +9,7 @@ class AppLocalizationsJa extends AppLocalizations {
   AppLocalizationsJa([String locale = 'ja']) : super(locale);
 
   @override
-  String get appName => 'Video ToolKit';
+  String get appName => 'ToolKit';
 
   @override
   String get tabAll => 'すべて';
@@ -52,6 +52,75 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get viewThirdPartyServices => 'サードパーティサービスを表示';
+
+  @override
+  String get iapDescription => 'アプリ内課金について';
+
+  @override
+  String get viewIapDetails => 'アプリ内課金とサブスクリプションの詳細を表示';
+
+  @override
+  String get iapSection1Title => '1. アプリ内課金アイテム';
+
+  @override
+  String get iapSection1Content =>
+      '本アプリは「プレミアム版」のアプリ内課金を提供しています。これは自動更新サブスクリプションではなく、一度きりの購入です。購入後、すべての機能が永久にアンロックされます：アルバムへの無制限保存、すべてのツールの無制限使用、将来の新機能の無料アップデート、広告なし体験。';
+
+  @override
+  String get iapSection2Title => '2. 支払いと確認';
+
+  @override
+  String get iapSection2Content =>
+      '購入はApple ID / Google Playアカウントに請求されます。購入確認後、金額がアカウントから引き落とされます。';
+
+  @override
+  String get iapSection3Title => '3. 購入の復元';
+
+  @override
+  String get iapSection3Content =>
+      'デバイスを変更したりアプリを再インストールした場合は、設定ページまたはショップページで「購入記録を復元」をタップすると、プレミアムアクセスを無料で復元でき、再度支払う必要はありません。';
+
+  @override
+  String get iapSection4Title => '4. キャンセルと返金';
+
+  @override
+  String get iapSection4Content =>
+      'これは一度きりの購入です。購入後の返金はサポートされていません。返金が必要な場合は、Apple / Google Playの公式チャンネルから申請してください。';
+
+  @override
+  String get iapSection5Title => '5. お問い合わせ';
+
+  @override
+  String get iapSection5Content =>
+      'アプリ内課金に関するご質問がございましたら、以下までご連絡ください：\nxinyoushanhai888@gmail.com';
+
+  @override
+  String get welcomeTitle => 'ToolKit へようこそ';
+
+  @override
+  String welcomeFreeCount(int count) {
+    return '$count 回の無料使用枠があります。アルバムへの保存ごとに1回消費されます。';
+  }
+
+  @override
+  String get welcomeUpgradeHint => 'プレミアム版にアップグレードすると、すべての機能が無制限でご利用いただけます';
+
+  @override
+  String get welcomeGotIt => 'わかりました';
+
+  @override
+  String get welcomeUpgrade => 'プレミアム版にアップグレード';
+
+  @override
+  String freeCountRemaining(int count) {
+    return '残り $count 回';
+  }
+
+  @override
+  String get freeCountExhausted => '無料使用回数が尽きました';
+
+  @override
+  String get upgradeToUnlock => 'プレミアム版にアップグレードで無制限にご利用いただけます';
 
   @override
   String get openSourceNotice =>
