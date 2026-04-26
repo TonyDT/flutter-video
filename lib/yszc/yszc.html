@@ -170,10 +170,11 @@
   <h1>ToolKit</h1>
   <p>隐私政策</p>
   <div class="lang-switch">
-    <a class="lang-btn active" href="yszc.html">中文</a>
-    <a class="lang-btn" href="en.html">English</a>
-    <a class="lang-btn" href="ja.html">日本語</a>
-    <a class="lang-btn" href="es.html">Español</a>
+    <!-- 修复路径：统一 ./ 相对路径，适配GitHub Pages -->
+    <a class="lang-btn" href="./yszc.html">中文</a>
+    <a class="lang-btn" href="./en.html">English</a>
+    <a class="lang-btn" href="./ja.html">日本語</a>
+    <a class="lang-btn" href="./es.html">Español</a>
   </div>
 </div>
 
@@ -400,6 +401,27 @@
 <div class="footer">
   <p>&copy; 2026 ToolKit. All rights reserved.</p>
 </div>
+
+<!-- ✅ 核心修复：语言切换JS逻辑，自动匹配当前页面，激活按钮 -->
+<script>
+  // 页面加载后自动匹配当前语言按钮
+  document.addEventListener('DOMContentLoaded', function() {
+    // 获取当前页面文件名
+    const currentPage = window.location.pathname.split('/').pop();
+    const buttons = document.querySelectorAll('.lang-btn');
+
+    // 清空所有active
+    buttons.forEach(btn => btn.classList.remove('active'));
+
+    // 匹配当前页面，添加active
+    buttons.forEach(btn => {
+      const btnHref = btn.getAttribute('href').replace('./', '');
+      if (currentPage === btnHref) {
+        btn.classList.add('active');
+      }
+    });
+  });
+</script>
 
 </body>
 </html>

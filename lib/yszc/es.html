@@ -165,10 +165,10 @@
     <h1>ToolKit</h1>
     <p>Política de Privacidad</p>
     <div class="lang-switch">
-        <a class="lang-btn" href="yszc.html">中文</a>
-        <a class="lang-btn" href="en.html">English</a>
-        <a class="lang-btn" href="ja.html">日本語</a>
-        <a class="lang-btn active" href="es.html">Español</a>
+        <a class="lang-btn" href="./yszc.html">中文</a>
+        <a class="lang-btn" href="./en.html">English</a>
+        <a class="lang-btn" href="./ja.html">日本語</a>
+        <a class="lang-btn" href="./es.html">Español</a>
     </div>
 </div>
 
@@ -395,6 +395,22 @@
 <div class="footer">
     <p>&copy; 2026 ToolKit. All rights reserved.</p>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const currentPage = window.location.pathname.split('/').pop();
+      const buttons = document.querySelectorAll('.lang-btn');
+
+      buttons.forEach(btn => btn.classList.remove('active'));
+
+      buttons.forEach(btn => {
+        const btnHref = btn.getAttribute('href').replace('./', '');
+        if (currentPage === btnHref) {
+          btn.classList.add('active');
+        }
+      });
+    });
+</script>
 
 </body>
 </html>
