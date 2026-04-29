@@ -1,5 +1,3 @@
-// ignore: unused_import
-import 'package:intl/intl.dart' as intl;
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -28,6 +26,9 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get darkMode => 'ダークモード';
+
+  @override
+  String get autoMode => '自動(17時切替)';
 
   @override
   String get aboutApp => 'アプリについて';
@@ -63,36 +64,31 @@ class AppLocalizationsJa extends AppLocalizations {
   String get iapSection1Title => '1. アプリ内課金アイテム';
 
   @override
-  String get iapSection1Content =>
-      '本アプリは「プレミアム版」のアプリ内課金を提供しています。これは自動更新サブスクリプションではなく、一度きりの購入です。購入後、すべての機能が永久にアンロックされます：アルバムへの無制限保存、すべてのツールの無制限使用、将来の新機能の無料アップデート、広告なし体験。';
+  String get iapSection1Content => '本アプリは「プレミアム版」のアプリ内課金を提供しています。これは自動更新サブスクリプションではなく、一度きりの購入です。購入後、すべての機能が永久にアンロックされます：アルバムへの無制限保存、すべてのツールの無制限使用、将来の新機能の無料アップデート、広告なし体験。';
 
   @override
   String get iapSection2Title => '2. 支払いと確認';
 
   @override
-  String get iapSection2Content =>
-      '購入はApple ID / Google Playアカウントに請求されます。購入確認後、金額がアカウントから引き落とされます。';
+  String get iapSection2Content => '購入はApple ID / Google Playアカウントに請求されます。購入確認後、金額がアカウントから引き落とされます。';
 
   @override
   String get iapSection3Title => '3. 購入の復元';
 
   @override
-  String get iapSection3Content =>
-      'デバイスを変更したりアプリを再インストールした場合は、設定ページまたはショップページで「購入記録を復元」をタップすると、プレミアムアクセスを無料で復元でき、再度支払う必要はありません。';
+  String get iapSection3Content => 'デバイスを変更したりアプリを再インストールした場合は、設定ページまたはショップページで「購入記録を復元」をタップすると、プレミアムアクセスを無料で復元でき、再度支払う必要はありません。';
 
   @override
   String get iapSection4Title => '4. キャンセルと返金';
 
   @override
-  String get iapSection4Content =>
-      'これは一度きりの購入です。購入後の返金はサポートされていません。返金が必要な場合は、Apple / Google Playの公式チャンネルから申請してください。';
+  String get iapSection4Content => 'これは一度きりの購入です。購入後の返金はサポートされていません。返金が必要な場合は、Apple / Google Playの公式チャンネルから申請してください。';
 
   @override
   String get iapSection5Title => '5. お問い合わせ';
 
   @override
-  String get iapSection5Content =>
-      'アプリ内課金に関するご質問がございましたら、以下までご連絡ください：\nxinyoushanhai888@gmail.com';
+  String get iapSection5Content => 'アプリ内課金に関するご質問がございましたら、以下までご連絡ください：\nxinyoushanhai888@gmail.com';
 
   @override
   String get welcomeTitle => 'ToolKit へようこそ';
@@ -123,8 +119,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get upgradeToUnlock => 'プレミアム版にアップグレードで無制限にご利用いただけます';
 
   @override
-  String get openSourceNotice =>
-      'FFmpeg、Flutterなどのオープンソース技術で構築されています。オープンソースコミュニティに感謝します。';
+  String get openSourceNotice => 'FFmpeg、Flutterなどのオープンソース技術で構築されています。オープンソースコミュニティに感謝します。';
 
   @override
   String get harmonyDeveloping => 'HarmonyOS版は開発中です';
@@ -235,10 +230,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String get tapToSelectVideo => 'タップして動画を選択';
 
   @override
-  String get tapToSelectFirstVideo => 'タップして最初の動画を選択';
+  String get tapToSelectFirstVideo => '最初の動画を選択';
 
   @override
-  String get tapToSelectSecondVideo => 'タップして2番目の動画を選択';
+  String get tapToSelectSecondVideo => '2番目の動画を選択';
 
   @override
   String get tapToPreview => 'タップしてプレビュー';
@@ -787,12 +782,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String get section1Title => '1. 情報の収集';
 
   @override
-  String get section1Content =>
-      'お客様のプライバシーを非常に重視しております。本アプリはサービス提供において以下の必要な情報のみを収集します：';
+  String get section1Content => 'お客様のプライバシーを非常に重視しております。本アプリはサービス提供において以下の必要な情報のみを収集します：';
 
   @override
-  String get section1Item1 =>
-      'お客様が選択した動画/音声ファイル（ローカル処理のみに使用し、サーバーにはアップロードされません）';
+  String get section1Item1 => 'お客様が選択した動画/音声ファイル（ローカル処理のみに使用し、サーバーにはアップロードされません）';
 
   @override
   String get section1Item2 => 'デバイスの基本情報（デバイス適用に使用し、個人識別情報は含まれません）';
@@ -801,22 +794,19 @@ class AppLocalizationsJa extends AppLocalizations {
   String get section2Title => '2. 情報の利用';
 
   @override
-  String get section2Content =>
-      'すべての音声/動画処理はお客様のデバイス上でローカルに完了します。お客様のファイルやデータをリモートサーバーにアップロードすることはありません。収集したデバイス情報は機能適合とクラッシュ調査にのみ使用します。';
+  String get section2Content => 'すべての音声/動画処理はお客様のデバイス上でローカルに完了します。お客様のファイルやデータをリモートサーバーにアップロードすることはありません。収集したデバイス情報は機能適合とクラッシュ調査にのみ使用します。';
 
   @override
   String get section3Title => '3. 情報の保存';
 
   @override
-  String get section3Content =>
-      'アプリで生成された一時ファイルはデバイスのローカル一時ディレクトリに保存されます。処理完了後、お客様の裁量で保存または削除できます。サーバー側にお客様のデータを保存することはありません。';
+  String get section3Content => 'アプリで生成された一時ファイルはデバイスのローカル一時ディレクトリに保存されます。処理完了後、お客様の裁量で保存または削除できます。サーバー側にお客様のデータを保存することはありません。';
 
   @override
   String get section4Title => '4. 情報の共有';
 
   @override
-  String get section4Content =>
-      'お客様の個人情報を第三者に販売、取引、または譲渡することはありません。以下の場合を除きます：';
+  String get section4Content => 'お客様の個人情報を第三者に販売、取引、または譲渡することはありません。以下の場合を除きます：';
 
   @override
   String get section4Item1 => 'お客様の明示的な同意を得た場合';
@@ -828,36 +818,31 @@ class AppLocalizationsJa extends AppLocalizations {
   String get section5Title => '5. サードパーティサービス';
 
   @override
-  String get section5Content =>
-      '本アプリは一部のサードパーティSDKを使用してサービスを提供しています。これらのSDKには独自のプライバシーポリシーがある場合があります。詳細は「サードパーティSDK一覧」ページをご覧ください。';
+  String get section5Content => '本アプリは一部のサードパーティSDKを使用してサービスを提供しています。これらのSDKには独自のプライバシーポリシーがある場合があります。詳細は「サードパーティSDK一覧」ページをご覧ください。';
 
   @override
   String get section6Title => '6. データセキュリティ';
 
   @override
-  String get section6Content =>
-      'お客様の情報を不正なアクセス、使用、または開示から保護するため、合理的なセキュリティ措置を講じています。ただし、インターネット環境は絶対的に安全ではないことにご留意ください。デバイスの安全な管理をお勧めします。';
+  String get section6Content => 'お客様の情報を不正なアクセス、使用、または開示から保護するため、合理的なセキュリティ措置を講じています。ただし、インターネット環境は絶対的に安全ではないことにご留意ください。デバイスの安全な管理をお勧めします。';
 
   @override
   String get section7Title => '7. 未成年者の保護';
 
   @override
-  String get section7Content =>
-      '未成年者の個人情報の保護を非常に重視しています。18歳未満の方は、保護者の指導の下で本アプリをご利用ください。';
+  String get section7Content => '未成年者の個人情報の保護を非常に重視しています。18歳未満の方は、保護者の指導の下で本アプリをご利用ください。';
 
   @override
   String get section8Title => '8. プライバシーポリシーの変更';
 
   @override
-  String get section8Content =>
-      '本プライバシーポリシーを適時改訂する場合があります。変更があった場合、アプリ内のポップアップまたはお知らせでお客様に通知します。';
+  String get section8Content => '本プライバシーポリシーを適時改訂する場合があります。変更があった場合、アプリ内のポップアップまたはお知らせでお客様に通知します。';
 
   @override
   String get section9Title => '9. お問い合わせ';
 
   @override
-  String get section9Content =>
-      '本プライバシーポリシーに関するご質問やご提案がございましたら、以下までご連絡ください：\nxinyoushanhai888@gmail.com';
+  String get section9Content => '本プライバシーポリシーに関するご質問やご提案がございましたら、以下までご連絡ください：\nxinyoushanhai888@gmail.com';
 
   @override
   String get sdkFlutterTitle => 'Flutter';

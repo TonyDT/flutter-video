@@ -1,5 +1,3 @@
-// ignore: unused_import
-import 'package:intl/intl.dart' as intl;
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -28,6 +26,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get darkMode => 'Dark Mode';
+
+  @override
+  String get autoMode => 'Auto (5PM)';
 
   @override
   String get aboutApp => 'About App';
@@ -63,36 +64,31 @@ class AppLocalizationsEn extends AppLocalizations {
   String get iapSection1Title => '1. In-App Purchase Items';
 
   @override
-  String get iapSection1Content =>
-      'This app offers a \"Premium\" in-app purchase, which is a one-time purchase, not an auto-renewing subscription. After purchase, you will permanently unlock all features, including: unlimited saves to album, unrestricted use of all tools, free future updates, and ad-free experience.';
+  String get iapSection1Content => 'This app offers a \"Premium\" in-app purchase, which is a one-time purchase, not an auto-renewing subscription. After purchase, you will permanently unlock all features, including: unlimited saves to album, unrestricted use of all tools, free future updates, and ad-free experience.';
 
   @override
   String get iapSection2Title => '2. Payment & Confirmation';
 
   @override
-  String get iapSection2Content =>
-      'The purchase will be charged to your Apple ID / Google Play account. Once confirmed, the amount will be deducted from your account.';
+  String get iapSection2Content => 'The purchase will be charged to your Apple ID / Google Play account. Once confirmed, the amount will be deducted from your account.';
 
   @override
   String get iapSection3Title => '3. Restore Purchases';
 
   @override
-  String get iapSection3Content =>
-      'If you change devices or reinstall the app, you can tap \"Restore Purchases\" on the Settings or Shop page to restore your premium access for free, without paying again.';
+  String get iapSection3Content => 'If you change devices or reinstall the app, you can tap \"Restore Purchases\" on the Settings or Shop page to restore your premium access for free, without paying again.';
 
   @override
   String get iapSection4Title => '4. Cancellation & Refund';
 
   @override
-  String get iapSection4Content =>
-      'This is a one-time purchase. Refunds are not supported after purchase. If you need a refund, please apply through the official Apple / Google Play channels.';
+  String get iapSection4Content => 'This is a one-time purchase. Refunds are not supported after purchase. If you need a refund, please apply through the official Apple / Google Play channels.';
 
   @override
   String get iapSection5Title => '5. Contact Us';
 
   @override
-  String get iapSection5Content =>
-      'If you have any questions about in-app purchases, please contact:\nxinyoushanhai888@gmail.com';
+  String get iapSection5Content => 'If you have any questions about in-app purchases, please contact:\nxinyoushanhai888@gmail.com';
 
   @override
   String get welcomeTitle => 'Welcome to ToolKit';
@@ -103,8 +99,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get welcomeUpgradeHint =>
-      'Upgrade to Premium for unlimited access to all features';
+  String get welcomeUpgradeHint => 'Upgrade to Premium for unlimited access to all features';
 
   @override
   String get welcomeGotIt => 'Got it';
@@ -124,8 +119,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get upgradeToUnlock => 'Upgrade to Premium for unlimited use';
 
   @override
-  String get openSourceNotice =>
-      'Built with FFmpeg, Flutter and other open-source technologies. Thanks to the open-source community.';
+  String get openSourceNotice => 'Built with FFmpeg, Flutter and other open-source technologies. Thanks to the open-source community.';
 
   @override
   String get harmonyDeveloping => 'HarmonyOS version is under development';
@@ -236,10 +230,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tapToSelectVideo => 'Tap to select a video';
 
   @override
-  String get tapToSelectFirstVideo => 'Tap to select the first video';
+  String get tapToSelectFirstVideo => 'Tap to select first video';
 
   @override
-  String get tapToSelectSecondVideo => 'Tap to select the second video';
+  String get tapToSelectSecondVideo => 'Tap to select second video';
 
   @override
   String get tapToPreview => 'Tap to preview';
@@ -346,8 +340,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get compressTip =>
-      'Higher value means more compression, lower quality';
+  String get compressTip => 'Higher value means more compression, lower quality';
 
   @override
   String get encodeSpeed => 'Encode speed:';
@@ -408,8 +401,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get cropPreviewFailedButSaved =>
-      'Preview failed, but file has been generated';
+  String get cropPreviewFailedButSaved => 'Preview failed, but file has been generated';
 
   @override
   String originalResolution(int width, int height) {
@@ -422,8 +414,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get cropDragTip =>
-      'Drag the green box or edges to adjust crop area, drag inside to move';
+  String get cropDragTip => 'Drag the green box or edges to adjust crop area, drag inside to move';
 
   @override
   String get resetCrop => 'Reset Crop Area';
@@ -449,8 +440,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get cutCompletePreviewUnavailable =>
-      'Cut complete (preview unavailable)';
+  String get cutCompletePreviewUnavailable => 'Cut complete (preview unavailable)';
 
   @override
   String get videoPreviewUnavailable => 'Video preview unavailable';
@@ -527,8 +517,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get noImagesExtracted =>
-      'No images extracted, please check the video file';
+  String get noImagesExtracted => 'No images extracted, please check the video file';
 
   @override
   String get extractFailed => 'Extraction failed';
@@ -605,8 +594,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get muteDescription =>
-      'All audio will be removed, only video frames retained';
+  String get muteDescription => 'All audio will be removed, only video frames retained';
 
   @override
   String get muting => 'Muting...';
@@ -656,8 +644,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get separateComplete => 'Separation complete!';
 
   @override
-  String get separateFailed =>
-      'Separation failed, video may not contain audio/video tracks';
+  String get separateFailed => 'Separation failed, video may not contain audio/video tracks';
 
   @override
   String separateError(String error) {
@@ -689,8 +676,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get separateDescription =>
-      'Extract video frames and audio as separate files';
+  String get separateDescription => 'Extract video frames and audio as separate files';
 
   @override
   String get separating => 'Separating...';
@@ -796,37 +782,31 @@ class AppLocalizationsEn extends AppLocalizations {
   String get section1Title => '1. Information Collection';
 
   @override
-  String get section1Content =>
-      'We take your privacy very seriously. This app only collects the following necessary information during service provision:';
+  String get section1Content => 'We take your privacy very seriously. This app only collects the following necessary information during service provision:';
 
   @override
-  String get section1Item1 =>
-      'Video/audio files you actively select (only used for local processing, never uploaded to any server)';
+  String get section1Item1 => 'Video/audio files you actively select (only used for local processing, never uploaded to any server)';
 
   @override
-  String get section1Item2 =>
-      'Basic device information (for device adaptation, does not contain personal identity information)';
+  String get section1Item2 => 'Basic device information (for device adaptation, does not contain personal identity information)';
 
   @override
   String get section2Title => '2. Information Usage';
 
   @override
-  String get section2Content =>
-      'All audio/video processing is completed locally on your device. We will never upload any of your files or data to remote servers. Collected device information is only used for feature adaptation and crash investigation.';
+  String get section2Content => 'All audio/video processing is completed locally on your device. We will never upload any of your files or data to remote servers. Collected device information is only used for feature adaptation and crash investigation.';
 
   @override
   String get section3Title => '3. Information Storage';
 
   @override
-  String get section3Content =>
-      'Temporary files generated by the app are stored in the device\'s local temporary directory. You can save or delete them at your discretion after processing. We do not store any of your data on servers.';
+  String get section3Content => 'Temporary files generated by the app are stored in the device\'s local temporary directory. You can save or delete them at your discretion after processing. We do not store any of your data on servers.';
 
   @override
   String get section4Title => '4. Information Sharing';
 
   @override
-  String get section4Content =>
-      'We will not sell, trade, or otherwise transfer your personal information to third parties, except in the following cases:';
+  String get section4Content => 'We will not sell, trade, or otherwise transfer your personal information to third parties, except in the following cases:';
 
   @override
   String get section4Item1 => 'With your explicit consent';
@@ -838,50 +818,43 @@ class AppLocalizationsEn extends AppLocalizations {
   String get section5Title => '5. Third-party Services';
 
   @override
-  String get section5Content =>
-      'This app uses some third-party SDKs to provide services, which may have their own privacy policies. Please see the \"Third-party SDK List\" page for details.';
+  String get section5Content => 'This app uses some third-party SDKs to provide services, which may have their own privacy policies. Please see the \"Third-party SDK List\" page for details.';
 
   @override
   String get section6Title => '6. Data Security';
 
   @override
-  String get section6Content =>
-      'We take reasonable security measures to protect your information from unauthorized access, use, or disclosure. However, please note that the Internet is not absolutely secure. We recommend keeping your device safe.';
+  String get section6Content => 'We take reasonable security measures to protect your information from unauthorized access, use, or disclosure. However, please note that the Internet is not absolutely secure. We recommend keeping your device safe.';
 
   @override
   String get section7Title => '7. Protection of Minors';
 
   @override
-  String get section7Content =>
-      'We attach great importance to protecting minors\' personal information. If you are under 18, we recommend using this app under the guidance of a guardian.';
+  String get section7Content => 'We attach great importance to protecting minors\' personal information. If you are under 18, we recommend using this app under the guidance of a guardian.';
 
   @override
   String get section8Title => '8. Privacy Policy Changes';
 
   @override
-  String get section8Content =>
-      'We may revise this privacy policy from time to time. When changes occur, we will notify you via in-app pop-ups or announcements.';
+  String get section8Content => 'We may revise this privacy policy from time to time. When changes occur, we will notify you via in-app pop-ups or announcements.';
 
   @override
   String get section9Title => '9. Contact Us';
 
   @override
-  String get section9Content =>
-      'If you have any questions or suggestions about this privacy policy, please contact us at:\nxinyoushanhai888@gmail.com';
+  String get section9Content => 'If you have any questions or suggestions about this privacy policy, please contact us at:\nxinyoushanhai888@gmail.com';
 
   @override
   String get sdkFlutterTitle => 'Flutter';
 
   @override
-  String get sdkFlutterDesc =>
-      'Cross-platform application development framework for building UI and interactions';
+  String get sdkFlutterDesc => 'Cross-platform application development framework for building UI and interactions';
 
   @override
   String get sdkFfmpegTitle => 'FFmpeg';
 
   @override
-  String get sdkFfmpegDesc =>
-      'Audio/video processing core library for video cropping, compression, format conversion, etc.';
+  String get sdkFfmpegDesc => 'Audio/video processing core library for video cropping, compression, format conversion, etc.';
 
   @override
   String get sdkVideoPlayerTitle => 'Video Player';
@@ -893,36 +866,31 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sdkFilePickerTitle => 'File Picker';
 
   @override
-  String get sdkFilePickerDesc =>
-      'File selector for choosing local video and audio files';
+  String get sdkFilePickerDesc => 'File selector for choosing local video and audio files';
 
   @override
   String get sdkGallerySaverTitle => 'Gallery Saver';
 
   @override
-  String get sdkGallerySaverDesc =>
-      'Album save tool for saving processed files to system album';
+  String get sdkGallerySaverDesc => 'Album save tool for saving processed files to system album';
 
   @override
   String get sdkPermissionTitle => 'Permission Handler';
 
   @override
-  String get sdkPermissionDesc =>
-      'Permission management component for requesting storage, album, and other system permissions';
+  String get sdkPermissionDesc => 'Permission management component for requesting storage, album, and other system permissions';
 
   @override
   String get sdkPathProviderTitle => 'Path Provider';
 
   @override
-  String get sdkPathProviderDesc =>
-      'Path provider for obtaining temporary and document directories';
+  String get sdkPathProviderDesc => 'Path provider for obtaining temporary and document directories';
 
   @override
   String get sdkProviderTitle => 'Provider';
 
   @override
-  String get sdkProviderDesc =>
-      'State management library for in-app state sharing and management';
+  String get sdkProviderDesc => 'State management library for in-app state sharing and management';
 
   @override
   String licenseLabel(String license) {
@@ -946,15 +914,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get alreadyPremium => 'You are already a Premium user!';
 
   @override
-  String get alreadyPremiumDesc =>
-      'Thank you for your support, all features are unlocked';
+  String get alreadyPremiumDesc => 'Thank you for your support, all features are unlocked';
 
   @override
   String get unlockPremium => 'Unlock Premium';
 
   @override
-  String get unlockPremiumDesc =>
-      'One-time purchase, permanent access to all features';
+  String get unlockPremiumDesc => 'One-time purchase, permanent access to all features';
 
   @override
   String get featureUnlimitedSave => 'Unlimited saves to album';

@@ -37,7 +37,7 @@ class _RatioVideoPageState extends State<RatioVideoPage> {
   static const _ratios = ['16:9', '9:16', '4:3', '1:1', '21:9'];
   static const _bg = LinearGradient(
     begin: Alignment.topCenter, end: Alignment.bottomCenter,
-    colors: [Color(0xFF2E7D32), Color(0xFF43A047), Color(0xFFE8F5E9)],
+    colors: [Color(0xFF134E4A), Color(0xFF0C4A6E), Color(0xFFCCFBF1)],
   );
 
   @override

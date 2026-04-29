@@ -27,7 +27,7 @@ class IAPProvider extends ChangeNotifier {
   bool get firstLaunchShown => _firstLaunchShown;
 
   /// 商品ID（需与商店配置一致）
-  static const String _premiumProductId = 'premium_unlock';
+  static const String _premiumProductId = 'com.abc.toolkit.unlock.all';
 
   /// 初始化
   Future<void> init() async {

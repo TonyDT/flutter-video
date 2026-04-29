@@ -32,7 +32,7 @@ class _MuteVideoPageState extends State<MuteVideoPage> {
 
   static const _bg = LinearGradient(
     begin: Alignment.topCenter, end: Alignment.bottomCenter,
-    colors: [Color(0xFF00695C), Color(0xFF00897B), Color(0xFFE0F2F1)],
+    colors: [Color(0xFF064E3B), Color(0xFF134E4A), Color(0xFFD1FAE5)],
   );
 
   @override

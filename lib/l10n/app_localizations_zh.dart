@@ -1,5 +1,3 @@
-// ignore: unused_import
-import 'package:intl/intl.dart' as intl;
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -28,6 +26,9 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get darkMode => '深色模式';
+
+  @override
+  String get autoMode => '自动(17点切换)';
 
   @override
   String get aboutApp => '关于应用';
@@ -63,36 +64,31 @@ class AppLocalizationsZh extends AppLocalizations {
   String get iapSection1Title => '一、内购项目';
 
   @override
-  String get iapSection1Content =>
-      '本应用提供「高级版」内购项目，为一次性购买，非自动续期订阅。购买后即可永久解锁全部功能，包括：无限次保存到相册、所有工具无限制使用、未来新功能免费更新、无广告干扰。';
+  String get iapSection1Content => '本应用提供「高级版」内购项目，为一次性购买，非自动续期订阅。购买后即可永久解锁全部功能，包括：无限次保存到相册、所有工具无限制使用、未来新功能免费更新、无广告干扰。';
 
   @override
   String get iapSection2Title => '二、付款与确认';
 
   @override
-  String get iapSection2Content =>
-      '购买将通过您的 Apple ID / Google Play 账户扣款。确认购买后，款项将从您的账户中扣除。';
+  String get iapSection2Content => '购买将通过您的 Apple ID / Google Play 账户扣款。确认购买后，款项将从您的账户中扣除。';
 
   @override
   String get iapSection3Title => '三、恢复购买';
 
   @override
-  String get iapSection3Content =>
-      '若您更换设备或重新安装应用，可在设置页面或商店页面点击「恢复购买记录」，即可免费恢复已购买的高级版权限，无需重复付费。';
+  String get iapSection3Content => '若您更换设备或重新安装应用，可在设置页面或商店页面点击「恢复购买记录」，即可免费恢复已购买的高级版权限，无需重复付费。';
 
   @override
   String get iapSection4Title => '四、取消与退款';
 
   @override
-  String get iapSection4Content =>
-      '本内购为一次性购买，购买成功后不支持退款。如需退款，请通过 Apple / Google Play 官方渠道申请。';
+  String get iapSection4Content => '本内购为一次性购买，购买成功后不支持退款。如需退款，请通过 Apple / Google Play 官方渠道申请。';
 
   @override
   String get iapSection5Title => '五、联系我们';
 
   @override
-  String get iapSection5Content =>
-      '如您对内购有任何疑问，请联系：\nxinyoushanhai888@gmail.com';
+  String get iapSection5Content => '如您对内购有任何疑问，请联系：\nxinyoushanhai888@gmail.com';
 
   @override
   String get welcomeTitle => '欢迎使用 ToolKit';
@@ -798,15 +794,13 @@ class AppLocalizationsZh extends AppLocalizations {
   String get section2Title => '二、信息使用';
 
   @override
-  String get section2Content =>
-      '所有音视频处理均在您的设备本地完成，我们不会将您的任何文件或数据上传至远程服务器。收集的设备信息仅用于功能适配和崩溃排查。';
+  String get section2Content => '所有音视频处理均在您的设备本地完成，我们不会将您的任何文件或数据上传至远程服务器。收集的设备信息仅用于功能适配和崩溃排查。';
 
   @override
   String get section3Title => '三、信息存储';
 
   @override
-  String get section3Content =>
-      '应用产生的临时文件存储在设备本地临时目录中，处理完成后可由您自行保存或删除。我们不会在服务器端存储您的任何数据。';
+  String get section3Content => '应用产生的临时文件存储在设备本地临时目录中，处理完成后可由您自行保存或删除。我们不会在服务器端存储您的任何数据。';
 
   @override
   String get section4Title => '四、信息共享';
@@ -824,22 +818,19 @@ class AppLocalizationsZh extends AppLocalizations {
   String get section5Title => '五、第三方服务';
 
   @override
-  String get section5Content =>
-      '本应用使用了部分第三方SDK来提供服务，这些SDK可能会有其独立的隐私政策。详情请查看\"第三方SDK列表\"页面。';
+  String get section5Content => '本应用使用了部分第三方SDK来提供服务，这些SDK可能会有其独立的隐私政策。详情请查看\"第三方SDK列表\"页面。';
 
   @override
   String get section6Title => '六、数据安全';
 
   @override
-  String get section6Content =>
-      '我们采取合理的安全措施保护您的信息不被未经授权的访问、使用或泄露。但请注意，互联网环境并非绝对安全，我们建议您妥善保管设备。';
+  String get section6Content => '我们采取合理的安全措施保护您的信息不被未经授权的访问、使用或泄露。但请注意，互联网环境并非绝对安全，我们建议您妥善保管设备。';
 
   @override
   String get section7Title => '七、未成年人保护';
 
   @override
-  String get section7Content =>
-      '我们非常重视对未成年人个人信息的保护。若您是未满18周岁的未成年人，建议在监护人指导下使用本应用。';
+  String get section7Content => '我们非常重视对未成年人个人信息的保护。若您是未满18周岁的未成年人，建议在监护人指导下使用本应用。';
 
   @override
   String get section8Title => '八、隐私政策变更';
@@ -851,8 +842,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get section9Title => '九、联系我们';
 
   @override
-  String get section9Content =>
-      '如您对本隐私政策有任何疑问或建议，请通过以下方式联系我们：\nxinyoushanhai888@gmail.com';
+  String get section9Content => '如您对本隐私政策有任何疑问或建议，请通过以下方式联系我们：\nxinyoushanhai888@gmail.com';
 
   @override
   String get sdkFlutterTitle => 'Flutter';

@@ -37,7 +37,7 @@ class _CompressVideoPageState extends State<CompressVideoPage> {
 
   static const _bg = LinearGradient(
     begin: Alignment.topCenter, end: Alignment.bottomCenter,
-    colors: [Color(0xFF1B5E20), Color(0xFF2E7D32), Color(0xFFE8F5E9)],
+    colors: [Color(0xFF0C4A6E), Color(0xFF1E3A5F), Color(0xFFE8F0FE)],
   );
 
   @override

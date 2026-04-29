@@ -21,6 +21,9 @@ class ShopPage extends StatelessWidget {
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
         ),
+        backgroundColor: AppTheme.cardBg(context),
+        elevation: 0,
+        surfaceTintColor: Colors.transparent,
       ),
       body: Consumer<IAPProvider>(
         builder: (context, iap, _) {
@@ -29,7 +32,14 @@ class ShopPage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(Icons.check_circle, size: 72, color: Colors.green),
+                  Container(
+                    width: 80, height: 80,
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(colors: AppTheme.primaryGradient),
+                      borderRadius: BorderRadius.circular(24),
+                    ),
+                    child: const Icon(Icons.check_circle, size: 44, color: Colors.white),
+                  ),
                   const SizedBox(height: 20),
                   Text(l10n.alreadyPremium, style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: AppTheme.textPrimary(context))),
                   const SizedBox(height: 8),
@@ -44,12 +54,18 @@ class ShopPage extends StatelessWidget {
             child: Column(
               children: [
                 const SizedBox(height: 20),
-                // 图标
                 Container(
                   width: 100, height: 100,
                   decoration: BoxDecoration(
-                    gradient: const LinearGradient(colors: [Color(0xFF7C3AED), Color(0xFFA78BFA)]),
+                    gradient: const LinearGradient(colors: AppTheme.primaryGradient),
                     borderRadius: BorderRadius.circular(28),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppTheme.primary.withValues(alpha: 0.3),
+                        blurRadius: 16,
+                        offset: const Offset(0, 6),
+                      ),
+                    ],
                   ),
                   child: const Icon(Icons.workspace_premium, size: 52, color: Colors.white),
                 ),
@@ -59,12 +75,11 @@ class ShopPage extends StatelessWidget {
                 Text(l10n.unlockPremiumDesc, style: TextStyle(fontSize: 15, color: AppTheme.textSecondary(context))),
                 const SizedBox(height: 36),
                 // 功能列表
-                _buildFeatureItem(context, Icons.all_inclusive, l10n.featureUnlimitedSave),
-                _buildFeatureItem(context, Icons.speed, l10n.featureUnlimitedTools),
-                _buildFeatureItem(context, Icons.update, l10n.featureFreeUpdates),
-                _buildFeatureItem(context, Icons.block, l10n.featureNoAds),
+                _buildFeatureItem(context, Icons.all_inclusive, l10n.featureUnlimitedSave, 0),
+                _buildFeatureItem(context, Icons.speed, l10n.featureUnlimitedTools, 1),
+                _buildFeatureItem(context, Icons.update, l10n.featureFreeUpdates, 2),
+                _buildFeatureItem(context, Icons.block, l10n.featureNoAds, 3),
                 const SizedBox(height: 40),
-                // 购买按钮
                 SizedBox(
                   width: double.infinity,
                   height: 56,
@@ -74,7 +89,7 @@ class ShopPage extends StatelessWidget {
                       backgroundColor: AppTheme.primary,
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
-                      elevation: 2,
+                      elevation: 0,
                     ),
                     child: iap.isPurchasing
                         ? const SizedBox(width: 24, height: 24, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2.5))
@@ -82,15 +97,13 @@ class ShopPage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 16),
-                // 恢复购买
                 TextButton(
                   onPressed: iap.isPurchasing ? null : () => iap.restorePurchases(),
                   child: Text(l10n.restorePurchases, style: TextStyle(color: AppTheme.textSecondary(context), fontSize: 14)),
                 ),
-                // 错误提示
                 if (iap.error != null) ...[
                   const SizedBox(height: 12),
-                  Text(iap.error!, style: const TextStyle(color: Colors.red, fontSize: 13), textAlign: TextAlign.center),
+                  Text(iap.error!, style: const TextStyle(color: AppTheme.errorColor, fontSize: 13), textAlign: TextAlign.center),
                 ],
               ],
             ),
@@ -100,19 +113,23 @@ class ShopPage extends StatelessWidget {
     );
   }
 
-  Widget _buildFeatureItem(BuildContext context, IconData icon, String text) {
+  Widget _buildFeatureItem(BuildContext context, IconData icon, String text, int gradientIndex) {
+    final gradient = AppTheme.toolGradients[gradientIndex % AppTheme.toolGradients.length];
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
         children: [
           Container(
             width: 40, height: 40,
-            decoration: BoxDecoration(color: AppTheme.iconBg(context), borderRadius: BorderRadius.circular(12)),
-            child: Icon(icon, size: 22, color: AppTheme.primary),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(colors: gradient),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Icon(icon, size: 22, color: Colors.white),
           ),
           const SizedBox(width: 16),
           Expanded(child: Text(text, style: TextStyle(fontSize: 15, color: AppTheme.textPrimary(context)))),
-          const Icon(Icons.check_circle, color: Colors.green, size: 20),
+          const Icon(Icons.check_circle, color: AppTheme.successColor, size: 20),
         ],
       ),
     );

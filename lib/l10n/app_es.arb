@@ -5,8 +5,9 @@
   "tabSettings": "Ajustes",
   "settingsAbout": "Ajustes y Acerca de",
   "appearance": "Apariencia",
-  "lightMode": "Modo claro",
-  "darkMode": "Modo oscuro",
+    "lightMode": "Modo claro",
+    "darkMode": "Modo oscuro",
+    "autoMode": "Auto (5PM)",
   "aboutApp": "Acerca de la app",
   "appNameLabel": "Nombre de la app",
   "versionLabel": "Versión",
@@ -73,8 +74,8 @@
   "saveError": "Error al guardar: {error}",
   "loading": "Cargando...",
   "tapToSelectVideo": "Toca para seleccionar un vídeo",
-  "tapToSelectFirstVideo": "Toca para seleccionar el primer vídeo",
-  "tapToSelectSecondVideo": "Toca para seleccionar el segundo vídeo",
+  "tapToSelectFirstVideo": "Seleccionar primer vídeo",
+  "tapToSelectSecondVideo": "Seleccionar segundo vídeo",
   "tapToPreview": "Toca para previsualizar",
   "start": "Inicio",
   "end": "Fin",
@@ -311,5 +312,277 @@
   "noImagesExtractedShort": "No se extrajeron imágenes",
   "reMerge": "Fusionar de nuevo",
   "originalLabel": "Original:",
-  "segmentCount": "segmentos"
+  "segmentCount": "segmentos",
+  "@segmentCount": {
+    "placeholders": {
+      "count": { "type": "String" }
+    }
+  },
+
+  "@welcomeFreeCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "@freeCountRemaining": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "@toolCountAll": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "@featureDeveloping": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "@saveError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "@mergeError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "@compressError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "@originalSize": {
+    "placeholders": {
+      "size": { "type": "String" }
+    }
+  },
+  "@compressQuality": {
+    "placeholders": {
+      "value": { "type": "int" }
+    }
+  },
+  "@compressedSize": {
+    "placeholders": {
+      "size": { "type": "String" }
+    }
+  },
+  "@savedSpace": {
+    "placeholders": {
+      "size": { "type": "String" },
+      "percent": { "type": "String" }
+    }
+  },
+  "@convertError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "@convertTo": {
+    "placeholders": {
+      "format": { "type": "String" }
+    }
+  },
+  "@cropError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "@originalResolution": {
+    "placeholders": {
+      "width": { "type": "int" },
+      "height": { "type": "int" }
+    }
+  },
+  "@cropResolution": {
+    "placeholders": {
+      "width": { "type": "int" },
+      "height": { "type": "int" }
+    }
+  },
+  "@cutError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "@totalDuration": {
+    "placeholders": {
+      "duration": { "type": "String" }
+    }
+  },
+  "@cutRange": {
+    "placeholders": {
+      "start": { "type": "String" },
+      "end": { "type": "String" },
+      "duration": { "type": "String" }
+    }
+  },
+  "@dubbingError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "@extractError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "@extractedCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "@savedCountToAlbum": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "@videoDuration": {
+    "placeholders": {
+      "duration": { "type": "String" }
+    }
+  },
+  "@extractRange": {
+    "placeholders": {
+      "start": { "type": "String" },
+      "end": { "type": "String" },
+      "duration": { "type": "String" }
+    }
+  },
+  "@extractFps": {
+    "placeholders": {
+      "fps": { "type": "String" }
+    }
+  },
+  "@estimatedImages": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "@extractedImagesCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "@showingFirst30": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "@saveAllCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "@muteError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "@ratioError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "@separateError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "@videoOnlySavedToAlbum": {
+    "placeholders": {
+      "label": { "type": "String" }
+    }
+  },
+  "@saveVideoError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "@savedToDownloads": {
+    "placeholders": {
+      "label": { "type": "String" },
+      "fileName": { "type": "String" }
+    }
+  },
+  "@fileNotExist": {
+    "placeholders": {
+      "label": { "type": "String" }
+    }
+  },
+  "@splitComplete": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "@splitError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "@savedSegmentsToAlbum": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "@splitPoint": {
+    "placeholders": {
+      "index": { "type": "int" }
+    }
+  },
+  "@willProduceSegments": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "@segmentInfo": {
+    "placeholders": {
+      "index": { "type": "int" },
+      "start": { "type": "String" },
+      "end": { "type": "String" },
+      "duration": { "type": "String" }
+    }
+  },
+  "@saveAllSegments": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "@segment": {
+    "placeholders": {
+      "index": { "type": "int" }
+    }
+  },
+  "@licenseLabel": {
+    "placeholders": {
+      "license": { "type": "String" }
+    }
+  },
+  "@videoInitFailed": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "@selectVideoFailedWithError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "@saveLabel": {
+    "placeholders": {
+      "label": { "type": "String" }
+    }
+  },
+  "@labelSaved": {
+    "placeholders": {
+      "label": { "type": "String" }
+    }
+  },
+  "@saveLabelError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  }
 }

@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             title: 'ToolKit',
             debugShowCheckedModeBanner: false,
-            themeMode: theme.mode,
+            themeMode: theme.effectiveMode,
             theme: _buildLightTheme(),
             darkTheme: _buildDarkTheme(),
             localizationsDelegates: const [

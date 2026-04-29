@@ -1,22 +1,9 @@
 <!DOCTYPE html><html><head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
   <base href="$FLUTTER_BASE_HREF">
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
+  <meta name="description" content="Video ToolKit - Professional video &amp; audio processing tools">
 
   <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
@@ -30,8 +17,9 @@
   <title>Video ToolKit</title>
   <link rel="manifest" href="manifest.json">
   
-  
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+  
+  
   <style id="splash-screen-style">
     html {
       height: 100%
@@ -110,15 +98,16 @@
       <source srcset="splash/img/dark-1x.png 1x, splash/img/dark-2x.png 2x, splash/img/dark-3x.png 3x, splash/img/dark-4x.png 4x" media="(prefers-color-scheme: dark)">
       <img class="center" aria-hidden="true" src="splash/img/light-1x.png" alt="">
   </picture>
-  
-  <!--
-    Web / WASM 预留说明（暂不实际集成 ffmpeg.wasm）：
-
-    - 未来如需在 Web 端集成 FFmpeg WASM，可将 `ffmpeg.wasm`（以及对应的 JS glue / worker）
-      放到 `web/` 静态目录或通过 `assets` 暴露后，使用 JS 方式加载。
-    - 本项目当前仅保留此说明，便于后续接入 `ffmpeg.wasm` 时快速定位入口。
-  -->
+  <div class="splash-container">
+    <div class="splash-icon">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 5v14l11-7z"></path>
+      </svg>
+    </div>
+    <div class="splash-title">Video ToolKit</div>
+    <div class="splash-subtitle">Professional Video Processing</div>
+    <div class="splash-loader"></div>
+  </div>
   <script src="flutter_bootstrap.js" async=""></script>
-
 
 </body></html>

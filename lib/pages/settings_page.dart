@@ -15,79 +15,61 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    return Container(color: AppTheme.bg(context), child: SafeArea(child: ListView(padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8), children: [
-      Container(padding: const EdgeInsets.only(top: 8, bottom: 16), child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-        Center(child: Text('ToolKit', style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: AppTheme.primaryLight, letterSpacing: -0.5))),
-      ])),
-      const SizedBox(height: 8),
-
-      // 主题切换卡片
-      _buildSectionCard(context, icon: Icons.dark_mode_outlined, title: l10n.appearance, children: [
-        _buildThemeSwitch(context),
-      ]),
-      const SizedBox(height: 16),
-
-      // 语言切换卡片
-      _buildSectionCard(context, icon: Icons.language, title: l10n.language, children: [
-        _buildLanguageSwitch(context),
-      ]),
-      const SizedBox(height: 16),
-
-      _buildSectionCard(context, icon: Icons.info_outline_rounded, title: l10n.aboutApp, children: [
-        _buildInfoRow(context, l10n.appNameLabel, 'ToolKit'),
-        _buildInfoRow(context, l10n.versionLabel, '1.0.0'),
-        _buildInfoRow(context, l10n.developerLabel, 'xinyoushanhai888@gmail.com'),
-        const SizedBox(height: 12), _buildOpenSourceNotice(context),
-      ]),
-      const SizedBox(height: 16),
-
-      _buildNavigateCard(context, icon: Icons.privacy_tip_outlined, title: l10n.privacyPolicy, subtitle: l10n.viewPrivacyTerms,
-        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const PrivacyPolicyPage()))),
-      const SizedBox(height: 12),
-
-      _buildNavigateCard(context, icon: Icons.extension_outlined, title: l10n.sdkList, subtitle: l10n.viewThirdPartyServices,
-        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const SdkListPage()))),
-      const SizedBox(height: 12),
-
-      _buildNavigateCard(context, icon: Icons.shop_outlined, title: l10n.iapDescription, subtitle: l10n.viewIapDetails,
-        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const IapDescriptionPage()))),
-      const SizedBox(height: 40),
-    ])));
-  }
-
-  Widget _buildLanguageSwitch(BuildContext context) {
-    final appTheme = AppTheme();
     return Container(
-      padding: const EdgeInsets.all(4),
-      decoration: BoxDecoration(
-        color: AppTheme.iconBg(context),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Wrap(
-        spacing: 4,
-        runSpacing: 4,
-        children: kSupportedLocales.map((locale) {
-          final isSelected = appTheme.locale.languageCode == locale.languageCode;
-          return GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: () => appTheme.setLocale(locale),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-              decoration: BoxDecoration(
-                color: isSelected ? AppTheme.accentColor(context) : Colors.transparent,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Text(
-                kLocaleNames[locale.languageCode]!,
-                style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w500,
-                  color: isSelected ? Colors.white : AppTheme.textSecondary(context),
-                ),
+      color: AppTheme.bg(context),
+      child: SafeArea(
+        child: ListView(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          children: [
+            // 标题
+            Container(
+              padding: const EdgeInsets.only(top: 8, bottom: 20),
+              child: Row(
+                children: [
+                  Container(
+                    width: 40, height: 40,
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(colors: AppTheme.primaryGradient),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: const Icon(Icons.settings, color: Colors.white, size: 22),
+                  ),
+                  const SizedBox(width: 12),
+                  Text('ToolKit', style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: AppTheme.textPrimary(context), letterSpacing: -0.5)),
+                  const Spacer(),
+                  AppTheme.buildLanguageButton(context),
+                ],
               ),
             ),
-          );
-        }).toList(),
+            const SizedBox(height: 4),
+
+            // 主题切换卡片
+            _buildSectionCard(context, icon: Icons.dark_mode_outlined, title: l10n.appearance, children: [
+              _buildThemeSwitch(context),
+            ]),
+            const SizedBox(height: 12),
+
+            _buildSectionCard(context, icon: Icons.info_outline_rounded, title: l10n.aboutApp, children: [
+              _buildInfoRow(context, l10n.appNameLabel, 'ToolKit'),
+              _buildInfoRow(context, l10n.versionLabel, '1.0.0'),
+              _buildInfoRow(context, l10n.developerLabel, 'xinyoushanhai888@gmail.com'),
+              const SizedBox(height: 12), _buildOpenSourceNotice(context),
+            ]),
+            const SizedBox(height: 12),
+
+            _buildNavigateCard(context, icon: Icons.privacy_tip_outlined, title: l10n.privacyPolicy, subtitle: l10n.viewPrivacyTerms,
+              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const PrivacyPolicyPage()))),
+            const SizedBox(height: 10),
+
+            _buildNavigateCard(context, icon: Icons.extension_outlined, title: l10n.sdkList, subtitle: l10n.viewThirdPartyServices,
+              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const SdkListPage()))),
+            const SizedBox(height: 10),
+
+            _buildNavigateCard(context, icon: Icons.shop_outlined, title: l10n.iapDescription, subtitle: l10n.viewIapDetails,
+              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const IapDescriptionPage()))),
+            const SizedBox(height: 40),
+          ],
+        ),
       ),
     );
   }
@@ -96,6 +78,7 @@ class SettingsPage extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     final appTheme = AppTheme();
     final isDark = appTheme.isDark;
+    
     return Container(
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
@@ -107,19 +90,19 @@ class SettingsPage extends StatelessWidget {
           Expanded(
             child: GestureDetector(
               behavior: HitTestBehavior.opaque,
-              onTap: () { if (isDark) appTheme.toggle(); },
+              onTap: () { appTheme.setMode(ThemeMode.light); },
               child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 decoration: BoxDecoration(
-                  color: isDark ? Colors.transparent : AppTheme.accentColor(context),
+                  color: !isDark ? AppTheme.primary : Colors.transparent,
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.light_mode_outlined, size: 18, color: isDark ? AppTheme.textSecondary(context) : Colors.white),
+                    Icon(Icons.light_mode_outlined, size: 18, color: !isDark ? Colors.white : AppTheme.textSecondary(context)),
                     const SizedBox(width: 6),
-                    Text(l10n.lightMode, style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: isDark ? AppTheme.textSecondary(context) : Colors.white)),
+                    Text(l10n.lightMode, style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: !isDark ? Colors.white : AppTheme.textSecondary(context))),
                   ],
                 ),
               ),
@@ -128,11 +111,11 @@ class SettingsPage extends StatelessWidget {
           Expanded(
             child: GestureDetector(
               behavior: HitTestBehavior.opaque,
-              onTap: () { if (!isDark) appTheme.toggle(); },
+              onTap: () { appTheme.setMode(ThemeMode.dark); },
               child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 decoration: BoxDecoration(
-                  color: isDark ? AppTheme.accentColor(context) : Colors.transparent,
+                  color: isDark ? AppTheme.primary : Colors.transparent,
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Row(
@@ -152,11 +135,30 @@ class SettingsPage extends StatelessWidget {
   }
 
   Widget _buildSectionCard(BuildContext ctx, {required IconData icon, required String title, required List<Widget> children}) => Container(
-    decoration: BoxDecoration(color: AppTheme.cardBg(ctx), borderRadius: BorderRadius.circular(16), border: Border.all(color: AppTheme.borderColor(ctx), width: 0.5)),
+    decoration: BoxDecoration(
+      color: AppTheme.cardBg(ctx),
+      borderRadius: BorderRadius.circular(16),
+      border: Border.all(color: AppTheme.borderColor(ctx), width: 0.5),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withValues(alpha: Theme.of(ctx).brightness == Brightness.dark ? 0.2 : 0.04),
+          blurRadius: 8,
+          offset: const Offset(0, 2),
+        ),
+      ],
+    ),
     child: Padding(padding: const EdgeInsets.all(16), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Row(children: [
-        Container(padding: const EdgeInsets.all(8), decoration: BoxDecoration(color: AppTheme.accentColor(ctx).withValues(alpha: 0.12), borderRadius: BorderRadius.circular(10)), child: Icon(icon, color: AppTheme.primaryLight, size: 20)),
-        const SizedBox(width: 12), Text(title, style: TextStyle(color: AppTheme.textPrimary(ctx), fontSize: 17, fontWeight: FontWeight.w600)),
+        Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(colors: AppTheme.primaryGradient),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Icon(icon, color: Colors.white, size: 18),
+        ),
+        const SizedBox(width: 12),
+        Text(title, style: TextStyle(color: AppTheme.textPrimary(ctx), fontSize: 17, fontWeight: FontWeight.w600)),
       ]),
       const SizedBox(height: 16), ...children,
     ])));
@@ -169,7 +171,12 @@ class SettingsPage extends StatelessWidget {
   Widget _buildOpenSourceNotice(BuildContext ctx) {
     final l10n = AppLocalizations.of(ctx)!;
     return Container(
-      padding: const EdgeInsets.all(12), decoration: BoxDecoration(color: AppTheme.accentColor(ctx).withValues(alpha: 0.06), borderRadius: BorderRadius.circular(12), border: Border.all(color: AppTheme.accentColor(ctx).withValues(alpha: 0.08))),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: AppTheme.surfaceColor(ctx),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: AppTheme.borderColor(ctx)),
+      ),
       child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Icon(Icons.code, color: AppTheme.primaryLight, size: 18),
         const SizedBox(width: 8),
@@ -179,12 +186,38 @@ class SettingsPage extends StatelessWidget {
 
   Widget _buildNavigateCard(BuildContext ctx, {required IconData icon, required String title, required String subtitle, required VoidCallback onTap}) => Material(
     color: AppTheme.cardBg(ctx), borderRadius: BorderRadius.circular(16),
-    child: InkWell(borderRadius: BorderRadius.circular(16), onTap: onTap, child: Container(padding: const EdgeInsets.all(16), decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), border: Border.all(color: AppTheme.borderColor(ctx), width: 0.5)), child: Row(children: [
-      Container(padding: const EdgeInsets.all(10), decoration: BoxDecoration(color: AppTheme.accentColor(ctx).withValues(alpha: 0.12), borderRadius: BorderRadius.circular(12)), child: Icon(icon, color: AppTheme.primaryLight, size: 22)),
-      const SizedBox(width: 14), Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Text(title, style: TextStyle(color: AppTheme.textPrimary(ctx), fontSize: 16, fontWeight: FontWeight.w600), maxLines: 1, overflow: TextOverflow.ellipsis),
-        const SizedBox(height: 3), Text(subtitle, style: TextStyle(color: AppTheme.textSecondary(ctx), fontSize: 13), maxLines: 1, overflow: TextOverflow.ellipsis),
-      ])),
-      Icon(Icons.chevron_right, color: AppTheme.textSecondary(ctx).withValues(alpha: 0.5)),
-    ]))));
+    child: InkWell(
+      borderRadius: BorderRadius.circular(16),
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: AppTheme.borderColor(ctx), width: 0.5),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: Theme.of(ctx).brightness == Brightness.dark ? 0.2 : 0.04),
+              blurRadius: 8,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Row(children: [
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(colors: AppTheme.primaryGradient),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Icon(icon, color: Colors.white, size: 20),
+          ),
+          const SizedBox(width: 14),
+          Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text(title, style: TextStyle(color: AppTheme.textPrimary(ctx), fontSize: 16, fontWeight: FontWeight.w600), maxLines: 1, overflow: TextOverflow.ellipsis),
+            const SizedBox(height: 3), Text(subtitle, style: TextStyle(color: AppTheme.textSecondary(ctx), fontSize: 13), maxLines: 1, overflow: TextOverflow.ellipsis),
+          ])),
+          Icon(Icons.chevron_right_rounded, color: AppTheme.textSecondary(ctx).withValues(alpha: 0.4)),
+        ]),
+      ),
+    ));
 }

@@ -34,7 +34,7 @@ class _SplitVideoPageState extends State<SplitVideoPage> {
 
   static const _bg = LinearGradient(
     begin: Alignment.topCenter, end: Alignment.bottomCenter,
-    colors: [Color(0xFF33691E), Color(0xFF689F38), Color(0xFFF1F8E9)],
+    colors: [Color(0xFF4C1D95), Color(0xFF831843), Color(0xFFF3E8FF)],
   );
 
   @override

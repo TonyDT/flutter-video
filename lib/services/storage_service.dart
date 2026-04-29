@@ -17,7 +17,7 @@ class StorageService {
   static const String _keyFirstLaunchShown = 'first_launch_shown_v2';
 
   // 初始免费次数
-  static const int initialFreeCount = 7;
+  static const int initialFreeCount = 10;
 
   // AES 密钥派生盐值（不要修改，否则已加密数据将失效）
   static const String _keySalt = 'TkTl_k1t_s3cur3_s@lt_2024';

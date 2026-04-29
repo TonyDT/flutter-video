@@ -1,0 +1,582 @@
+{
+  "@@locale": "ar",
+  "appName": "ToolKit",
+  "tabAll": "الكل",
+  "tabSettings": "الإعدادات",
+  "settingsAbout": "الإعدادات والمعلومات",
+  "appearance": "المظهر",
+    "lightMode": "الوضع الفاتح",
+    "darkMode": "الوضع الداكن",
+    "autoMode": "تلقائي (5 مساءً)",
+  "aboutApp": "حول التطبيق",
+  "appNameLabel": "اسم التطبيق",
+  "versionLabel": "الإصدار",
+  "developerLabel": "المطور",
+  "privacyPolicy": "سياسة الخصوصية",
+  "viewPrivacyTerms": "عرض شروط الخصوصية",
+  "sdkList": "قائمة حزم SDK الخارجية",
+  "viewThirdPartyServices": "عرض خدمات الطرف الثالث",
+  "iapDescription": "عمليات الشراء داخل التطبيق",
+  "viewIapDetails": "عرض تفاصيل الشراء والاشتراك داخل التطبيق",
+  "iapSection1Title": "1. عناصر الشراء داخل التطبيق",
+  "iapSection1Content": "يقدم هذا التطبيق شراءً داخل التطبيق \"Premium\"، وهو شراء لمرة واحدة وليس اشتراكًا تجديديًا تلقائيًا. بعد الشراء، ستقوم بإلغاء قفل جميع الميزات بشكل دائم، بما في ذلك: عمليات حفظ غير محدودة للألبوم، واستخدام غير مقيد لجميع الأدوات، وتحديثات مستقبلية مجانية، وتجربة بدون إعلانات.",
+  "iapSection2Title": "2. الدفع والتأكيد",
+  "iapSection2Content": "سيتم خصم المبلغ من حساب Apple ID / Google Play الخاص بك. بمجرد التأكيد، سيتم خصم المبلغ من حسابك.",
+  "iapSection3Title": "3. استعادة المشتريات",
+  "iapSection3Content": "إذا قمت بتغيير الأجهزة أو إعادة تثبيت التطبيق، يمكنك النقر على \"استعادة المشتريات\" في صفحة الإعدادات أو المتجر لاستعادة وصول Premium مجانًا، دون الدفع مرة أخرى.",
+  "iapSection4Title": "4. الإلغاء والاسترداد",
+  "iapSection4Content": "هذا شراء لمرة واحدة. لا يتم دعم استرداد الأموال بعد الشراء. إذا كنت بحاجة إلى استرداد أموال، يرجى التقدم عبر القنوات الرسمية لـ Apple / Google Play.",
+  "iapSection5Title": "5. تواصل معنا",
+  "iapSection5Content": "إذا كانت لديك أي أسئلة حول عمليات الشراء داخل التطبيق، يرجى التواصل مع:\nxinyoushanhai888@gmail.com",
+
+  "welcomeTitle": "مرحبًا بك في ToolKit",
+  "welcomeFreeCount": "لديك {count} استخدامات مجانية. كل حفظ في الألبوم يستهلك استخدامًا واحدًا.",
+  "@welcomeFreeCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "welcomeUpgradeHint": "الترقية إلى Premium للحصول على وصول غير محدود لجميع الميزات",
+  "welcomeGotIt": "فهمت",
+  "welcomeUpgrade": "الترقية إلى Premium",
+  "freeCountRemaining": "{count} متبقي",
+  "@freeCountRemaining": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "freeCountExhausted": "استنفدت الاستخدامات المجانية",
+  "upgradeToUnlock": "الترقية إلى Premium لاستخدام غير محدود",
+  "openSourceNotice": "مبني باستخدام FFmpeg وFlutter وتقنيات مفتوحة المصدر أخرى. شكرًا لمجتمع المصادر المفتوحة.",
+  "harmonyDeveloping": "نسخة HarmonyOS قيد التطوير",
+  "language": "اللغة",
+
+  "toolMerge": "دمج مقاطع الفيديو",
+  "toolMergeDesc": "دمج عدة ملفات فيديو في ملف واحد",
+  "toolCut": "قص الفيديو",
+  "toolCutDesc": "استخراج مقطع زمني محدد من الفيديو",
+  "toolCompress": "ضغط الفيديو",
+  "toolCompressDesc": "تقليل حجم ملف الفيديو",
+  "toolRatio": "نسبة الفيديو",
+  "toolRatioDesc": "تعديل نسبة الأبعاد",
+  "toolMute": "كتم الفيديو",
+  "toolMuteDesc": "إزالة المسار الصوتي من الفيديو",
+  "toolDubbing": "التعليق الصوتي",
+  "toolDubbingDesc": "إضافة موسيقى خلفية إلى الفيديو",
+  "toolExtract": "استخراج الصور",
+  "toolExtractDesc": "استخراج الإطارات من الفيديو كصور",
+  "toolSplit": "تقسيم الفيديو",
+  "toolSplitDesc": "تقسيم الفيديو إلى عدة مقاطع",
+  "toolSeparate": "فصل الصوت/الصورة",
+  "toolSeparateDesc": "فصل المسارات الصوتية والمرئية",
+  "toolCrop": "قص الفيديو",
+  "toolCropDesc": "قص منطقة إطار الفيديو",
+  "toolConvert": "تحويل الصيغة",
+  "toolConvertDesc": "تحويل صيغة ملف الفيديو",
+  "toolCountAll": "{count} أدوات · الكل",
+  "@toolCountAll": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "featureDeveloping": "{name} قيد التطوير",
+  "@featureDeveloping": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+
+  "selectVideoFailed": "فشل في اختيار الفيديو",
+  "selectAudioFailed": "فشل في اختيار الصوت",
+  "needAlbumPermission": "مطلوب إذن الألبوم",
+  "savedToAlbum": "تم الحفظ في الألبوم",
+  "saveFailed": "فشل الحفظ",
+  "saveError": "خطأ في الحفظ: {error}",
+  "@saveError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "loading": "جارٍ التحميل...",
+  "tapToSelectVideo": "انقر لاختيار فيديو",
+  "tapToSelectFirstVideo": "انقر لاختيار الفيديو الأول",
+  "tapToSelectSecondVideo": "انقر لاختيار الفيديو الثاني",
+  "tapToPreview": "انقر للمعاينة",
+  "start": "البداية",
+  "end": "النهاية",
+  "change": "تغيير",
+  "reselect": "إعادة الاختيار",
+  "changeVideo": "تغيير الفيديو",
+  "saveToAlbum": "حفظ في الألبوم",
+  "processing": "جارٍ المعالجة...",
+  "videoLoadFailed": "فشل تحميل الفيديو",
+  "previewFailed": "فشلت المعاينة",
+  "previewInitFailed": "فشل تهيئة المعاينة",
+
+  "mergeVideo": "دمج مقاطع الفيديو",
+  "selectTwoVideosToMerge": "اختر فيديوهين لدمجهما",
+  "video1": "الفيديو 1",
+  "video2": "الفيديو 2",
+  "selectVideo1": "اختر الفيديو 1",
+  "selectVideo2": "اختر الفيديو 2",
+  "pleaseSelectTwoVideos": "يرجى اختيار فيديوهين أولاً",
+  "webNotSupportMerge": "الدمج غير مدعوم على الويب",
+  "video1CropFailed": "فشل قص الفيديو 1",
+  "video2CropFailed": "فشل قص الفيديو 2",
+  "mergeSuccess": "تم الدمج بنجاح!",
+  "mergeFailed": "فشل الدمج",
+  "mergeError": "خطأ في الدمج: {error}",
+  "@mergeError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "merging": "جارٍ الدمج...",
+  "startMerge": "بدء الدمج",
+
+  "compressVideo": "ضغط الفيديو",
+  "compressSuccess": "اكتمل الضغط!",
+  "compressFailed": "فشل الضغط",
+  "compressError": "خطأ في الضغط: {error}",
+  "@compressError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "originalSize": "الحجم الأصلي: {size}",
+  "@originalSize": {
+    "placeholders": {
+      "size": { "type": "String" }
+    }
+  },
+  "compressQuality": "جودة الضغط (CRF): {value}",
+  "@compressQuality": {
+    "placeholders": {
+      "value": { "type": "int" }
+    }
+  },
+  "compressTip": "كلما ارتفعت القيمة زاد الضغط وانخفضت الجودة",
+  "encodeSpeed": "سرعة الترميز:",
+  "compressedSize": "مضغوط: {size}",
+  "@compressedSize": {
+    "placeholders": {
+      "size": { "type": "String" }
+    }
+  },
+  "savedSpace": "تم التوفير: {size} ({percent}%)",
+  "@savedSpace": {
+    "placeholders": {
+      "size": { "type": "String" },
+      "percent": { "type": "String" }
+    }
+  },
+  "compressing": "جارٍ الضغط...",
+  "startCompress": "بدء الضغط",
+
+  "convertFormat": "تحويل الصيغة",
+  "convertSuccess": "تم التحويل بنجاح!",
+  "convertFailed": "فشل التحويل",
+  "convertError": "خطأ في التحويل: {error}",
+  "@convertError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "targetFormat": "الصيغة الهدف:",
+  "converting": "جارٍ التحويل...",
+  "convertTo": "تحويل إلى {format}",
+  "@convertTo": {
+    "placeholders": {
+      "format": { "type": "String" }
+    }
+  },
+
+  "cropVideo": "قص الفيديو",
+  "cropSuccess": "تم القص بنجاح!",
+  "cropFailed": "فشل القص",
+  "cropError": "خطأ في القص: {error}",
+  "@cropError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "cropPreviewFailedButSaved": "فشلت المعاينة، لكن تم إنشاء الملف",
+  "originalResolution": "الأصلي: {width}x{height}",
+  "@originalResolution": {
+    "placeholders": {
+      "width": { "type": "int" },
+      "height": { "type": "int" }
+    }
+  },
+  "cropResolution": "القص: {width}x{height}",
+  "@cropResolution": {
+    "placeholders": {
+      "width": { "type": "int" },
+      "height": { "type": "int" }
+    }
+  },
+  "cropDragTip": "اسحب الصندوق الأخضر أو الحواف لتعديل منطقة القص، اسحب من الداخل للتحريك",
+  "resetCrop": "إعادة تعيين منطقة القص",
+  "cropping": "جارٍ القص...",
+  "startCrop": "بدء القص",
+
+  "cutVideo": "قص الفيديو",
+  "cutSuccess": "تم القص بنجاح!",
+  "cutFailed": "فشل القص",
+  "cutError": "خطأ في القص: {error}",
+  "@cutError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "cutCompletePreviewUnavailable": "اكتمل القص (المعاينة غير متوفرة)",
+  "videoPreviewUnavailable": "معاينة الفيديو غير متوفرة",
+  "totalDuration": "المدة الإجمالية: {duration}",
+  "@totalDuration": {
+    "placeholders": {
+      "duration": { "type": "String" }
+    }
+  },
+  "cutRange": "القص: {start} - {end}  ({duration})",
+  "@cutRange": {
+    "placeholders": {
+      "start": { "type": "String" },
+      "end": { "type": "String" },
+      "duration": { "type": "String" }
+    }
+  },
+  "cutting": "جارٍ القص...",
+  "startCut": "بدء القص",
+
+  "dubbingVideo": "التعليق الصوتي",
+  "dubbingSuccess": "تم التعليق الصوتي بنجاح!",
+  "dubbingFailed": "فشل التعليق الصوتي",
+  "dubbingError": "خطأ في التعليق الصوتي: {error}",
+  "@dubbingError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "selectVideo": "اختر فيديو",
+  "videoSelected": "تم اختيار الفيديو",
+  "selectAudio": "اختر صوتًا",
+  "audioSelected": "تم اختيار الصوت",
+  "dubbingMode": "وضع التعليق الصوتي:",
+  "replaceOriginalAudio": "استبدال الصوت الأصلي",
+  "replaceAudioHint": "أوقف الخلط لخلط المسارين الصوتيين معًا",
+  "dubbing": "جارٍ التعليق الصوتي...",
+  "startDubbing": "بدء التعليق الصوتي",
+  "startOver": "البدء من جديد",
+
+  "extractImages": "استخراج الصور",
+  "startTimeMustBeBeforeEnd": "يجب أن يكون وقت البداية قبل وقت النهاية",
+  "extractedCount": "تم استخراج {count} صورة",
+  "@extractedCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "noImagesExtracted": "لم يتم استخراج صور، يرجى التحقق من ملف الفيديو",
+  "extractFailed": "فشل الاستخراج",
+  "extractError": "خطأ في الاستخراج: {error}",
+  "@extractError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "savedCountToAlbum": "تم حفظ {count} صورة في الألبوم",
+  "@savedCountToAlbum": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "videoDuration": "مدة الفيديو: {duration}",
+  "@videoDuration": {
+    "placeholders": {
+      "duration": { "type": "String" }
+    }
+  },
+  "startTime": "وقت البداية",
+  "endTime": "وقت النهاية",
+  "extractRange": "نطاق الاستخراج: {start} - {end}  ({duration})",
+  "@extractRange": {
+    "placeholders": {
+      "start": { "type": "String" },
+      "end": { "type": "String" },
+      "duration": { "type": "String" }
+    }
+  },
+  "extractFps": "معدل الاستخراج: {fps} إطار/ثانية",
+  "@extractFps": {
+    "placeholders": {
+      "fps": { "type": "String" }
+    }
+  },
+  "estimatedImages": "سيتم استخراج حوالي {count} صورة",
+  "@estimatedImages": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "extracting": "جارٍ الاستخراج...",
+  "startExtract": "بدء الاستخراج",
+  "extractedImagesCount": "تم استخراج {count} صورة",
+  "@extractedImagesCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "showingFirst30": "عرض أول {count} من",
+  "@showingFirst30": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "saveAllCount": "حفظ الكل {count}",
+  "@saveAllCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+
+  "muteVideo": "كتم الفيديو",
+  "muteSuccess": "تم كتم الصوت بنجاح!",
+  "muteFailed": "فشل كتم الصوت",
+  "muteError": "خطأ في كتم الصوت: {error}",
+  "@muteError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "muteDescription": "سيتم إزالة كل الصوت، مع الاحتفاظ بإطارات الفيديو فقط",
+  "muting": "جارٍ كتم الصوت...",
+  "removeAudio": "إزالة الصوت",
+
+  "ratioVideo": "نسبة الفيديو",
+  "ratioSuccess": "تم تعديل النسبة بنجاح!",
+  "ratioFailed": "فشل تعديل النسبة",
+  "ratioError": "خطأ في تعديل النسبة: {error}",
+  "@ratioError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "targetRatio": "النسبة الهدف:",
+  "scaleMode": "وضع القياس:",
+  "stretchFit": "ملاءمةStretch",
+  "cropFill": "تعبئة القص",
+  "letterbox": "صندوق الرسائل",
+  "adjusting": "جارٍ التعديل...",
+  "startAdjust": "بدء التعديل",
+
+  "separateAV": "فصل الصوت/الصورة",
+  "separateComplete": "اكتمل الفصل!",
+  "separateFailed": "فشل الفصل، قد لا يحتوي الفيديو على مسارات صوتية/مرئية",
+  "separateError": "خطأ في الفصل: {error}",
+  "@separateError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "videoOnlySavedToAlbum": "تم حفظ الفيديو فقط في الألبوم",
+  "saveVideoFailed": "فشل حفظ الفيديو",
+  "saveVideoError": "خطأ في حفظ الفيديو: {error}",
+  "@saveVideoError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "cannotGetDownloadDir": "لا يمكن الحصول على مجلد التنزيلات",
+  "savedToDownloads": "تم حفظ {label} في: التنزيلات/{fileName}",
+  "@savedToDownloads": {
+    "placeholders": {
+      "label": { "type": "String" },
+      "fileName": { "type": "String" }
+    }
+  },
+  "fileNotExist": "ملف {label} غير موجود",
+  "@fileNotExist": {
+    "placeholders": {
+      "label": { "type": "String" }
+    }
+  },
+  "separateDescription": "استخراج إطارات الفيديو والصوت كملفات منفصلة",
+  "separating": "جارٍ الفصل...",
+  "startSeparate": "بدء الفصل",
+  "videoOnly": "فيديو فقط (بدون صوت)",
+  "savedToAlbumLabel": "تم الحفظ في الألبوم",
+  "m4aAudio": "صوت M4A",
+  "mp3Audio": "صوت MP3",
+  "savedToDownloadsShort": "تم الحفظ في التنزيلات",
+  "playMp3Audio": "تشغيل صوت MP3",
+  "playM4aAudio": "تشغيل صوت M4A",
+
+  "splitVideo": "تقسيم الفيديو",
+  "addAtLeastOneSplitPoint": "يرجى إضافة نقطة تقسيم واحدة على الأقل",
+  "splitComplete": "اكتمل التقسيم! {count} مقاطع",
+  "@splitComplete": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "splitFailed": "فشل التقسيم",
+  "splitError": "خطأ في التقسيم: {error}",
+  "@splitError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "savedSegmentsToAlbum": "تم حفظ {count} مقطع في الألبوم",
+  "@savedSegmentsToAlbum": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "splitPoints": "نقاط التقسيم:",
+  "add": "إضافة",
+  "noSplitPoints": "لا توجد نقاط تقسيم، انقر للإضافة",
+  "splitPoint": "نقطة التقسيم {index}:",
+  "@splitPoint": {
+    "placeholders": {
+      "index": { "type": "int" }
+    }
+  },
+  "willProduceSegments": "سيتم إنتاج {count} مقطع بعد التقسيم:",
+  "@willProduceSegments": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "segmentInfo": "المقطع {index}: {start}-{end} ({duration})",
+  "@segmentInfo": {
+    "placeholders": {
+      "index": { "type": "int" },
+      "start": { "type": "String" },
+      "end": { "type": "String" },
+      "duration": { "type": "String" }
+    }
+  },
+  "splitting": "جارٍ التقسيم...",
+  "startSplit": "بدء التقسيم",
+  "saveAllSegments": "حفظ جميع المقاطع {count}",
+  "@saveAllSegments": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "segment": "المقطع {index}",
+  "@segment": {
+    "placeholders": {
+      "index": { "type": "int" }
+    }
+  },
+
+  "privacyTitle": "سياسة الخصوصية",
+  "updateDate": "تاريخ التحديث",
+  "privacyDate": "1 يناير 2025",
+  "section1Title": "1. جمع المعلومات",
+  "section1Content": "نحن نأخذ خصوصيتك على محمل الجد. يجمع هذا التطبيق فقط المعلومات التالية الضرورية لتقديم الخدمة:",
+  "section1Item1": "ملفات الفيديو/الصوت التي تختارها بنشاط (تُستخدم فقط للمعالجة المحلية، ولا تُرفع إلى أي خادم)",
+  "section1Item2": "معلومات الجهاز الأساسية (لمواءمة الجهاز، لا تحتوي على معلومات هوية شخصية)",
+  "section2Title": "2. استخدام المعلومات",
+  "section2Content": "يتم إكمال جميع معالجة الصوت/الفيديو محليًا على جهازك. لن نرفع أبدًا أيًا من ملفاتك أو بياناتك إلى خوادم بعيدة. تُستخدم معلومات الجهاز المجمعة فقط لتكييف الميزات وتحليل الأعطال.",
+  "section3Title": "3. تخزين المعلومات",
+  "section3Content": "الملفات المؤقتة التي ينشئها التطبيق مخزنة في الدليل المؤقت المحلي للجهاز. يمكنك حفظها أو حذفها حسب رغبتك بعد المعالجة. لا نخزن أيًا من بياناتك على الخوادم.",
+  "section4Title": "4. مشاركة المعلومات",
+  "section4Content": "لن نبيع أو نتداول أو ننقل معلوماتك الشخصية إلى أطراف ثالثة، باستثناء الحالات التالية:",
+  "section4Item1": "بموافقة صريحة منك",
+  "section4Item2": "كما هو مطلوب بموجب القانون أو أمر حكومي",
+  "section5Title": "5. خدمات الطرف الثالث",
+  "section5Content": "يستخدم هذا التطبيق بعض حزم SDK التابعة لجهات خارجية لتقديم الخدمات، والتي قد تكون لها سياسات خصوصية خاصة بها. يرجى الاطلاع على صفحة \"قائمة حزم SDK التابعة لجهات خارجية\" للتفاصيل.",
+  "section6Title": "6. أمان البيانات",
+  "section6Content": "نتخذ تدابير أمنية معقولة لحماية معلوماتك من الوصول أو الاستخدام أو الإفصاح غير المصرح به. ومع ذلك، يرجى ملاحظة أن الإنترنت ليس آمنًا تمامًا. نوصي بالحفاظ على أمان جهازك.",
+  "section7Title": "7. حماية القاصرين",
+  "section7Content": "نولي أهمية كبيرة لحماية المعلومات الشخصية للقاصرين. إذا كان عمرك أقل من 18 عامًا، نوصي باستخدام هذا التطبيق تحت إشراف ولي الأمر.",
+  "section8Title": "8. تغييرات سياسة الخصوصية",
+  "section8Content": "قد نقوم بمراجعة سياسة الخصوصية هذه من وقت لآخر. عند حدوث تغييرات، سنخبرك عبر النوافذ المنبثقة داخل التطبيق أو الإعلانات.",
+  "section9Title": "9. تواصل معنا",
+  "section9Content": "إذا كانت لديك أي أسئلة أو اقتراحات حول سياسة الخصوصية هذه، يرجى التواصل معنا على:\nxinyoushanhai888@gmail.com",
+
+  "sdkFlutterTitle": "Flutter",
+  "sdkFlutterDesc": "إطار عمل تطوير تطبيقات متعددة المنصات لبناء واجهة المستخدم والتفاعلات",
+  "sdkFfmpegTitle": "FFmpeg",
+  "sdkFfmpegDesc": "مكتبة أساسية لمعالجة الصوت/الفيديو لقص وضغط وتحويل صيغ الفيديو وغيرها",
+  "sdkVideoPlayerTitle": "مشغل الفيديو",
+  "sdkVideoPlayerDesc": "مكون تشغيل الفيديو لمعاينة الفيديو",
+  "sdkFilePickerTitle": "منتقي الملفات",
+  "sdkFilePickerDesc": "منتقي الملفات لاختيار ملفات الفيديو والصوت المحلية",
+  "sdkGallerySaverTitle": "حافظ الألبوم",
+  "sdkGallerySaverDesc": "أداة حفظ الألبوم لحفظ الملفات المعالجة في ألبوم النظام",
+  "sdkPermissionTitle": "معالج الأذونات",
+  "sdkPermissionDesc": "مكون إدارة الأذونات لطلب أذونات التخزين والألبوم وغيرها من أذونات النظام",
+  "sdkPathProviderTitle": "موفر المسار",
+  "sdkPathProviderDesc": "موفر المسار للحصول على الأدلة المؤقتة والمستندات",
+  "sdkProviderTitle": "Provider",
+  "sdkProviderDesc": "مكتبة إدارة الحالة لمشاركة وإدارة حالة التطبيق",
+  "licenseLabel": "الترخيص: {license}",
+  "@licenseLabel": {
+    "placeholders": {
+      "license": { "type": "String" }
+    }
+  },
+
+  "videoInitFailed": "فشل تهيئة الفيديو: {error}",
+  "@videoInitFailed": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "selectVideoFailedWithError": "فشل اختيار الفيديو: {error}",
+  "@selectVideoFailedWithError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+
+  "premiumVersion": "Premium",
+  "alreadyPremium": "أنت بالفعل مستخدم Premium!",
+  "alreadyPremiumDesc": "شكرًا لدعمك، جميع الميزات مفتوحة",
+  "unlockPremium": "فتح Premium",
+  "unlockPremiumDesc": "شراء لمرة واحدة، وصول دائم لجميع الميزات",
+  "featureUnlimitedSave": "حفظ غير محدود في الألبوم",
+  "featureUnlimitedTools": "استخدام غير مقيد لجميع الأدوات",
+  "featureFreeUpdates": "تحديثات مستقبلية مجانية",
+  "featureNoAds": "تجربة بدون إعلانات",
+  "unlockNow": "فتح الآن",
+  "restorePurchases": "استعادة المشتريات",
+
+  "video1LoadFailed": "فشل تحميل الفيديو 1",
+  "video2LoadFailed": "فشل تحميل الفيديو 2",
+  "selectVideoLabel": "اختر فيديو",
+  "videoChanged": "تغيير الفيديو",
+  "saveVideoOnly": "حفظ الفيديو فقط",
+  "videoOnlySaved": "تم حفظ الفيديو فقط",
+  "sourceFileNotExist": "الملف المصدر غير موجود",
+  "saveLabel": "حفظ {label}",
+  "@saveLabel": {
+    "placeholders": {
+      "label": { "type": "String" }
+    }
+  },
+  "labelSaved": "تم حفظ {label}",
+  "@labelSaved": {
+    "placeholders": {
+      "label": { "type": "String" }
+    }
+  },
+  "saveLabelError": "خطأ في الحفظ: {error}",
+  "@saveLabelError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "noImagesExtractedShort": "لم يتم استخراج صور",
+  "reMerge": "إعادة الدمج",
+  "originalLabel": "الأصلي:",
+  "segmentCount": "مقاطع",
+  "@segmentCount": {
+    "placeholders": {
+      "count": { "type": "String" }
+    }
+  }
+}

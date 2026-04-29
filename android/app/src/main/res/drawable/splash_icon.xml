@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Background circle with gradient effect -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:fillAlpha="0.15"
+        android:pathData="M54,54m-40,0a40,40 0,1 1,80 0a40,40 0,1 1,-80 0"/>
+    <!-- Play icon -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M44,36l20,18l-20,18z"/>
+    <!-- Film strip decoration -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:fillAlpha="0.3"
+        android:pathData="M30,30h4v4h-4zM30,38h4v4h-4zM30,46h4v4h-4zM30,54h4v4h-4zM30,62h4v4h-4zM30,70h4v4h-4zM74,30h4v4h-4zM74,38h4v4h-4zM74,46h4v4h-4zM74,54h4v4h-4zM74,62h4v4h-4zM74,70h4v4h-4z"/>
+</vector>

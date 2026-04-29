@@ -37,7 +37,7 @@ class _ExtractImagePageState extends State<ExtractImagePage> {
 
   static const _bg = LinearGradient(
     begin: Alignment.topCenter, end: Alignment.bottomCenter,
-    colors: [Color(0xFF1B5E20), Color(0xFF388E3C), Color(0xFFE8F5E9)],
+    colors: [Color(0xFF831843), Color(0xFF881337), Color(0xFFFCE7F3)],
   );
 
   @override

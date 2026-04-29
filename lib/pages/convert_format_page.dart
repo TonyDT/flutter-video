@@ -34,7 +34,7 @@ class _ConvertFormatPageState extends State<ConvertFormatPage> {
   static const _formats = ['mp4', 'avi', 'mov', 'mkv', 'webm', 'flv', 'wmv', '3gp'];
   static const _bg = LinearGradient(
     begin: Alignment.topCenter, end: Alignment.bottomCenter,
-    colors: [Color(0xFF33691E), Color(0xFF558B2F), Color(0xFFF1F8E9)],
+    colors: [Color(0xFF2E1065), Color(0xFF1E3A5F), Color(0xFFEDE9FE)],
   );
 
   @override

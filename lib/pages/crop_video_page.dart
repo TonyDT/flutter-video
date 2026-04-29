@@ -41,7 +41,7 @@ class _CropVideoPageState extends State<CropVideoPage> {
 
   static const _bg = LinearGradient(
     begin: Alignment.topCenter, end: Alignment.bottomCenter,
-    colors: [Color(0xFF1B5E20), Color(0xFF388E3C), Color(0xFFE8F5E9)],
+    colors: [Color(0xFF7C2D12), Color(0xFF7F1D1D), Color(0xFFFEE2E2)],
   );
 
   @override

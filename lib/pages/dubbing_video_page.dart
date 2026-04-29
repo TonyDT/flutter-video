@@ -36,7 +36,7 @@ class _DubbingVideoPageState extends State<DubbingVideoPage> {
 
   static const _bg = LinearGradient(
     begin: Alignment.topCenter, end: Alignment.bottomCenter,
-    colors: [Color(0xFF558B2F), Color(0xFF7CB342), Color(0xFFF1F8E9)],
+    colors: [Color(0xFF78350F), Color(0xFF7C2D12), Color(0xFFFEF3C7)],
   );
 
   @override

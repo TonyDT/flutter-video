@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 
 import '../providers/iap_provider.dart';
 import '../theme/app_theme.dart';
-import '../services/storage_service.dart';
 import 'settings_page.dart';
 import 'video_tools_page.dart';
 import 'shop_page.dart';
@@ -34,11 +33,8 @@ class _ToolTabsPageState extends State<ToolTabsPage> {
 
   Future<void> _checkFirstLaunch() async {
     final iap = context.read<IAPProvider>();
-    // 已购买不需要提示
     if (iap.hasPurchased) return;
-    // 已经显示过不需要再提示
     if (iap.firstLaunchShown) return;
-
     if (!mounted) return;
     _showWelcomeDialog(iap);
   }
@@ -61,7 +57,7 @@ class _ToolTabsPageState extends State<ToolTabsPage> {
               Container(
                 width: 72, height: 72,
                 decoration: BoxDecoration(
-                  gradient: const LinearGradient(colors: [Color(0xFF7C3AED), Color(0xFFA78BFA)]),
+                  gradient: const LinearGradient(colors: AppTheme.primaryGradient),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: const Icon(Icons.play_circle_filled, size: 40, color: Colors.white),
@@ -71,7 +67,7 @@ class _ToolTabsPageState extends State<ToolTabsPage> {
               const SizedBox(height: 16),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                decoration: BoxDecoration(color: AppTheme.accentColor(context).withValues(alpha: 0.08), borderRadius: BorderRadius.circular(12)),
+                decoration: BoxDecoration(color: AppTheme.primary.withValues(alpha: 0.08), borderRadius: BorderRadius.circular(12)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
@@ -97,6 +93,7 @@ class _ToolTabsPageState extends State<ToolTabsPage> {
                     backgroundColor: AppTheme.primary,
                     foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                    elevation: 0,
                   ),
                   child: Text(l10n.welcomeGotIt, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
                 ),
@@ -129,22 +126,30 @@ class _ToolTabsPageState extends State<ToolTabsPage> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final bg = Theme.of(context).brightness == Brightness.dark
-        ? const Color(0xFF1E1E32)
-        : const Color(0xFFEDE7F6);
 
     return Scaffold(
-      backgroundColor: bg,
+      backgroundColor: AppTheme.bg(context),
       body: _pages[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: const Icon(Icons.grid_view_outlined), activeIcon: const Icon(Icons.grid_view), label: l10n.tabAll),
-          BottomNavigationBarItem(icon: const Icon(Icons.settings_outlined), activeIcon: const Icon(Icons.settings), label: l10n.tabSettings),
-        ],
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        type: BottomNavigationBarType.fixed,
-        elevation: 0,
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: AppTheme.cardBg(context),
+          border: Border(top: BorderSide(color: AppTheme.borderColor(context), width: 0.5)),
+        ),
+        child: BottomNavigationBar(
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(icon: const Icon(Icons.grid_view_outlined), activeIcon: const Icon(Icons.grid_view), label: l10n.tabAll),
+            BottomNavigationBarItem(icon: const Icon(Icons.settings_outlined), activeIcon: const Icon(Icons.settings), label: l10n.tabSettings),
+          ],
+          currentIndex: _selectedIndex,
+          onTap: _onItemTapped,
+          type: BottomNavigationBarType.fixed,
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          selectedItemColor: AppTheme.primary,
+          unselectedItemColor: AppTheme.textSecondary(context),
+          selectedFontSize: 12,
+          unselectedFontSize: 12,
+        ),
       ),
     );
   }

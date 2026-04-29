@@ -12,7 +12,7 @@ class PrivacyPolicyPage extends StatelessWidget {
   static const _bg = LinearGradient(
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
-    colors: [Color(0xFF1E3A5F), Color(0xFF3D5A80), Color(0xFF98C1D9)],
+    colors: [Color(0xFF1E3A5F), Color(0xFF3D5A80), Color(0xFFE0E7FF)],
     stops: [0.0, 0.4, 1.0],
   );
 

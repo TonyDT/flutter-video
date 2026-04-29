@@ -43,7 +43,7 @@ class _SeparateAVPageState extends State<SeparateAVPage> {
 
   static const _bg = LinearGradient(
     begin: Alignment.topCenter, end: Alignment.bottomCenter,
-    colors: [Color(0xFF00695C), Color(0xFF26A69A), Color(0xFFE0F2F1)],
+    colors: [Color(0xFF312E81), Color(0xFF164E63), Color(0xFFE0E7FF)],
   );
 
   @override

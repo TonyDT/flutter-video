@@ -1,0 +1,582 @@
+{
+  "@@locale": "ru",
+  "appName": "ToolKit",
+  "tabAll": "Все",
+  "tabSettings": "Настройки",
+  "settingsAbout": "Настройки и информация",
+  "appearance": "Внешний вид",
+    "lightMode": "Светлая тема",
+    "darkMode": "Тёмная тема",
+    "autoMode": "Авто (17:00)",
+  "aboutApp": "О приложении",
+  "appNameLabel": "Название приложения",
+  "versionLabel": "Версия",
+  "developerLabel": "Разработчик",
+  "privacyPolicy": "Политика конфиденциальности",
+  "viewPrivacyTerms": "Просмотреть условия конфиденциальности",
+  "sdkList": "Список сторонних SDK",
+  "viewThirdPartyServices": "Просмотреть сторонние сервисы",
+  "iapDescription": "Покупки в приложении",
+  "viewIapDetails": "Просмотреть детали покупок и подписок",
+  "iapSection1Title": "1. Покупки в приложении",
+  "iapSection1Content": "Это приложение предлагает покупку \"Premium\" в приложении - это разовая покупка, а не автоматически возобновляемая подписка. После покупки вы навсегда разблокируете все функции, включая: неограниченное сохранение в альбом, неограниченное использование всех инструментов, бесплатные будущие обновления и отсутствие рекламы.",
+  "iapSection2Title": "2. Оплата и подтверждение",
+  "iapSection2Content": "Оплата будет снята с вашего аккаунта Apple ID / Google Play. После подтверждения сумма будет списана с вашего счёта.",
+  "iapSection3Title": "3. Восстановление покупок",
+  "iapSection3Content": "Если вы смените устройство или переустановите приложение, вы можете нажать \"Восстановить покупки\" на странице настроек или магазина, чтобы бесплатно восстановить Premium-доступ без повторной оплаты.",
+  "iapSection4Title": "4. Отмена и возврат",
+  "iapSection4Content": "Это разовая покупка. Возврат средств после покупки не поддерживается. Если вам нужен возврат, пожалуйста, подайте заявку через официальные каналы Apple / Google Play.",
+  "iapSection5Title": "5. Свяжитесь с нами",
+  "iapSection5Content": "Если у вас есть вопросы о покупках в приложении, пожалуйста, свяжитесь с нами:\nxinyoushanhai888@gmail.com",
+
+  "welcomeTitle": "Добро пожаловать в ToolKit",
+  "welcomeFreeCount": "У вас есть {count} бесплатных использований. Каждое сохранение в альбом потребляет 1 использование.",
+  "@welcomeFreeCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "welcomeUpgradeHint": "Обновите до Premium для неограниченного доступа ко всем функциям",
+  "welcomeGotIt": "Понятно",
+  "welcomeUpgrade": "Обновить до Premium",
+  "freeCountRemaining": "Осталось: {count}",
+  "@freeCountRemaining": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "freeCountExhausted": "Бесплатные использования закончились",
+  "upgradeToUnlock": "Обновите до Premium для неограниченного использования",
+  "openSourceNotice": "Создано с использованием FFmpeg, Flutter и других технологий с открытым исходным кодом. Спасибо сообществу открытого исходного кода.",
+  "harmonyDeveloping": "Версия для HarmonyOS находится в разработке",
+  "language": "Язык",
+
+  "toolMerge": "Объединить видео",
+  "toolMergeDesc": "Объединить несколько видеофайлов в один",
+  "toolCut": "Вырезать видео",
+  "toolCutDesc": "Извлечь определённый временной сегмент из видео",
+  "toolCompress": "Сжать видео",
+  "toolCompressDesc": "Уменьшить размер файла видео",
+  "toolRatio": "Соотношение видео",
+  "toolRatioDesc": "Изменить соотношение сторон",
+  "toolMute": "Без звука",
+  "toolMuteDesc": "Удалить звуковую дорожку из видео",
+  "toolDubbing": "Озвучка видео",
+  "toolDubbingDesc": "Добавить фоновую музыку к видео",
+  "toolExtract": "Извлечь изображения",
+  "toolExtractDesc": "Извлечь кадры из видео как изображения",
+  "toolSplit": "Разделить видео",
+  "toolSplitDesc": "Разделить видео на несколько сегментов",
+  "toolSeparate": "Разделить аудио/видео",
+  "toolSeparateDesc": "Разделить звуковые и видеодорожки",
+  "toolCrop": "Обрезать видео",
+  "toolCropDesc": "Обрезать область кадра видео",
+  "toolConvert": "Конвертировать формат",
+  "toolConvertDesc": "Конвертировать формат видеофайла",
+  "toolCountAll": "{count} инструментов · Все",
+  "@toolCountAll": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "featureDeveloping": "{name} находится в разработке",
+  "@featureDeveloping": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+
+  "selectVideoFailed": "Не удалось выбрать видео",
+  "selectAudioFailed": "Не удалось выбрать аудио",
+  "needAlbumPermission": "Требуется разрешение на альбом",
+  "savedToAlbum": "Сохранено в альбом",
+  "saveFailed": "Ошибка сохранения",
+  "saveError": "Ошибка сохранения: {error}",
+  "@saveError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "loading": "Загрузка...",
+  "tapToSelectVideo": "Нажмите, чтобы выбрать видео",
+  "tapToSelectFirstVideo": "Выбрать первое видео",
+  "tapToSelectSecondVideo": "Выбрать второе видео",
+  "tapToPreview": "Нажмите для предпросмотра",
+  "start": "Начало",
+  "end": "Конец",
+  "change": "Изменить",
+  "reselect": "Выбрать заново",
+  "changeVideo": "Изменить видео",
+  "saveToAlbum": "Сохранить в альбом",
+  "processing": "Обработка...",
+  "videoLoadFailed": "Не удалось загрузить видео",
+  "previewFailed": "Ошибка предпросмотра",
+  "previewInitFailed": "Не удалось инициализировать предпросмотр",
+
+  "mergeVideo": "Объединение видео",
+  "selectTwoVideosToMerge": "Выберите два видео для объединения",
+  "video1": "Видео 1",
+  "video2": "Видео 2",
+  "selectVideo1": "Выбрать видео 1",
+  "selectVideo2": "Выбрать видео 2",
+  "pleaseSelectTwoVideos": "Пожалуйста, сначала выберите два видео",
+  "webNotSupportMerge": "Объединение не поддерживается в Web",
+  "video1CropFailed": "Не удалось обрезать видео 1",
+  "video2CropFailed": "Не удалось обрезать видео 2",
+  "mergeSuccess": "Объединение успешно!",
+  "mergeFailed": "Ошибка объединения",
+  "mergeError": "Ошибка объединения: {error}",
+  "@mergeError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "merging": "Объединение...",
+  "startMerge": "Начать объединение",
+
+  "compressVideo": "Сжатие видео",
+  "compressSuccess": "Сжатие завершено!",
+  "compressFailed": "Ошибка сжатия",
+  "compressError": "Ошибка сжатия: {error}",
+  "@compressError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "originalSize": "Оригинальный размер: {size}",
+  "@originalSize": {
+    "placeholders": {
+      "size": { "type": "String" }
+    }
+  },
+  "compressQuality": "Качество сжатия (CRF): {value}",
+  "@compressQuality": {
+    "placeholders": {
+      "value": { "type": "int" }
+    }
+  },
+  "compressTip": "Более высокое значение означает большее сжатие и меньшее качество",
+  "encodeSpeed": "Скорость кодирования:",
+  "compressedSize": "Сжато: {size}",
+  "@compressedSize": {
+    "placeholders": {
+      "size": { "type": "String" }
+    }
+  },
+  "savedSpace": "Сохранено: {size} ({percent}%)",
+  "@savedSpace": {
+    "placeholders": {
+      "size": { "type": "String" },
+      "percent": { "type": "String" }
+    }
+  },
+  "compressing": "Сжатие...",
+  "startCompress": "Начать сжатие",
+
+  "convertFormat": "Конвертация формата",
+  "convertSuccess": "Конвертация успешна!",
+  "convertFailed": "Ошибка конвертации",
+  "convertError": "Ошибка конвертации: {error}",
+  "@convertError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "targetFormat": "Целевой формат:",
+  "converting": "Конвертация...",
+  "convertTo": "Конвертировать в {format}",
+  "@convertTo": {
+    "placeholders": {
+      "format": { "type": "String" }
+    }
+  },
+
+  "cropVideo": "Обрезка видео",
+  "cropSuccess": "Обрезка успешна!",
+  "cropFailed": "Ошибка обрезки",
+  "cropError": "Ошибка обрезки: {error}",
+  "@cropError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "cropPreviewFailedButSaved": "Предпросмотр не удался, но файл был создан",
+  "originalResolution": "Оригинал: {width}x{height}",
+  "@originalResolution": {
+    "placeholders": {
+      "width": { "type": "int" },
+      "height": { "type": "int" }
+    }
+  },
+  "cropResolution": "Обрезка: {width}x{height}",
+  "@cropResolution": {
+    "placeholders": {
+      "width": { "type": "int" },
+      "height": { "type": "int" }
+    }
+  },
+  "cropDragTip": "Перетащите зелёную рамку или края для настройки области обрезки, перетащите внутри для перемещения",
+  "resetCrop": "Сбросить область обрезки",
+  "cropping": "Обрезка...",
+  "startCrop": "Начать обрезку",
+
+  "cutVideo": "Вырезка видео",
+  "cutSuccess": "Вырезка успешна!",
+  "cutFailed": "Ошибка вырезки",
+  "cutError": "Ошибка вырезки: {error}",
+  "@cutError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "cutCompletePreviewUnavailable": "Вырезка завершена (предпросмотр недоступен)",
+  "videoPreviewUnavailable": "Предпросмотр видео недоступен",
+  "totalDuration": "Общая длительность: {duration}",
+  "@totalDuration": {
+    "placeholders": {
+      "duration": { "type": "String" }
+    }
+  },
+  "cutRange": "Вырезка: {start} - {end}  ({duration})",
+  "@cutRange": {
+    "placeholders": {
+      "start": { "type": "String" },
+      "end": { "type": "String" },
+      "duration": { "type": "String" }
+    }
+  },
+  "cutting": "Вырезка...",
+  "startCut": "Начать вырезку",
+
+  "dubbingVideo": "Озвучка видео",
+  "dubbingSuccess": "Озвучка успешна!",
+  "dubbingFailed": "Ошибка озвучки",
+  "dubbingError": "Ошибка озвучки: {error}",
+  "@dubbingError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "selectVideo": "Выбрать видео",
+  "videoSelected": "Видео выбрано",
+  "selectAudio": "Выбрать аудио",
+  "audioSelected": "Аудио выбрано",
+  "dubbingMode": "Режим озвучки:",
+  "replaceOriginalAudio": "Заменить оригинальное аудио",
+  "replaceAudioHint": "Отключите для микширования обеих звуковых дорожек",
+  "dubbing": "Озвучка...",
+  "startDubbing": "Начать озвучку",
+  "startOver": "Начать заново",
+
+  "extractImages": "Извлечение изображений",
+  "startTimeMustBeBeforeEnd": "Время начала должно быть раньше времени окончания",
+  "extractedCount": "Извлечено {count} изображений",
+  "@extractedCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "noImagesExtracted": "Изображения не извлечены, пожалуйста, проверьте видеофайл",
+  "extractFailed": "Ошибка извлечения",
+  "extractError": "Ошибка извлечения: {error}",
+  "@extractError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "savedCountToAlbum": "Сохранено {count} изображений в альбом",
+  "@savedCountToAlbum": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "videoDuration": "Длительность видео: {duration}",
+  "@videoDuration": {
+    "placeholders": {
+      "duration": { "type": "String" }
+    }
+  },
+  "startTime": "Время начала",
+  "endTime": "Время окончания",
+  "extractRange": "Диапазон извлечения: {start} - {end}  ({duration})",
+  "@extractRange": {
+    "placeholders": {
+      "start": { "type": "String" },
+      "end": { "type": "String" },
+      "duration": { "type": "String" }
+    }
+  },
+  "extractFps": "Частота извлечения: {fps} кадров/сек",
+  "@extractFps": {
+    "placeholders": {
+      "fps": { "type": "String" }
+    }
+  },
+  "estimatedImages": "Будет извлечено примерно {count} изображений",
+  "@estimatedImages": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "extracting": "Извлечение...",
+  "startExtract": "Начать извлечение",
+  "extractedImagesCount": "Извлечено {count} изображений",
+  "@extractedImagesCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "showingFirst30": "Показаны первые {count} из",
+  "@showingFirst30": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "saveAllCount": "Сохранить все {count}",
+  "@saveAllCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+
+  "muteVideo": "Без звука",
+  "muteSuccess": "Звук успешно удалён!",
+  "muteFailed": "Ошибка удаления звука",
+  "muteError": "Ошибка удаления звука: {error}",
+  "@muteError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "muteDescription": "Весь звук будет удалён, только видеокадры будут сохранены",
+  "muting": "Удаление звука...",
+  "removeAudio": "Удалить звук",
+
+  "ratioVideo": "Соотношение видео",
+  "ratioSuccess": "Соотношение успешно изменено!",
+  "ratioFailed": "Ошибка изменения соотношения",
+  "ratioError": "Ошибка изменения соотношения: {error}",
+  "@ratioError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "targetRatio": "Целевое соотношение:",
+  "scaleMode": "Режим масштабирования:",
+  "stretchFit": "Растянуть",
+  "cropFill": "Обрезать для заполнения",
+  "letterbox": "Письмо в конверте",
+  "adjusting": "Изменение...",
+  "startAdjust": "Начать изменение",
+
+  "separateAV": "Разделить аудио/видео",
+  "separateComplete": "Разделение завершено!",
+  "separateFailed": "Ошибка разделения, видео может не содержать звуковых/видеодорожек",
+  "separateError": "Ошибка разделения: {error}",
+  "@separateError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "videoOnlySavedToAlbum": "Только видео сохранено в альбом",
+  "saveVideoFailed": "Ошибка сохранения видео",
+  "saveVideoError": "Ошибка сохранения видео: {error}",
+  "@saveVideoError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "cannotGetDownloadDir": "Не удалось получить папку загрузок",
+  "savedToDownloads": "{label} сохранено в: Загрузки/{fileName}",
+  "@savedToDownloads": {
+    "placeholders": {
+      "label": { "type": "String" },
+      "fileName": { "type": "String" }
+    }
+  },
+  "fileNotExist": "Файл {label} не существует",
+  "@fileNotExist": {
+    "placeholders": {
+      "label": { "type": "String" }
+    }
+  },
+  "separateDescription": "Извлечь видеокадры и аудио как отдельные файлы",
+  "separating": "Разделение...",
+  "startSeparate": "Начать разделение",
+  "videoOnly": "Только видео (без звука)",
+  "savedToAlbumLabel": "Сохранено в альбом",
+  "m4aAudio": "Аудио M4A",
+  "mp3Audio": "Аудио MP3",
+  "savedToDownloadsShort": "Сохранено в загрузки",
+  "playMp3Audio": "Воспроизвести MP3 аудио",
+  "playM4aAudio": "Воспроизвести M4A аудио",
+
+  "splitVideo": "Разделение видео",
+  "addAtLeastOneSplitPoint": "Пожалуйста, добавьте хотя бы одну точку разделения",
+  "splitComplete": "Разделение завершено! {count} сегментов",
+  "@splitComplete": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "splitFailed": "Ошибка разделения",
+  "splitError": "Ошибка разделения: {error}",
+  "@splitError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "savedSegmentsToAlbum": "Сохранено {count} сегментов в альбом",
+  "@savedSegmentsToAlbum": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "splitPoints": "Точки разделения:",
+  "add": "Добавить",
+  "noSplitPoints": "Нет точек разделения, нажмите для добавления",
+  "splitPoint": "Точка разделения {index}:",
+  "@splitPoint": {
+    "placeholders": {
+      "index": { "type": "int" }
+    }
+  },
+  "willProduceSegments": "Будет создано {count} сегментов после разделения:",
+  "@willProduceSegments": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "segmentInfo": "Сегмент {index}: {start}-{end} ({duration})",
+  "@segmentInfo": {
+    "placeholders": {
+      "index": { "type": "int" },
+      "start": { "type": "String" },
+      "end": { "type": "String" },
+      "duration": { "type": "String" }
+    }
+  },
+  "splitting": "Разделение...",
+  "startSplit": "Начать разделение",
+  "saveAllSegments": "Сохранить все {count} сегментов",
+  "@saveAllSegments": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "segment": "Сегмент {index}",
+  "@segment": {
+    "placeholders": {
+      "index": { "type": "int" }
+    }
+  },
+
+  "privacyTitle": "Политика конфиденциальности",
+  "updateDate": "Дата обновления",
+  "privacyDate": "1 января 2025 года",
+  "section1Title": "1. Сбор информации",
+  "section1Content": "Мы очень серьёзно относимся к вашей конфиденциальности. Это приложение собирает только следующую необходимую информацию для предоставления услуг:",
+  "section1Item1": "Видео/аудио файлы, которые вы активно выбираете (используются только для локальной обработки, никогда не загружаются на какой-либо сервер)",
+  "section1Item2": "Основная информация об устройстве (для адаптации устройства, не содержит персональных идентификационных данных)",
+  "section2Title": "2. Использование информации",
+  "section2Content": "Вся обработка аудио/видео выполняется локально на вашем устройстве. Мы никогда не загружаем ваши файлы или данные на удалённые серверы. Собранная информация об устройстве используется только для адаптации функций и расследования сбоев.",
+  "section3Title": "3. Хранение информации",
+  "section3Content": "Временные файлы, создаваемые приложением, хранятся в локальном временном каталоге устройства. Вы можете сохранять или удалять их по своему усмотрению после обработки. Мы не храним ваши данные на серверах.",
+  "section4Title": "4. Обмен информацией",
+  "section4Content": "Мы не будем продавать, обменивать или иным образом передавать вашу личную информацию третьим лицам, за исключением следующих случаев:",
+  "section4Item1": "С вашего явного согласия",
+  "section4Item2": "По требованию закона или государственного постановления",
+  "section5Title": "5. Услуги третьих лиц",
+  "section5Content": "Это приложение использует некоторые сторонние SDK для предоставления услуг, которые могут иметь собственные политики конфиденциальности. Подробности см. на странице \"Список сторонних SDK\".",
+  "section6Title": "6. Безопасность данных",
+  "section6Content": "Мы принимаем разумные меры безопасности для защиты вашей информации от несанкционированного доступа, использования или раскрытия. Однако учтите, что Интернет не является абсолютно безопасным. Мы рекомендуем поддерживать безопасность вашего устройства.",
+  "section7Title": "7. Защита несовершеннолетних",
+  "section7Content": "Мы уделяем большое внимание защите персональных данных несовершеннолетних. Если вам меньше 18 лет, мы рекомендуем использовать это приложение под присмотром родителя или опекуна.",
+  "section8Title": "8. Изменения политики конфиденциальности",
+  "section8Content": "Мы можем время от времени пересматривать эту политику конфиденциальности. При внесении изменений мы уведомим вас через всплывающие окна в приложении или объявления.",
+  "section9Title": "9. Свяжитесь с нами",
+  "section9Content": "Если у вас есть вопросы или предложения относительно этой политики конфиденциальности, пожалуйста, свяжитесь с нами:\nxinyoushanhai888@gmail.com",
+
+  "sdkFlutterTitle": "Flutter",
+  "sdkFlutterDesc": "Кроссплатформенный фреймворк для разработки приложений, используемый для построения UI и взаимодействий",
+  "sdkFfmpegTitle": "FFmpeg",
+  "sdkFfmpegDesc": "Базовая библиотека для обработки аудио/видео для обрезки, сжатия, конвертации форматов и т.д.",
+  "sdkVideoPlayerTitle": "Видеоплеер",
+  "sdkVideoPlayerDesc": "Компонент воспроизведения видео для предпросмотра",
+  "sdkFilePickerTitle": "Выбор файлов",
+  "sdkFilePickerDesc": "Выбор файлов для выбора локальных видео и аудио файлов",
+  "sdkGallerySaverTitle": "Сохранение в галерею",
+  "sdkGallerySaverDesc": "Инструмент сохранения в альбом для сохранения обработанных файлов в системный альбом",
+  "sdkPermissionTitle": "Обработчик разрешений",
+  "sdkPermissionDesc": "Компонент управления разрешениями для запроса разрешений хранилища, альбома и других системных разрешений",
+  "sdkPathProviderTitle": "Провайдер путей",
+  "sdkPathProviderDesc": "Провайдер путей для получения временных каталогов и документов",
+  "sdkProviderTitle": "Provider",
+  "sdkProviderDesc": "Библиотека управления состоянием для совместного использования и управления состоянием приложения",
+  "licenseLabel": "Лицензия: {license}",
+  "@licenseLabel": {
+    "placeholders": {
+      "license": { "type": "String" }
+    }
+  },
+
+  "videoInitFailed": "Не удалось инициализировать видео: {error}",
+  "@videoInitFailed": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "selectVideoFailedWithError": "Не удалось выбрать видео: {error}",
+  "@selectVideoFailedWithError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+
+  "premiumVersion": "Premium",
+  "alreadyPremium": "Вы уже пользователь Premium!",
+  "alreadyPremiumDesc": "Спасибо за поддержку, все функции разблокированы",
+  "unlockPremium": "Разблокировать Premium",
+  "unlockPremiumDesc": "Разовая покупка, постоянный доступ ко всем функциям",
+  "featureUnlimitedSave": "Неограниченное сохранение в альбом",
+  "featureUnlimitedTools": "Неограниченное использование всех инструментов",
+  "featureFreeUpdates": "Бесплатные будущие обновления",
+  "featureNoAds": "Отсутствие рекламы",
+  "unlockNow": "Разблокировать сейчас",
+  "restorePurchases": "Восстановить покупки",
+
+  "video1LoadFailed": "Не удалось загрузить видео 1",
+  "video2LoadFailed": "Не удалось загрузить видео 2",
+  "selectVideoLabel": "Выбрать видео",
+  "videoChanged": "Изменить видео",
+  "saveVideoOnly": "Сохранить только видео",
+  "videoOnlySaved": "Только видео сохранено",
+  "sourceFileNotExist": "Исходный файл не существует",
+  "saveLabel": "Сохранить {label}",
+  "@saveLabel": {
+    "placeholders": {
+      "label": { "type": "String" }
+    }
+  },
+  "labelSaved": "{label} сохранено",
+  "@labelSaved": {
+    "placeholders": {
+      "label": { "type": "String" }
+    }
+  },
+  "saveLabelError": "Ошибка сохранения: {error}",
+  "@saveLabelError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "noImagesExtractedShort": "Изображения не извлечены",
+  "reMerge": "Повторное объединение",
+  "originalLabel": "Оригинал:",
+  "segmentCount": "сегментов",
+  "@segmentCount": {
+    "placeholders": {
+      "count": { "type": "String" }
+    }
+  }
+}

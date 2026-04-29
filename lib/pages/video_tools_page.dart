@@ -25,20 +25,41 @@ class VideoToolsPage extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     final tools = _buildTools(l10n);
 
-    return Container(color: AppTheme.bg(context), child: CustomScrollView(physics: const BouncingScrollPhysics(), slivers: [
-      SliverToBoxAdapter(child: _buildHeader(context)),
-      SliverToBoxAdapter(child: Padding(padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12), child: Row(children: [
-        Icon(Icons.inventory_2_outlined, size: 18, color: AppTheme.textSecondary(context)),
-        const SizedBox(width: 6),
-        Text(l10n.toolCountAll(tools.length), style: TextStyle(fontSize: 13, color: AppTheme.textSecondary(context))),
-      ]))),
-      SliverPadding(padding: const EdgeInsets.symmetric(horizontal: 16), sliver: SliverLayoutBuilder(builder: (sliverCtx, constraints) {
-        final count = constraints.crossAxisExtent >= 480 ? 4 : constraints.crossAxisExtent >= 360 ? 3 : 2;
-        return SliverGrid(gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: count, crossAxisSpacing: 12, mainAxisSpacing: 12, childAspectRatio: count <= 2 ? 1.0 : 0.82),
-          delegate: SliverChildListDelegate(tools.map((t) => _buildCard(context, t)).toList()));
-      })),
-      const SliverPadding(padding: EdgeInsets.only(bottom: 100)),
-    ]));
+    return Container(
+      color: AppTheme.bg(context),
+      child: CustomScrollView(
+        physics: const BouncingScrollPhysics(),
+        slivers: [
+          // 顶部标题区
+          SliverToBoxAdapter(child: _buildHeader(context)),
+          // 工具数量
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+              child: Row(children: [
+                Icon(Icons.inventory_2_outlined, size: 16, color: AppTheme.textSecondary(context)),
+                const SizedBox(width: 6),
+                Text(l10n.toolCountAll(tools.length), style: TextStyle(fontSize: 13, color: AppTheme.textSecondary(context))),
+              ]),
+            ),
+          ),
+          // 工具列表 - 单列
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            sliver: SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (ctx, i) => Padding(
+                  padding: const EdgeInsets.only(bottom: 12),
+                  child: _buildCard(context, tools[i], i),
+                ),
+                childCount: tools.length,
+              ),
+            ),
+          ),
+          const SliverPadding(padding: EdgeInsets.only(bottom: 100)),
+        ],
+      ),
+    );
   }
 
   List<_Tool> _buildTools(AppLocalizations l10n) => [
@@ -56,18 +77,87 @@ class VideoToolsPage extends StatelessWidget {
   ];
 
   Widget _buildHeader(BuildContext ctx) => Container(
-    padding: const EdgeInsets.only(left: 20, right: 20, top: kToolbarHeight + 4, bottom: 16),
-    child: Center(child: Text('ToolKit', style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: AppTheme.primaryLight, letterSpacing: -0.5))),
+    padding: const EdgeInsets.only(left: 20, right: 20, top: kToolbarHeight + 4, bottom: 8),
+    child: Row(
+      children: [
+        Container(
+          width: 40, height: 40,
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(colors: AppTheme.primaryGradient),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: const Icon(Icons.play_circle_filled, color: Colors.white, size: 22),
+        ),
+        const SizedBox(width: 12),
+        Text('ToolKit', style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: AppTheme.textPrimary(ctx), letterSpacing: -0.5)),
+        const Spacer(),
+        AppTheme.buildLanguageButton(ctx),
+      ],
+    ),
   );
 
-  Widget _buildCard(BuildContext context, _Tool tool) {
-    return Container(decoration: BoxDecoration(color: AppTheme.cardBg(context), borderRadius: BorderRadius.circular(16), border: Border.all(color: AppTheme.borderColor(context), width: 0.5)), child: Material(color: Colors.transparent, child: InkWell(borderRadius: BorderRadius.circular(16), onTap: () => _navigate(context, tool.id, tool.title), child: Padding(padding: const EdgeInsets.all(16), child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.center, children: [
-      Container(width: 48, height: 48, decoration: BoxDecoration(color: AppTheme.iconBg(context), borderRadius: BorderRadius.circular(14)), child: Icon(tool.icon, size: 24, color: AppTheme.primaryLight)),
-      const Spacer(flex: 2),
-      Text(tool.title, style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: AppTheme.textPrimary(context)), maxLines: 1, overflow: TextOverflow.ellipsis),
-      const SizedBox(height: 4),
-      Text(tool.description, style: TextStyle(fontSize: 12, color: AppTheme.textSecondary(context), height: 1.3), maxLines: 2, overflow: TextOverflow.ellipsis),
-    ])))));
+  Widget _buildCard(BuildContext context, _Tool tool, int index) {
+    final gradient = AppTheme.toolGradients[index % AppTheme.toolGradients.length];
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(16),
+        onTap: () => _navigate(context, tool.id, tool.title),
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: AppTheme.cardBg(context),
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: AppTheme.borderColor(context), width: 0.5),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: Theme.of(context).brightness == Brightness.dark ? 0.2 : 0.04),
+                blurRadius: 8,
+                offset: const Offset(0, 2),
+              ),
+            ],
+          ),
+          child: Row(
+            children: [
+              // 渐变图标
+              Container(
+                width: 52, height: 52,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(colors: gradient, begin: Alignment.topLeft, end: Alignment.bottomRight),
+                  borderRadius: BorderRadius.circular(14),
+                  boxShadow: [
+                    BoxShadow(
+                      color: gradient[0].withValues(alpha: 0.3),
+                      blurRadius: 8,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: Icon(tool.icon, size: 26, color: Colors.white),
+              ),
+              const SizedBox(width: 16),
+              // 文字区
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(tool.title,
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: AppTheme.textPrimary(context)),
+                      maxLines: 1, overflow: TextOverflow.ellipsis),
+                    const SizedBox(height: 4),
+                    Text(tool.description,
+                      style: TextStyle(fontSize: 13, color: AppTheme.textSecondary(context), height: 1.4),
+                      maxLines: 2, overflow: TextOverflow.ellipsis),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 8),
+              Icon(Icons.chevron_right_rounded, color: AppTheme.textSecondary(context).withValues(alpha: 0.4), size: 22),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   void _navigate(BuildContext ctx, String id, String name) {

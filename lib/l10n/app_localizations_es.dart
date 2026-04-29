@@ -1,5 +1,3 @@
-// ignore: unused_import
-import 'package:intl/intl.dart' as intl;
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -28,6 +26,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get darkMode => 'Modo oscuro';
+
+  @override
+  String get autoMode => 'Auto (5PM)';
 
   @override
   String get aboutApp => 'Acerca de la app';
@@ -63,36 +64,31 @@ class AppLocalizationsEs extends AppLocalizations {
   String get iapSection1Title => '1. Artículos de compra';
 
   @override
-  String get iapSection1Content =>
-      'Esta aplicación ofrece una compra integrada de \"Versión Premium\", que es una compra única, no una suscripción de renovación automática. Después de la compra, desbloqueará permanentemente todas las funciones, incluyendo: guardado ilimitado en el álbum, uso sin restricciones de todas las herramientas, actualizaciones futuras gratuitas y experiencia sin anuncios.';
+  String get iapSection1Content => 'Esta aplicación ofrece una compra integrada de \"Versión Premium\", que es una compra única, no una suscripción de renovación automática. Después de la compra, desbloqueará permanentemente todas las funciones, incluyendo: guardado ilimitado en el álbum, uso sin restricciones de todas las herramientas, actualizaciones futuras gratuitas y experiencia sin anuncios.';
 
   @override
   String get iapSection2Title => '2. Pago y confirmación';
 
   @override
-  String get iapSection2Content =>
-      'La compra se cargará a su cuenta de Apple ID / Google Play. Una vez confirmada, el importe se deducirá de su cuenta.';
+  String get iapSection2Content => 'La compra se cargará a su cuenta de Apple ID / Google Play. Una vez confirmada, el importe se deducirá de su cuenta.';
 
   @override
   String get iapSection3Title => '3. Restaurar compras';
 
   @override
-  String get iapSection3Content =>
-      'Si cambia de dispositivo o reinstala la aplicación, puede tocar \"Restaurar compras\" en la página de Configuración o Tienda para restaurar su acceso premium gratis, sin pagar de nuevo.';
+  String get iapSection3Content => 'Si cambia de dispositivo o reinstala la aplicación, puede tocar \"Restaurar compras\" en la página de Configuración o Tienda para restaurar su acceso premium gratis, sin pagar de nuevo.';
 
   @override
   String get iapSection4Title => '4. Cancelación y reembolso';
 
   @override
-  String get iapSection4Content =>
-      'Esta es una compra única. No se admiten reembolsos después de la compra. Si necesita un reembolso, solicítelo a través de los canales oficiales de Apple / Google Play.';
+  String get iapSection4Content => 'Esta es una compra única. No se admiten reembolsos después de la compra. Si necesita un reembolso, solicítelo a través de los canales oficiales de Apple / Google Play.';
 
   @override
   String get iapSection5Title => '5. Contáctenos';
 
   @override
-  String get iapSection5Content =>
-      'Si tiene preguntas sobre las compras dentro de la app, contáctenos en:\nxinyoushanhai888@gmail.com';
+  String get iapSection5Content => 'Si tiene preguntas sobre las compras dentro de la app, contáctenos en:\nxinyoushanhai888@gmail.com';
 
   @override
   String get welcomeTitle => 'Bienvenido a ToolKit';
@@ -103,8 +99,7 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get welcomeUpgradeHint =>
-      'Actualice a Premium para acceso ilimitado a todas las funciones';
+  String get welcomeUpgradeHint => 'Actualice a Premium para acceso ilimitado a todas las funciones';
 
   @override
   String get welcomeGotIt => 'Entendido';
@@ -124,8 +119,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get upgradeToUnlock => 'Actualice a Premium para uso ilimitado';
 
   @override
-  String get openSourceNotice =>
-      'Desarrollado con FFmpeg, Flutter y otras tecnologías de código abierto. Gracias a la comunidad de código abierto.';
+  String get openSourceNotice => 'Desarrollado con FFmpeg, Flutter y otras tecnologías de código abierto. Gracias a la comunidad de código abierto.';
 
   @override
   String get harmonyDeveloping => 'La versión HarmonyOS está en desarrollo';
@@ -143,8 +137,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get toolCut => 'Cortar vídeo';
 
   @override
-  String get toolCutDesc =>
-      'Extraer un segmento de tiempo específico del vídeo';
+  String get toolCutDesc => 'Extraer un segmento de tiempo específico del vídeo';
 
   @override
   String get toolCompress => 'Comprimir vídeo';
@@ -237,10 +230,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get tapToSelectVideo => 'Toca para seleccionar un vídeo';
 
   @override
-  String get tapToSelectFirstVideo => 'Toca para seleccionar el primer vídeo';
+  String get tapToSelectFirstVideo => 'Seleccionar primer vídeo';
 
   @override
-  String get tapToSelectSecondVideo => 'Toca para seleccionar el segundo vídeo';
+  String get tapToSelectSecondVideo => 'Seleccionar segundo vídeo';
 
   @override
   String get tapToPreview => 'Toca para previsualizar';
@@ -294,8 +287,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get selectVideo2 => 'Seleccionar vídeo 2';
 
   @override
-  String get pleaseSelectTwoVideos =>
-      'Por favor, selecciona dos vídeos primero';
+  String get pleaseSelectTwoVideos => 'Por favor, selecciona dos vídeos primero';
 
   @override
   String get webNotSupportMerge => 'La fusión no es compatible en la Web';
@@ -348,8 +340,7 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get compressTip =>
-      'Un valor más alto significa más compresión y menor calidad';
+  String get compressTip => 'Un valor más alto significa más compresión y menor calidad';
 
   @override
   String get encodeSpeed => 'Velocidad de codificación:';
@@ -410,8 +401,7 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get cropPreviewFailedButSaved =>
-      'Error en la vista previa, pero el archivo se ha generado';
+  String get cropPreviewFailedButSaved => 'Error en la vista previa, pero el archivo se ha generado';
 
   @override
   String originalResolution(int width, int height) {
@@ -424,8 +414,7 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get cropDragTip =>
-      'Arrastra el cuadro verde o los bordes para ajustar el área de recorte, arrastra dentro para mover';
+  String get cropDragTip => 'Arrastra el cuadro verde o los bordes para ajustar el área de recorte, arrastra dentro para mover';
 
   @override
   String get resetCrop => 'Restablecer área de recorte';
@@ -451,8 +440,7 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get cutCompletePreviewUnavailable =>
-      'Corte completado (vista previa no disponible)';
+  String get cutCompletePreviewUnavailable => 'Corte completado (vista previa no disponible)';
 
   @override
   String get videoPreviewUnavailable => 'Vista previa del vídeo no disponible';
@@ -521,8 +509,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get extractImages => 'Extraer imágenes';
 
   @override
-  String get startTimeMustBeBeforeEnd =>
-      'El tiempo de inicio debe ser anterior al tiempo de fin';
+  String get startTimeMustBeBeforeEnd => 'El tiempo de inicio debe ser anterior al tiempo de fin';
 
   @override
   String extractedCount(int count) {
@@ -530,8 +517,7 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get noImagesExtracted =>
-      'No se extrajeron imágenes, verifica el archivo de vídeo';
+  String get noImagesExtracted => 'No se extrajeron imágenes, verifica el archivo de vídeo';
 
   @override
   String get extractFailed => 'Extracción fallida';
@@ -608,8 +594,7 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get muteDescription =>
-      'Se eliminará todo el audio, solo se conservarán los fotogramas del vídeo';
+  String get muteDescription => 'Se eliminará todo el audio, solo se conservarán los fotogramas del vídeo';
 
   @override
   String get muting => 'Silenciando...';
@@ -659,8 +644,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get separateComplete => '¡Separación completada!';
 
   @override
-  String get separateFailed =>
-      'Separación fallida, el vídeo puede no contener pistas de audio/vídeo';
+  String get separateFailed => 'Separación fallida, el vídeo puede no contener pistas de audio/vídeo';
 
   @override
   String separateError(String error) {
@@ -679,8 +663,7 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get cannotGetDownloadDir =>
-      'No se puede obtener el directorio de descargas';
+  String get cannotGetDownloadDir => 'No se puede obtener el directorio de descargas';
 
   @override
   String savedToDownloads(String label, String fileName) {
@@ -693,8 +676,7 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get separateDescription =>
-      'Extraer los fotogramas y el audio del vídeo como archivos independientes';
+  String get separateDescription => 'Extraer los fotogramas y el audio del vídeo como archivos independientes';
 
   @override
   String get separating => 'Separando...';
@@ -727,8 +709,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get splitVideo => 'Dividir vídeo';
 
   @override
-  String get addAtLeastOneSplitPoint =>
-      'Por favor, añade al menos un punto de división';
+  String get addAtLeastOneSplitPoint => 'Por favor, añade al menos un punto de división';
 
   @override
   String splitComplete(int count) {
@@ -801,135 +782,115 @@ class AppLocalizationsEs extends AppLocalizations {
   String get section1Title => '1. Recopilación de información';
 
   @override
-  String get section1Content =>
-      'Tomamos su privacidad muy en serio. Esta aplicación solo recopila la siguiente información necesaria durante la prestación del servicio:';
+  String get section1Content => 'Tomamos su privacidad muy en serio. Esta aplicación solo recopila la siguiente información necesaria durante la prestación del servicio:';
 
   @override
-  String get section1Item1 =>
-      'Archivos de vídeo/audio que usted selecciona activamente (solo se usan para procesamiento local, nunca se suben a ningún servidor)';
+  String get section1Item1 => 'Archivos de vídeo/audio que usted selecciona activamente (solo se usan para procesamiento local, nunca se suben a ningún servidor)';
 
   @override
-  String get section1Item2 =>
-      'Información básica del dispositivo (para adaptación del dispositivo, no contiene información de identidad personal)';
+  String get section1Item2 => 'Información básica del dispositivo (para adaptación del dispositivo, no contiene información de identidad personal)';
 
   @override
   String get section2Title => '2. Uso de la información';
 
   @override
-  String get section2Content =>
-      'Todo el procesamiento de audio/vídeo se completa localmente en su dispositivo. Nunca subiremos sus archivos o datos a servidores remotos. La información del dispositivo recopilada solo se usa para adaptación de funciones e investigación de fallos.';
+  String get section2Content => 'Todo el procesamiento de audio/vídeo se completa localmente en su dispositivo. Nunca subiremos sus archivos o datos a servidores remotos. La información del dispositivo recopilada solo se usa para adaptación de funciones e investigación de fallos.';
 
   @override
   String get section3Title => '3. Almacenamiento de información';
 
   @override
-  String get section3Content =>
-      'Los archivos temporales generados por la aplicación se almacenan en el directorio temporal local del dispositivo. Puede guardarlos o eliminarlos a su discreción después del procesamiento. No almacenamos ninguno de sus datos en servidores.';
+  String get section3Content => 'Los archivos temporales generados por la aplicación se almacenan en el directorio temporal local del dispositivo. Puede guardarlos o eliminarlos a su discreción después del procesamiento. No almacenamos ninguno de sus datos en servidores.';
 
   @override
   String get section4Title => '4. Compartir información';
 
   @override
-  String get section4Content =>
-      'No venderemos, intercambiaremos ni transferiremos su información personal a terceros, excepto en los siguientes casos:';
+  String get section4Content => 'No venderemos, intercambiaremos ni transferiremos su información personal a terceros, excepto en los siguientes casos:';
 
   @override
   String get section4Item1 => 'Con su consentimiento explícito';
 
   @override
-  String get section4Item2 =>
-      'Según lo requiera la ley o una orden gubernamental';
+  String get section4Item2 => 'Según lo requiera la ley o una orden gubernamental';
 
   @override
   String get section5Title => '5. Servicios de terceros';
 
   @override
-  String get section5Content =>
-      'Esta aplicación utiliza algunos SDK de terceros para proporcionar servicios, que pueden tener sus propias políticas de privacidad. Consulte la página \"Lista de SDK de terceros\" para más detalles.';
+  String get section5Content => 'Esta aplicación utiliza algunos SDK de terceros para proporcionar servicios, que pueden tener sus propias políticas de privacidad. Consulte la página \"Lista de SDK de terceros\" para más detalles.';
 
   @override
   String get section6Title => '6. Seguridad de datos';
 
   @override
-  String get section6Content =>
-      'Tomamos medidas de seguridad razonables para proteger su información contra acceso, uso o divulgación no autorizados. Sin embargo, tenga en cuenta que Internet no es absolutamente seguro. Le recomendamos mantener su dispositivo seguro.';
+  String get section6Content => 'Tomamos medidas de seguridad razonables para proteger su información contra acceso, uso o divulgación no autorizados. Sin embargo, tenga en cuenta que Internet no es absolutamente seguro. Le recomendamos mantener su dispositivo seguro.';
 
   @override
   String get section7Title => '7. Protección de menores';
 
   @override
-  String get section7Content =>
-      'Otorgamos gran importancia a la protección de la información personal de menores. Si es menor de 18 años, le recomendamos usar esta aplicación bajo la supervisión de un tutor.';
+  String get section7Content => 'Otorgamos gran importancia a la protección de la información personal de menores. Si es menor de 18 años, le recomendamos usar esta aplicación bajo la supervisión de un tutor.';
 
   @override
   String get section8Title => '8. Cambios en la política de privacidad';
 
   @override
-  String get section8Content =>
-      'Podemos revisar esta política de privacidad de vez en cuando. Cuando se produzcan cambios, se lo notificaremos mediante ventanas emergentes o anuncios en la aplicación.';
+  String get section8Content => 'Podemos revisar esta política de privacidad de vez en cuando. Cuando se produzcan cambios, se lo notificaremos mediante ventanas emergentes o anuncios en la aplicación.';
 
   @override
   String get section9Title => '9. Contáctenos';
 
   @override
-  String get section9Content =>
-      'Si tiene preguntas o sugerencias sobre esta política de privacidad, contáctenos en:\nxinyoushanhai888@gmail.com';
+  String get section9Content => 'Si tiene preguntas o sugerencias sobre esta política de privacidad, contáctenos en:\nxinyoushanhai888@gmail.com';
 
   @override
   String get sdkFlutterTitle => 'Flutter';
 
   @override
-  String get sdkFlutterDesc =>
-      'Framework de desarrollo de aplicaciones multiplataforma para construir UI e interacciones';
+  String get sdkFlutterDesc => 'Framework de desarrollo de aplicaciones multiplataforma para construir UI e interacciones';
 
   @override
   String get sdkFfmpegTitle => 'FFmpeg';
 
   @override
-  String get sdkFfmpegDesc =>
-      'Biblioteca principal de procesamiento de audio/vídeo para recorte, compresión y conversión de formato de vídeo';
+  String get sdkFfmpegDesc => 'Biblioteca principal de procesamiento de audio/vídeo para recorte, compresión y conversión de formato de vídeo';
 
   @override
   String get sdkVideoPlayerTitle => 'Video Player';
 
   @override
-  String get sdkVideoPlayerDesc =>
-      'Componente de reproducción de vídeo para vista previa de vídeos';
+  String get sdkVideoPlayerDesc => 'Componente de reproducción de vídeo para vista previa de vídeos';
 
   @override
   String get sdkFilePickerTitle => 'File Picker';
 
   @override
-  String get sdkFilePickerDesc =>
-      'Selector de archivos para elegir archivos locales de vídeo y audio';
+  String get sdkFilePickerDesc => 'Selector de archivos para elegir archivos locales de vídeo y audio';
 
   @override
   String get sdkGallerySaverTitle => 'Gallery Saver';
 
   @override
-  String get sdkGallerySaverDesc =>
-      'Herramienta de guardado en álbum para guardar archivos procesados en el álbum del sistema';
+  String get sdkGallerySaverDesc => 'Herramienta de guardado en álbum para guardar archivos procesados en el álbum del sistema';
 
   @override
   String get sdkPermissionTitle => 'Permission Handler';
 
   @override
-  String get sdkPermissionDesc =>
-      'Componente de gestión de permisos para solicitar permisos de almacenamiento, álbum, etc.';
+  String get sdkPermissionDesc => 'Componente de gestión de permisos para solicitar permisos de almacenamiento, álbum, etc.';
 
   @override
   String get sdkPathProviderTitle => 'Path Provider';
 
   @override
-  String get sdkPathProviderDesc =>
-      'Proveedor de rutas para obtener directorios temporales y de documentos';
+  String get sdkPathProviderDesc => 'Proveedor de rutas para obtener directorios temporales y de documentos';
 
   @override
   String get sdkProviderTitle => 'Provider';
 
   @override
-  String get sdkProviderDesc =>
-      'Biblioteca de gestión de estado para compartir y gestionar el estado dentro de la aplicación';
+  String get sdkProviderDesc => 'Biblioteca de gestión de estado para compartir y gestionar el estado dentro de la aplicación';
 
   @override
   String licenseLabel(String license) {
@@ -953,22 +914,19 @@ class AppLocalizationsEs extends AppLocalizations {
   String get alreadyPremium => '¡Ya eres usuario Premium!';
 
   @override
-  String get alreadyPremiumDesc =>
-      'Gracias por tu apoyo, todas las funciones están desbloqueadas';
+  String get alreadyPremiumDesc => 'Gracias por tu apoyo, todas las funciones están desbloqueadas';
 
   @override
   String get unlockPremium => 'Desbloquear Premium';
 
   @override
-  String get unlockPremiumDesc =>
-      'Compra única, acceso permanente a todas las funciones';
+  String get unlockPremiumDesc => 'Compra única, acceso permanente a todas las funciones';
 
   @override
   String get featureUnlimitedSave => 'Guardado ilimitado en el álbum';
 
   @override
-  String get featureUnlimitedTools =>
-      'Uso sin restricciones de todas las herramientas';
+  String get featureUnlimitedTools => 'Uso sin restricciones de todas las herramientas';
 
   @override
   String get featureFreeUpdates => 'Actualizaciones futuras gratuitas';

@@ -36,7 +36,7 @@ class _CutVideoPageState extends State<CutVideoPage> {
 
   static const _bg = LinearGradient(
     begin: Alignment.topCenter, end: Alignment.bottomCenter,
-    colors: [Color(0xFF0D3B2E), Color(0xFF1B6B4F), Color(0xFFE8F5E9)],
+    colors: [Color(0xFF1E3A5F), Color(0xFF312E81), Color(0xFFE0E7FF)],
   );
 
   @override
