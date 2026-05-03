@@ -3,6 +3,7 @@ library;
 
 import 'package:flutter/material.dart';
 import 'package:xixi_media_tool/l10n/app_localizations.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 // ignore_for_file: use_build_context_synchronously
 import 'privacy_policy_page.dart';
 import 'sdk_list_page.dart';
@@ -51,7 +52,15 @@ class SettingsPage extends StatelessWidget {
 
             _buildSectionCard(context, icon: Icons.info_outline_rounded, title: l10n.aboutApp, children: [
               _buildInfoRow(context, l10n.appNameLabel, 'ToolKit'),
-              _buildInfoRow(context, l10n.versionLabel, '1.0.0'),
+              FutureBuilder<PackageInfo>(
+                future: PackageInfo.fromPlatform(),
+                builder: (context, snapshot) {
+                  final version = snapshot.hasData
+                      ? '${snapshot.data!.version}+${snapshot.data!.buildNumber}'
+                      : '1.0.0';
+                  return _buildInfoRow(context, l10n.versionLabel, version);
+                },
+              ),
               _buildInfoRow(context, l10n.developerLabel, 'xinyoushanhai888@gmail.com'),
               const SizedBox(height: 12), _buildOpenSourceNotice(context),
             ]),

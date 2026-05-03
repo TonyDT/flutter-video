@@ -1,0 +1,3 @@
+-dontwarn com.google.android.play.**
+-keep class com.google.android.play.** { *; }
+-keep class io.flutter.embedding.engine.deferredcomponents.** { *; }

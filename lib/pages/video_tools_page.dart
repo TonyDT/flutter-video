@@ -32,17 +32,6 @@ class VideoToolsPage extends StatelessWidget {
         slivers: [
           // 顶部标题区
           SliverToBoxAdapter(child: _buildHeader(context)),
-          // 工具数量
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-              child: Row(children: [
-                Icon(Icons.inventory_2_outlined, size: 16, color: AppTheme.textSecondary(context)),
-                const SizedBox(width: 6),
-                Text(l10n.toolCountAll(tools.length), style: TextStyle(fontSize: 13, color: AppTheme.textSecondary(context))),
-              ]),
-            ),
-          ),
           // 工具列表 - 单列
           SliverPadding(
             padding: const EdgeInsets.symmetric(horizontal: 16),

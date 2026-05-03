@@ -27,7 +27,7 @@ class IAPProvider extends ChangeNotifier {
   bool get firstLaunchShown => _firstLaunchShown;
 
   /// 商品ID（需与商店配置一致）
-  static const String _premiumProductId = 'com.abc.toolkit.unlock.all';
+  static const String _premiumProductId = 'com.dt.videotoolkit.premium';
 
   /// 初始化
   Future<void> init() async {
@@ -159,6 +159,7 @@ class IAPProvider extends ChangeNotifier {
   Future<void> restorePurchases() async {
     if (!_isAvailable) {
       _error = '商店不可用';
+      _isPurchasing = false;
       notifyListeners();
       return;
     }
@@ -167,6 +168,14 @@ class IAPProvider extends ChangeNotifier {
     _error = null;
     notifyListeners();
     await _inAppPurchase.restorePurchases();
+    
+    // restorePurchases 完成后延迟重置状态，等待 purchaseStream 回调处理完毕
+    await Future.delayed(const Duration(milliseconds: 500));
+    if (!_hasPurchased) {
+      _error = '未找到已购买的商品';
+    }
+    _isPurchasing = false;
+    notifyListeners();
   }
 
   /// 消费1次免费次数，返回剩余次数
