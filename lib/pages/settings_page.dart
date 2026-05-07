@@ -57,7 +57,7 @@ class SettingsPage extends StatelessWidget {
                 builder: (context, snapshot) {
                   final version = snapshot.hasData
                       ? '${snapshot.data!.version}+${snapshot.data!.buildNumber}'
-                      : '1.0.0';
+                      : '';
                   return _buildInfoRow(context, l10n.versionLabel, version);
                 },
               ),

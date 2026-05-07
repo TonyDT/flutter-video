@@ -1,11 +1,10 @@
 /// 相册保存统一工具 - 所有保存到相册的操作走这里
-/// 流程：已购买→无限使用 | 未购买→检查免费次数→提示剩余→保存→扣减→次数为0跳转商店
+/// 流程：已购买→无限使用 | 未购买→检查免费次数→保存→扣减→提示剩余→次数为0跳转商店
 library;
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/iap_provider.dart';
-import '../services/storage_service.dart';
 import '../pages/shop_page.dart';
 import 'gallery_saver_helper.dart'
     if (dart.library.io) 'gallery_saver_helper.dart'
@@ -16,8 +15,6 @@ import 'permission_helper.dart'
 import 'top_notify.dart';
 
 class SaveToGallery {
-  static final StorageService _storage = StorageService();
-
   /// 检查是否已购买高级版
   static bool _isPremium(BuildContext context) {
     final iap = context.read<IAPProvider>();
@@ -43,21 +40,19 @@ class SaveToGallery {
       return _doSave(path, context, successMsg: successMsg, errorMsg: errorMsg);
     }
 
-    // 2. 免费用户检查次数
-    final count = await _storage.getFreeCount();
+    // 2. 免费用户检查次数（统一从 IAPProvider 读取，与欢迎弹窗数据源一致）
+    final iap = context.read<IAPProvider>();
+    final count = iap.freeCount;
     if (count <= 0) {
       TopNotify.error(context, '免费次数已用完，请升级高级版');
       _navigateToShop(context);
       return false;
     }
 
-    // 3. 提示当前剩余次数
-    TopNotify.info(context, '免费次数剩余 $count 次');
-
-    // 4. 保存
+    // 3. 保存
     final ok = await _doSave(path, context, successMsg: successMsg, errorMsg: errorMsg);
     if (ok) {
-      final remaining = await _storage.decrementFreeCount();
+      final remaining = await iap.consumeFreeCount();
       if (context.mounted) TopNotify.success(context, '$successMsg（剩余 $remaining 次）');
     }
     return ok;
@@ -74,21 +69,19 @@ class SaveToGallery {
       return _doSaveAll(paths, context, unit: unit);
     }
 
-    // 2. 免费用户检查次数
-    final count = await _storage.getFreeCount();
+    // 2. 免费用户检查次数（统一从 IAPProvider 读取，与欢迎弹窗数据源一致）
+    final iap = context.read<IAPProvider>();
+    final count = iap.freeCount;
     if (count <= 0) {
       TopNotify.error(context, '免费次数已用完，请升级高级版');
       _navigateToShop(context);
       return 0;
     }
 
-    // 3. 提示当前剩余次数
-    TopNotify.info(context, '免费次数剩余 $count 次');
-
-    // 4. 保存
+    // 3. 保存
     final saved = await _doSaveAll(paths, context, unit: unit);
     if (saved > 0) {
-      final remaining = await _storage.decrementFreeCount();
+      final remaining = await iap.consumeFreeCount();
       if (context.mounted) TopNotify.success(context, '已保存 $saved $unit到相册（剩余 $remaining 次）');
     }
     return saved;
@@ -109,7 +102,7 @@ class SaveToGallery {
     try {
       final result = await GallerySaverHelper.saveFile(path);
       if (result == true) {
-        if (context.mounted && !_isPremium(context)) TopNotify.success(context, successMsg);
+        if (context.mounted && _isPremium(context)) TopNotify.success(context, successMsg);
         return true;
       } else {
         if (context.mounted) TopNotify.error(context, errorMsg);
@@ -139,7 +132,7 @@ class SaveToGallery {
         if (r == true) saved++;
       } catch (_) {}
     }
-    if (context.mounted && saved > 0 && !_isPremium(context)) {
+    if (context.mounted && saved > 0 && _isPremium(context)) {
       TopNotify.success(context, '已保存 $saved $unit到相册');
     } else if (context.mounted && saved == 0) {
       TopNotify.error(context, '保存失败');

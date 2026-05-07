@@ -49,6 +49,11 @@ class ShopPage extends StatelessWidget {
             );
           }
 
+          final product = iap.productDetails;
+          final displayTitle = product?.title ?? l10n.unlockPremium;
+          final displayDesc = product?.description ?? l10n.unlockPremiumDesc;
+          final displayPrice = product?.price;
+
           return SingleChildScrollView(
             padding: const EdgeInsets.all(24),
             child: Column(
@@ -70,9 +75,9 @@ class ShopPage extends StatelessWidget {
                   child: const Icon(Icons.workspace_premium, size: 52, color: Colors.white),
                 ),
                 const SizedBox(height: 24),
-                Text(l10n.unlockPremium, style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: AppTheme.textPrimary(context))),
+                Text(displayTitle, style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: AppTheme.textPrimary(context)), textAlign: TextAlign.center),
                 const SizedBox(height: 8),
-                Text(l10n.unlockPremiumDesc, style: TextStyle(fontSize: 15, color: AppTheme.textSecondary(context))),
+                Text(displayDesc, style: TextStyle(fontSize: 15, color: AppTheme.textSecondary(context)), textAlign: TextAlign.center),
                 const SizedBox(height: 36),
                 // 功能列表
                 _buildFeatureItem(context, Icons.all_inclusive, l10n.featureUnlimitedSave, 0),
@@ -80,6 +85,26 @@ class ShopPage extends StatelessWidget {
                 _buildFeatureItem(context, Icons.update, l10n.featureFreeUpdates, 2),
                 _buildFeatureItem(context, Icons.block, l10n.featureNoAds, 3),
                 const SizedBox(height: 40),
+                // 价格展示
+                if (displayPrice != null) ...[
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                    decoration: BoxDecoration(
+                      color: AppTheme.primary.withValues(alpha: 0.08),
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(color: AppTheme.primary.withValues(alpha: 0.2)),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.local_offer, size: 20, color: AppTheme.primary),
+                        const SizedBox(width: 8),
+                        Text(displayPrice, style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: AppTheme.primary)),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                ],
                 SizedBox(
                   width: double.infinity,
                   height: 56,
@@ -93,7 +118,10 @@ class ShopPage extends StatelessWidget {
                     ),
                     child: iap.isPurchasing
                         ? const SizedBox(width: 24, height: 24, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2.5))
-                        : Text(l10n.unlockNow, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
+                        : Text(
+                            displayPrice != null ? '${l10n.unlockNow} · $displayPrice' : l10n.unlockNow,
+                            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                          ),
                   ),
                 ),
                 const SizedBox(height: 16),

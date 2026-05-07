@@ -10,6 +10,7 @@ import 'package:ffmpeg_kit_flutter_new/ffmpeg_kit.dart';
 import 'package:ffmpeg_kit_flutter_new/return_code.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:xixi_media_tool/l10n/app_localizations.dart';
+import '../utils/save_to_gallery.dart';
 import '../utils/native_file_helper.dart'
     if (dart.library.io) '../utils/native_file_helper.dart'
     if (dart.library.html) '../utils/native_file_helper_web.dart';
@@ -148,44 +149,19 @@ class _SeparateAVPageState extends State<SeparateAVPage> {
 
   Future<void> _saveVideoFile() async {
     if (_videoOnlyPath == null) return;
-    final l10n = AppLocalizations.of(context)!;
-    try {
-      final fileName = _videoOnlyPath!.split('/').last;
-      final destPath = await FilePicker.platform.saveFile(
-        dialogTitle: l10n.saveVideoOnly,
-        fileName: fileName,
-        type: FileType.video,
-        allowedExtensions: ['mp4'],
-      );
-      if (destPath == null) return;
-      final sourceFile = File(_videoOnlyPath!);
-      if (await sourceFile.exists()) {
-        await sourceFile.copy(destPath);
-        setState(() => _videoSaved = true);
-        _showSuccess(l10n.videoOnlySaved);
-      } else { _showError(l10n.sourceFileNotExist); }
-    } catch (e) { _showError(l10n.saveVideoError(e.toString())); }
+    await SaveToGallery.save(_videoOnlyPath!, context);
+    final sourceFile = File(_videoOnlyPath!);
+    if (await sourceFile.exists()) {
+      setState(() => _videoSaved = true);
+    }
   }
 
   Future<void> _saveAudioToFile(String path, String label, Function(bool) onSaved) async {
-    final l10n = AppLocalizations.of(context)!;
-    try {
-      final fileName = path.split('/').last;
-      final ext = fileName.split('.').last.toLowerCase();
-      final destPath = await FilePicker.platform.saveFile(
-        dialogTitle: l10n.saveLabel(label),
-        fileName: fileName,
-        type: FileType.custom,
-        allowedExtensions: [ext],
-      );
-      if (destPath == null) return;
-      final sourceFile = File(path);
-      if (await sourceFile.exists()) {
-        await sourceFile.copy(destPath);
-        onSaved(true);
-        _showSuccess(l10n.labelSaved(label));
-      } else { _showError(l10n.fileNotExist(label)); }
-    } catch (e) { _showError(l10n.saveLabelError(e.toString())); }
+    await SaveToGallery.save(path, context);
+    final sourceFile = File(path);
+    if (await sourceFile.exists()) {
+      onSaved(true);
+    }
   }
 
   Future<void> _toggleAudioPlay() async {
