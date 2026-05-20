@@ -36,6 +36,13 @@ android {
         ndk {
             abiFilters.addAll(["arm64-v8a", "armeabi-v7a"])
         }
+        // permission_handler: 只启用应用需要的权限，其余全部禁用
+        // 避免声明 MANAGE_EXTERNAL_STORAGE 等不需要的权限导致 Google Play 拒审
+        manifestPlaceholders += [
+            PERMISSION_PHOTOS : '1',          // READ_MEDIA_IMAGES + READ_MEDIA_VIDEO (Android 13+)
+            PERMISSION_STORAGE : '1',          // READ/WRITE_EXTERNAL_STORAGE (Android 12-)
+            PERMISSION_NOTIFICATION : '1',     // POST_NOTIFICATIONS
+        ]
     }
 
     signingConfigs {

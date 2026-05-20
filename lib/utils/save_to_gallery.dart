@@ -35,27 +35,32 @@ class SaveToGallery {
     String successMsg = '已保存到相册',
     String errorMsg = '保存失败',
   }) async {
-    // 1. 已购买高级版，无限使用
-    if (_isPremium(context)) {
-      return _doSave(path, context, successMsg: successMsg, errorMsg: errorMsg);
-    }
+    try {
+      // 1. 已购买高级版，无限使用
+      if (_isPremium(context)) {
+        return _doSave(path, context, successMsg: successMsg, errorMsg: errorMsg);
+      }
 
-    // 2. 免费用户检查次数（统一从 IAPProvider 读取，与欢迎弹窗数据源一致）
-    final iap = context.read<IAPProvider>();
-    final count = iap.freeCount;
-    if (count <= 0) {
-      TopNotify.error(context, '免费次数已用完，请升级高级版');
-      _navigateToShop(context);
+      // 2. 免费用户检查次数（统一从 IAPProvider 读取，与欢迎弹窗数据源一致）
+      final iap = context.read<IAPProvider>();
+      final count = iap.freeCount;
+      if (count <= 0) {
+        if (context.mounted) TopNotify.error(context, '免费次数已用完，请升级高级版');
+        _navigateToShop(context);
+        return false;
+      }
+
+      // 3. 保存
+      final ok = await _doSave(path, context, successMsg: successMsg, errorMsg: errorMsg);
+      if (ok) {
+        final remaining = await iap.consumeFreeCount();
+        if (context.mounted) TopNotify.success(context, '$successMsg（剩余 $remaining 次）');
+      }
+      return ok;
+    } catch (e) {
+      if (context.mounted) TopNotify.error(context, '$errorMsg: $e');
       return false;
     }
-
-    // 3. 保存
-    final ok = await _doSave(path, context, successMsg: successMsg, errorMsg: errorMsg);
-    if (ok) {
-      final remaining = await iap.consumeFreeCount();
-      if (context.mounted) TopNotify.success(context, '$successMsg（剩余 $remaining 次）');
-    }
-    return ok;
   }
 
   /// 批量保存多个文件到相册
@@ -64,27 +69,32 @@ class SaveToGallery {
     BuildContext context, {
     String unit = '个',
   }) async {
-    // 1. 已购买高级版，无限使用
-    if (_isPremium(context)) {
-      return _doSaveAll(paths, context, unit: unit);
-    }
+    try {
+      // 1. 已购买高级版，无限使用
+      if (_isPremium(context)) {
+        return _doSaveAll(paths, context, unit: unit);
+      }
 
-    // 2. 免费用户检查次数（统一从 IAPProvider 读取，与欢迎弹窗数据源一致）
-    final iap = context.read<IAPProvider>();
-    final count = iap.freeCount;
-    if (count <= 0) {
-      TopNotify.error(context, '免费次数已用完，请升级高级版');
-      _navigateToShop(context);
+      // 2. 免费用户检查次数（统一从 IAPProvider 读取，与欢迎弹窗数据源一致）
+      final iap = context.read<IAPProvider>();
+      final count = iap.freeCount;
+      if (count <= 0) {
+        if (context.mounted) TopNotify.error(context, '免费次数已用完，请升级高级版');
+        _navigateToShop(context);
+        return 0;
+      }
+
+      // 3. 保存
+      final saved = await _doSaveAll(paths, context, unit: unit);
+      if (saved > 0) {
+        final remaining = await iap.consumeFreeCount();
+        if (context.mounted) TopNotify.success(context, '已保存 $saved $unit到相册（剩余 $remaining 次）');
+      }
+      return saved;
+    } catch (e) {
+      if (context.mounted) TopNotify.error(context, '保存出错: $e');
       return 0;
     }
-
-    // 3. 保存
-    final saved = await _doSaveAll(paths, context, unit: unit);
-    if (saved > 0) {
-      final remaining = await iap.consumeFreeCount();
-      if (context.mounted) TopNotify.success(context, '已保存 $saved $unit到相册（剩余 $remaining 次）');
-    }
-    return saved;
   }
 
   /// 实际保存单个文件（无次数逻辑）
@@ -94,12 +104,12 @@ class SaveToGallery {
     String successMsg = '已保存到相册',
     String errorMsg = '保存失败',
   }) async {
-    final ok = await PermissionHelper.requestPhotos();
-    if (ok != true) {
-      if (context.mounted) TopNotify.error(context, '需要相册权限');
-      return false;
-    }
     try {
+      final ok = await PermissionHelper.requestPhotos();
+      if (ok != true) {
+        if (context.mounted) TopNotify.error(context, '需要相册权限');
+        return false;
+      }
       final result = await GallerySaverHelper.saveFile(path);
       if (result == true) {
         if (context.mounted && _isPremium(context)) TopNotify.success(context, successMsg);
@@ -120,23 +130,28 @@ class SaveToGallery {
     BuildContext context, {
     String unit = '个',
   }) async {
-    final ok = await PermissionHelper.requestPhotos();
-    if (ok != true) {
-      if (context.mounted) TopNotify.error(context, '需要相册权限');
+    try {
+      final ok = await PermissionHelper.requestPhotos();
+      if (ok != true) {
+        if (context.mounted) TopNotify.error(context, '需要相册权限');
+        return 0;
+      }
+      int saved = 0;
+      for (final p in paths) {
+        try {
+          final r = await GallerySaverHelper.saveFile(p);
+          if (r == true) saved++;
+        } catch (_) {}
+      }
+      if (context.mounted && saved > 0 && _isPremium(context)) {
+        TopNotify.success(context, '已保存 $saved $unit到相册');
+      } else if (context.mounted && saved == 0) {
+        TopNotify.error(context, '保存失败');
+      }
+      return saved;
+    } catch (e) {
+      if (context.mounted) TopNotify.error(context, '保存出错: $e');
       return 0;
     }
-    int saved = 0;
-    for (final p in paths) {
-      try {
-        final r = await GallerySaverHelper.saveFile(p);
-        if (r == true) saved++;
-      } catch (_) {}
-    }
-    if (context.mounted && saved > 0 && _isPremium(context)) {
-      TopNotify.success(context, '已保存 $saved $unit到相册');
-    } else if (context.mounted && saved == 0) {
-      TopNotify.error(context, '保存失败');
-    }
-    return saved;
   }
 }
