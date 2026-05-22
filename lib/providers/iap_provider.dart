@@ -215,7 +215,19 @@ class IAPProvider extends ChangeNotifier {
       _error = '无法发起购买，请稍后重试';
       _isPurchasing = false;
       notifyListeners();
+      return;
     }
+
+    // 超时保护：如果 60 秒内 purchaseStream 未回调，重置状态
+    // 防止用户在购买弹窗中按返回键取消后，Android Billing 不发送 canceled 事件导致按钮卡死
+    Future.delayed(const Duration(seconds: 60), () {
+      if (_isPurchasing) {
+        log('Purchase timeout — resetting isPurchasing to false');
+        _isPurchasing = false;
+        _error = '购买超时，请重试';
+        notifyListeners();
+      }
+    });
   }
 
   /// 恢复购买（用户手动触发）

@@ -1,7 +1,8 @@
 /// 相册保存统一工具 - 所有保存到相册的操作走这里
-/// 流程：已购买→无限使用 | 未购买→检查免费次数→保存→扣减→提示剩余→次数为0跳转商店
+/// 流程：已购买→直接保存 | 未购买→弹窗提示购买→跳转商店页
 library;
 
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/iap_provider.dart';
@@ -18,17 +19,48 @@ class SaveToGallery {
   /// 检查是否已购买高级版
   static bool _isPremium(BuildContext context) {
     final iap = context.read<IAPProvider>();
+    log('SaveToGallery._isPremium => hasPurchased=${iap.hasPurchased}');
     return iap.hasPurchased;
   }
 
-  /// 次数不足时跳转商店页
-  static void _navigateToShop(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(builder: (_) => const ShopPage()));
+  /// 未购买时弹窗提示购买
+  static Future<bool> _showPurchaseDialog(BuildContext context) async {
+    final result = await showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        title: Row(
+          children: [
+            Icon(Icons.workspace_premium, color: Colors.amber[700], size: 28),
+            const SizedBox(width: 10),
+            const Text('升级高级版', style: TextStyle(fontSize: 18)),
+          ],
+        ),
+        content: const Text('保存到相册需要购买高级版，一次性购买后可无限使用所有功能。'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(false),
+            child: const Text('取消'),
+          ),
+          ElevatedButton(
+            onPressed: () => Navigator.of(ctx).pop(true),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.deepPurple,
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            ),
+            child: const Text('前往购买'),
+          ),
+        ],
+      ),
+    );
+    return result ?? false;
   }
 
   /// 保存单个文件到相册
   ///
-  /// 统一封装：购买检查 → 次数检查 → 权限检查 → 保存 → 结果提示
+  /// 统一封装：购买检查 → 权限检查 → 保存 → 结果提示
   static Future<bool> save(
     String path,
     BuildContext context, {
@@ -36,27 +68,21 @@ class SaveToGallery {
     String errorMsg = '保存失败',
   }) async {
     try {
-      // 1. 已购买高级版，无限使用
-      if (_isPremium(context)) {
-        return _doSave(path, context, successMsg: successMsg, errorMsg: errorMsg);
-      }
+      final isPremium = _isPremium(context);
+      log('SaveToGallery.save => isPremium=$isPremium');
 
-      // 2. 免费用户检查次数（统一从 IAPProvider 读取，与欢迎弹窗数据源一致）
-      final iap = context.read<IAPProvider>();
-      final count = iap.freeCount;
-      if (count <= 0) {
-        if (context.mounted) TopNotify.error(context, '免费次数已用完，请升级高级版');
-        _navigateToShop(context);
+      // 1. 未购买→弹窗提示购买
+      if (!isPremium) {
+        log('SaveToGallery.save => showing purchase dialog');
+        final goPurchase = await _showPurchaseDialog(context);
+        if (goPurchase && context.mounted) {
+          Navigator.push(context, MaterialPageRoute(builder: (_) => const ShopPage()));
+        }
         return false;
       }
 
-      // 3. 保存
-      final ok = await _doSave(path, context, successMsg: successMsg, errorMsg: errorMsg);
-      if (ok) {
-        final remaining = await iap.consumeFreeCount();
-        if (context.mounted) TopNotify.success(context, '$successMsg（剩余 $remaining 次）');
-      }
-      return ok;
+      // 2. 已购买，直接保存
+      return _doSave(path, context, successMsg: successMsg, errorMsg: errorMsg);
     } catch (e) {
       if (context.mounted) TopNotify.error(context, '$errorMsg: $e');
       return false;
@@ -70,34 +96,28 @@ class SaveToGallery {
     String unit = '个',
   }) async {
     try {
-      // 1. 已购买高级版，无限使用
-      if (_isPremium(context)) {
-        return _doSaveAll(paths, context, unit: unit);
-      }
+      final isPremium = _isPremium(context);
+      log('SaveToGallery.saveAll => isPremium=$isPremium');
 
-      // 2. 免费用户检查次数（统一从 IAPProvider 读取，与欢迎弹窗数据源一致）
-      final iap = context.read<IAPProvider>();
-      final count = iap.freeCount;
-      if (count <= 0) {
-        if (context.mounted) TopNotify.error(context, '免费次数已用完，请升级高级版');
-        _navigateToShop(context);
+      // 1. 未购买→弹窗提示购买
+      if (!isPremium) {
+        log('SaveToGallery.saveAll => showing purchase dialog');
+        final goPurchase = await _showPurchaseDialog(context);
+        if (goPurchase && context.mounted) {
+          Navigator.push(context, MaterialPageRoute(builder: (_) => const ShopPage()));
+        }
         return 0;
       }
 
-      // 3. 保存
-      final saved = await _doSaveAll(paths, context, unit: unit);
-      if (saved > 0) {
-        final remaining = await iap.consumeFreeCount();
-        if (context.mounted) TopNotify.success(context, '已保存 $saved $unit到相册（剩余 $remaining 次）');
-      }
-      return saved;
+      // 2. 已购买，直接保存
+      return _doSaveAll(paths, context, unit: unit);
     } catch (e) {
       if (context.mounted) TopNotify.error(context, '保存出错: $e');
       return 0;
     }
   }
 
-  /// 实际保存单个文件（无次数逻辑）
+  /// 实际保存单个文件
   static Future<bool> _doSave(
     String path,
     BuildContext context, {
@@ -112,7 +132,7 @@ class SaveToGallery {
       }
       final result = await GallerySaverHelper.saveFile(path);
       if (result == true) {
-        if (context.mounted && _isPremium(context)) TopNotify.success(context, successMsg);
+        if (context.mounted) TopNotify.success(context, successMsg);
         return true;
       } else {
         if (context.mounted) TopNotify.error(context, errorMsg);
@@ -124,7 +144,7 @@ class SaveToGallery {
     }
   }
 
-  /// 实际批量保存（无次数逻辑）
+  /// 实际批量保存
   static Future<int> _doSaveAll(
     List<String> paths,
     BuildContext context, {
@@ -143,7 +163,7 @@ class SaveToGallery {
           if (r == true) saved++;
         } catch (_) {}
       }
-      if (context.mounted && saved > 0 && _isPremium(context)) {
+      if (context.mounted && saved > 0) {
         TopNotify.success(context, '已保存 $saved $unit到相册');
       } else if (context.mounted && saved == 0) {
         TopNotify.error(context, '保存失败');
