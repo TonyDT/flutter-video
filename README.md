@@ -127,7 +127,7 @@ flutter run -d chrome
 ## Android 配置
 
 - **minSdk**: 24
-- **targetSdk**: 跟随 Flutter 默认
+- **targetSdk**: 36（Android 16）
 - **NDK**: 27.0.12077973
 - **Java**: 17
 - **Kotlin**: 2.0.21

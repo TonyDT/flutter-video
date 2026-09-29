@@ -44,4 +44,30 @@ class PermissionHelper {
       return false;
     }
   }
+
+  /// 请求音频/存储权限。
+  ///
+  /// Android 10+ 保存到 MediaStore 通常不需要写权限；这里主要兼容
+  /// Android 9 及以下，以及部分 ROM 对媒体库访问的额外要求。
+  static Future<bool> requestAudio() async {
+    try {
+      if (await Permission.audio.isGranted) return true;
+      final audioStatus = await Permission.audio.request();
+      if (audioStatus.isGranted) return true;
+
+      if (await Permission.storage.isGranted) return true;
+      final storageStatus = await Permission.storage.request();
+      if (storageStatus.isGranted) return true;
+
+      if (await Permission.audio.isPermanentlyDenied ||
+          await Permission.storage.isPermanentlyDenied) {
+        await openAppSettings();
+      }
+
+      return false;
+    } catch (e) {
+      debugPrint('PermissionHelper.requestAudio error: $e');
+      return false;
+    }
+  }
 }

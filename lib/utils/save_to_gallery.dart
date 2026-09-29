@@ -10,6 +10,9 @@ import '../pages/shop_page.dart';
 import 'gallery_saver_helper.dart'
     if (dart.library.io) 'gallery_saver_helper.dart'
     if (dart.library.html) 'gallery_saver_helper_web.dart';
+import 'audio_file_saver.dart'
+    if (dart.library.io) 'audio_file_saver.dart'
+    if (dart.library.html) 'audio_file_saver_web.dart';
 import 'permission_helper.dart'
     if (dart.library.io) 'permission_helper.dart'
     if (dart.library.html) 'permission_helper_web.dart';
@@ -48,7 +51,8 @@ class SaveToGallery {
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.deepPurple,
               foregroundColor: Colors.white,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12)),
             ),
             child: const Text('前往购买'),
           ),
@@ -76,13 +80,44 @@ class SaveToGallery {
         log('SaveToGallery.save => showing purchase dialog');
         final goPurchase = await _showPurchaseDialog(context);
         if (goPurchase && context.mounted) {
-          Navigator.push(context, MaterialPageRoute(builder: (_) => const ShopPage()));
+          Navigator.push(
+              context, MaterialPageRoute(builder: (_) => const ShopPage()));
         }
         return false;
       }
 
       // 2. 已购买，直接保存
       return _doSave(path, context, successMsg: successMsg, errorMsg: errorMsg);
+    } catch (e) {
+      if (context.mounted) TopNotify.error(context, '$errorMsg: $e');
+      return false;
+    }
+  }
+
+  /// 保存音频文件到系统音乐库。
+  ///
+  /// Android 上不能复用图片/视频相册插件，否则 MP3 会被写入图片库导致保存失败。
+  static Future<bool> saveAudio(
+    String path,
+    BuildContext context, {
+    String successMsg = '音频已保存',
+    String errorMsg = '保存音频失败',
+  }) async {
+    try {
+      final isPremium = _isPremium(context);
+      log('SaveToGallery.saveAudio => isPremium=$isPremium');
+
+      if (!isPremium) {
+        final goPurchase = await _showPurchaseDialog(context);
+        if (goPurchase && context.mounted) {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (_) => const ShopPage()));
+        }
+        return false;
+      }
+
+      return _doSaveAudio(path, context,
+          successMsg: successMsg, errorMsg: errorMsg);
     } catch (e) {
       if (context.mounted) TopNotify.error(context, '$errorMsg: $e');
       return false;
@@ -104,7 +139,8 @@ class SaveToGallery {
         log('SaveToGallery.saveAll => showing purchase dialog');
         final goPurchase = await _showPurchaseDialog(context);
         if (goPurchase && context.mounted) {
-          Navigator.push(context, MaterialPageRoute(builder: (_) => const ShopPage()));
+          Navigator.push(
+              context, MaterialPageRoute(builder: (_) => const ShopPage()));
         }
         return 0;
       }
@@ -114,6 +150,31 @@ class SaveToGallery {
     } catch (e) {
       if (context.mounted) TopNotify.error(context, '保存出错: $e');
       return 0;
+    }
+  }
+
+  static Future<bool> _doSaveAudio(
+    String path,
+    BuildContext context, {
+    String successMsg = '音频已保存',
+    String errorMsg = '保存音频失败',
+  }) async {
+    try {
+      final ok = await PermissionHelper.requestAudio();
+      if (ok != true) {
+        if (context.mounted) TopNotify.error(context, '需要音频/存储权限');
+        return false;
+      }
+      final result = await AudioFileSaver.saveAudioFile(path);
+      if (result == true) {
+        if (context.mounted) TopNotify.success(context, successMsg);
+        return true;
+      }
+      if (context.mounted) TopNotify.error(context, errorMsg);
+      return false;
+    } catch (e) {
+      if (context.mounted) TopNotify.error(context, '保存音频出错: $e');
+      return false;
     }
   }
 

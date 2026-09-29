@@ -12,4 +12,9 @@ class PermissionHelper {
   static Future<bool> requestPhotos() async {
     return true; // Web 平台不需要权限
   }
+
+  /// Web 平台权限请求（无操作）
+  static Future<bool> requestAudio() async {
+    return true;
+  }
 }
